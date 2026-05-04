@@ -46,3 +46,9 @@ Before any commit:
 - `skills/` for deep workflow guidance
 - `commands/` for slash-command patterns worth adapting into prompts/macros
 - `mcp-configs/` for shared connector baselines
+
+## Bundled Skills (trial)
+
+A condensed ECC skills bundle is available at `.gemini/skills.md`.
+Load it in a session with `@.gemini/skills.md` for coding standards,
+workflow, security checklist, API design, testing, and review guidance.

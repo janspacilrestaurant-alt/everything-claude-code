@@ -299,6 +299,44 @@ async function runTests() {
     }
   })) passed++; else failed++;
 
+  if (await asyncTest('marks server unhealthy on stream idle timeout error', async () => {
+    const tempDir = createTempDir();
+    const configPath = path.join(tempDir, 'claude.json');
+    const statePath = path.join(tempDir, 'mcp-health.json');
+    const serverScript = path.join(tempDir, 'down-server.js');
+
+    try {
+      fs.writeFileSync(serverScript, 'process.exit(1);\n');
+      writeConfig(configPath, {
+        mcpServers: {
+          streamy: createCommandConfig(serverScript)
+        }
+      });
+
+      const result = runHook(
+        {
+          tool_name: 'mcp__streamy__fetch',
+          tool_input: {},
+          error: 'API Error: Stream idle timeout - partial response received'
+        },
+        {
+          CLAUDE_HOOK_EVENT_NAME: 'PostToolUseFailure',
+          ECC_MCP_CONFIG_PATH: configPath,
+          ECC_MCP_HEALTH_STATE_PATH: statePath,
+          ECC_MCP_HEALTH_TIMEOUT_MS: '100'
+        }
+      );
+
+      assert.strictEqual(result.code, 0, 'Expected PostToolUseFailure to remain non-blocking');
+      assert.ok(result.stderr.includes('reported transport'), `Expected transport failure log, got: ${result.stderr}`);
+
+      const state = readState(statePath);
+      assert.strictEqual(state.servers.streamy.status, 'unhealthy', 'Expected server to be marked unhealthy on stream idle timeout');
+    } finally {
+      cleanupTempDir(tempDir);
+    }
+  })) passed++; else failed++;
+
   if (await asyncTest('treats HTTP 400 probe responses as healthy reachable servers', async () => {
     const tempDir = createTempDir();
     const configPath = path.join(tempDir, 'claude.json');

@@ -31,7 +31,7 @@ const FAILURE_PATTERNS = [
   { code: 403, pattern: /\b403\b|forbidden|permission denied/i },
   { code: 429, pattern: /\b429\b|rate limit|too many requests/i },
   { code: 503, pattern: /\b503\b|service unavailable|overloaded|temporarily unavailable/i },
-  { code: 'transport', pattern: /ECONNREFUSED|ENOTFOUND|EAI_AGAIN|timed? out|socket hang up|connection (?:failed|lost|reset|closed)/i }
+  { code: 'transport', pattern: /ECONNREFUSED|ENOTFOUND|EAI_AGAIN|timed? out|\btimeout\b|socket hang up|connection (?:failed|lost|reset|closed)|stream.*idle|partial response/i }
 ];
 
 function envNumber(name, fallback) {
