@@ -1,0 +1,7 @@
+services:
+  scraper:
+    build: .
+    image: machinery-deals-scraper:latest
+    env_file: .env
+    # Run once; cron on the host triggers `docker compose run --rm scraper`.
+    profiles: ["manual"]
