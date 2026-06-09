@@ -20,6 +20,30 @@ every connected browser/device.
 Public scraping only — no marketplace logins. Polite delays (1–2 s) between
 requests per source.
 
+## Anti-bot hardening
+
+- **UA rotation** (`src/lib/ua.js`) — each new browser context picks a fresh
+  realistic desktop UA from a pinned pool of Chrome/Firefox/Safari strings.
+- **Exponential backoff + auto-throttle** (`src/lib/retry.js`) — every source
+  wraps its initial `page.goto` (or `fetch` for Bazoš) in `withRetry`, which
+  retries on 429/403/5xx/timeouts with `base × factor^attempt + jitter` delay.
+  A per-host error window inflates the base delay when a target starts
+  pushing back, so the scraper auto-slows instead of getting banned.
+- **Residential proxy support** — set `HTTPS_PROXY` in `.env`. Playwright
+  reads it natively; no code change needed. Worth paying for (~€50/mo) only
+  if EEN/Surplex start consistently returning 403 — for our ~150 req/day
+  volume that's unlikely.
+- **Bazoš.cz mobile API** (`src/sources/bazos.js`) — Bazoš rejects everything
+  that doesn't look like the real Android/iOS app, so the source sends
+  `User-Agent: bazos/2.12.1` + a fake-but-stable `x-deviceid` per request,
+  pages by `offset` in increments of 20 (Bazoš enforces multiples), and stops
+  at the platform's hard 200-result cap. Set `BAZOS_SECTION` in `.env` to
+  the right 2-char code once you've probed (see comment in the source).
+
+What we deliberately don't do at this scale: TLS fingerprint spoofing
+(Playwright's real Chromium passes), CAPTCHA solving, distributed crawling
+across nodes. Re-evaluate above ~10k requests/day.
+
 ## Local quickstart
 
 ```bash

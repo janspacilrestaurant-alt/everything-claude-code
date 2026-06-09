@@ -1,12 +1,17 @@
 import { newContext, sleep } from "../lib/browser.js";
 import { SOURCE_DELAYS_MS } from "../config.js";
+import { withRetry, getThrottleDelay } from "../lib/retry.js";
 
 export async function scrape({ query, segment, maxResults = 15 }) {
   const ctx = await newContext();
   const page = await ctx.newPage();
   const url = "https://www.surplex.com/en/search/?q=" + encodeURIComponent(query);
+  await sleep(getThrottleDelay(url));
   try {
-    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
+    await withRetry(
+      () => page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 }),
+      { url, attempts: 3, baseMs: 2000, isRetryable: (e) => /timeout|net::|HTTP (403|429|5)/i.test(e?.message || "") }
+    );
     await sleep(1500);
     const items = await page.$$eval(
       "a[href*='/en/m/']",

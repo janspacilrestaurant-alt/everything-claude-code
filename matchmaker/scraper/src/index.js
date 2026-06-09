@@ -9,8 +9,9 @@ import * as exapro from "./sources/exapro.js";
 import * as surplex from "./sources/surplex.js";
 import * as een from "./sources/een.js";
 import * as ted from "./sources/ted.js";
+import * as bazos from "./sources/bazos.js";
 
-const SOURCES = { machineseeker, exapro, surplex, een, ted };
+const SOURCES = { machineseeker, exapro, surplex, een, ted, bazos };
 const CONCURRENCY = parseInt(process.env.CONCURRENCY || "2", 10);
 const MAX_PER_SOURCE = parseInt(process.env.MAX_RESULTS_PER_SOURCE || "20", 10);
 const DRY_RUN = process.env.DRY_RUN === "1";

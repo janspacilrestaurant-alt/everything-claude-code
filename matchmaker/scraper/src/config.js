@@ -4,7 +4,7 @@
 export const SEGMENTS = {
   machines: {
     label: "Stroje",
-    offerSources: ["machineseeker", "exapro", "surplex"],
+    offerSources: ["machineseeker", "exapro", "surplex", "bazos"],
     demandSources: ["een", "ted"],
     queries: [
       "CNC lathe", "CNC milling machine", "machining center",
@@ -22,13 +22,13 @@ export const SEGMENTS = {
   },
   tooling: {
     label: "Tooling / Formy",
-    offerSources: ["machineseeker", "surplex"],
+    offerSources: ["machineseeker", "surplex", "bazos"],
     demandSources: ["een"],
     queries: ["injection mold", "stamping die", "Sandvik Capto", "tool holder"],
   },
   MRO: {
     label: "MRO / ND",
-    offerSources: ["machineseeker"],
+    offerSources: ["machineseeker", "bazos"],
     demandSources: ["een"],
     queries: [
       "Siemens spindle motor", "Fanuc servo amplifier",
@@ -49,11 +49,13 @@ export const SEGMENTS = {
   },
 };
 
-// Polite scraping: don't hammer marketplaces.
+// Polite scraping: don't hammer marketplaces. Retry logic in lib/retry.js
+// inflates these dynamically when a host returns 429/403.
 export const SOURCE_DELAYS_MS = {
   machineseeker: 1500,
   exapro: 2000,
   surplex: 1500,
   een: 1000,
   ted: 1000,
+  bazos: 1200,
 };

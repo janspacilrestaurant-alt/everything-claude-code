@@ -1,5 +1,6 @@
 import { newContext, sleep } from "../lib/browser.js";
 import { SOURCE_DELAYS_MS } from "../config.js";
+import { withRetry, getThrottleDelay } from "../lib/retry.js";
 
 // Enterprise Europe Network — partnering opportunities. The /partnering-opportunities
 // listing path with ?keyword= returns real deep-linkable slugs.
@@ -9,8 +10,12 @@ export async function scrape({ query, segment, maxResults = 15 }) {
   const url =
     "https://een.ec.europa.eu/partnering-opportunities?keyword=" +
     encodeURIComponent(query);
+  await sleep(getThrottleDelay(url));
   try {
-    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
+    await withRetry(
+      () => page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 }),
+      { url, attempts: 3, baseMs: 2500, isRetryable: (e) => /timeout|net::|HTTP (403|429|5)/i.test(e?.message || "") }
+    );
     await page
       .waitForSelector("a[href*='/partnering-opportunities/']", { timeout: 15000 })
       .catch(() => {});

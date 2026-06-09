@@ -1,5 +1,6 @@
 import { newContext, sleep } from "../lib/browser.js";
 import { SOURCE_DELAYS_MS } from "../config.js";
+import { withRetry, getThrottleDelay } from "../lib/retry.js";
 
 // TED — EU public tenders. Notice URLs look like /en/notice/<id>/...
 export async function scrape({ query, segment, maxResults = 15 }) {
@@ -7,8 +8,12 @@ export async function scrape({ query, segment, maxResults = 15 }) {
   const page = await ctx.newPage();
   const url =
     "https://ted.europa.eu/en/search/result?q=" + encodeURIComponent(query);
+  await sleep(getThrottleDelay(url));
   try {
-    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
+    await withRetry(
+      () => page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 }),
+      { url, attempts: 3, baseMs: 2000, isRetryable: (e) => /timeout|net::|HTTP (403|429|5)/i.test(e?.message || "") }
+    );
     await page
       .waitForSelector("a[href*='/en/notice/']", { timeout: 15000 })
       .catch(() => {});

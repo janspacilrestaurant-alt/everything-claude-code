@@ -1,13 +1,18 @@
 import { newContext, sleep } from "../lib/browser.js";
 import { SOURCE_DELAYS_MS } from "../config.js";
+import { withRetry, getThrottleDelay } from "../lib/retry.js";
 
 // Public Exapro search results. Listings expire when sold so we re-run daily.
 export async function scrape({ query, segment, maxResults = 15 }) {
   const ctx = await newContext();
   const page = await ctx.newPage();
   const url = "https://www.exapro.com/search/?q=" + encodeURIComponent(query);
+  await sleep(getThrottleDelay(url));
   try {
-    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
+    await withRetry(
+      () => page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 }),
+      { url, attempts: 3, baseMs: 2000, isRetryable: (e) => /timeout|net::|HTTP (403|429|5)/i.test(e?.message || "") }
+    );
     // Exapro listing URLs follow /<slug>-p<id>/ — we filter to those.
     await sleep(1500);
     const items = await page.$$eval(

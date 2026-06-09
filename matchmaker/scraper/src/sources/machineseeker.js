@@ -1,5 +1,6 @@
 import { newContext, sleep } from "../lib/browser.js";
 import { SOURCE_DELAYS_MS } from "../config.js";
+import { withRetry, isRetryableHttpStatus, getThrottleDelay } from "../lib/retry.js";
 
 // Public Machineseeker search → listing URLs. Single-token /mss/ is recommended;
 // for multi-word queries we use ?query=... which is also public.
@@ -8,8 +9,12 @@ export async function scrape({ query, segment, maxResults = 15 }) {
   const page = await ctx.newPage();
   const url =
     "https://www.machineseeker.com/search?query=" + encodeURIComponent(query);
+  await sleep(getThrottleDelay(url));
   try {
-    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
+    await withRetry(
+      () => page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 }),
+      { url, attempts: 3, baseMs: 2000, isRetryable: (e) => isRetryableHttpStatus(e?.response?.status?.() ?? 0) || /timeout|net::/i.test(e?.message || "") }
+    );
     await page.waitForSelector("article, .listing-link, a[href*='/M/']", {
       timeout: 15000,
     }).catch(() => {});
