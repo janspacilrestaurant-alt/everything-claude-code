@@ -977,6 +977,24 @@ function DealCard({deal,onUpdate,onDelete,onEdit,commission,onCommissionChange})
     onUpdate(deal.id,patch);
   };
 
+  const handleEditLink=(side)=>{
+    const label = side==="demand" ? "kupujícího" : "prodávajícího";
+    const current = deal[side]?.link || "";
+    const next = window.prompt(`Vlož reálnou URL inzerátu ${label} (https://...):`, current);
+    if (next === null) return;
+    const trimmed = next.trim();
+    if (trimmed === current) return;
+    const linkKind = { ...(deal.linkKind||{}), [side]: trimmed ? "real_listing" : "search" };
+    onUpdate(deal.id, { [side]: { ...deal[side], link: trimmed }, linkKind });
+  };
+
+  const linkKindBadge=(side)=>{
+    const kind = deal.linkKind?.[side];
+    if (kind === "real_listing") return { icon:"ti-circle-check", title:"Reálný inzerát" };
+    if (kind === "category")     return { icon:"ti-list",         title:"Marketplace kategorie" };
+    return { icon:"ti-search", title:"Vyhledávání (vlož reálnou URL ✎)" };
+  };
+
   return(
     <div style={{background:"var(--color-background-primary)",border:"0.5px solid var(--color-border-tertiary)",borderRadius:"var(--border-radius-lg)",overflow:"hidden"}}>
       {emailModal&&<EmailModal deal={deal} type={emailModal} onClose={()=>setEmailModal(null)} onSent={handleEmailSent}/>}
@@ -989,9 +1007,12 @@ function DealCard({deal,onUpdate,onDelete,onEdit,commission,onCommissionChange})
           <PostedDate date={deal.demand.postedDate} color="#534AB7"/>
           {deal.demand.buyerEmail && <a href={`mailto:${deal.demand.buyerEmail}`} style={{display:"inline-flex",alignItems:"center",gap:3,fontSize:10,color:"#3C3489",textDecoration:"none",marginTop:3,fontWeight:500}}><i className="ti ti-mail" aria-hidden="true" style={{fontSize:11}}/>{deal.demand.buyerEmail}</a>}
           <div style={{display:"flex",flexWrap:"wrap",gap:4,marginTop:5}}>
-            {deal.demand.link && /^https?:\/\//.test(deal.demand.link) && <a href={deal.demand.link} target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:3,fontSize:10,color:"#fff",textDecoration:"none",padding:"2px 8px",borderRadius:20,background:"#534AB7",border:"0.5px solid #534AB7",fontWeight:500}}>
-              <i className="ti ti-external-link" aria-hidden="true" style={{fontSize:11}}/> Inzerát kupujícího
+            {deal.demand.link && /^https?:\/\//.test(deal.demand.link) && <a href={deal.demand.link} target="_blank" rel="noopener noreferrer" title={linkKindBadge("demand").title} style={{display:"inline-flex",alignItems:"center",gap:3,fontSize:10,color:"#fff",textDecoration:"none",padding:"2px 8px",borderRadius:20,background:"#534AB7",border:"0.5px solid #534AB7",fontWeight:500}}>
+              <i className={"ti "+linkKindBadge("demand").icon} aria-hidden="true" style={{fontSize:11}}/> Inzerát kupujícího
             </a>}
+            <button onClick={()=>handleEditLink("demand")} title="Upravit URL inzerátu" style={{display:"inline-flex",alignItems:"center",fontSize:10,padding:"2px 6px",borderRadius:20,background:"transparent",border:"0.5px dashed #534AB7",color:"#534AB7",cursor:"pointer"}}>
+              <i className="ti ti-edit" aria-hidden="true" style={{fontSize:11}}/>
+            </button>
             {buildSourceLinks(deal.demand.searchQuery||deal.demand.title).slice(0,4).map(s=>(
               <a key={s.id} href={s.href} target="_blank" rel="noopener noreferrer"
                 style={{display:"inline-flex",alignItems:"center",gap:2,fontSize:10,padding:"2px 7px",borderRadius:20,textDecoration:"none",background:s.color,border:`0.5px solid ${s.border}`,color:s.text,whiteSpace:"nowrap"}}>
@@ -1007,9 +1028,12 @@ function DealCard({deal,onUpdate,onDelete,onEdit,commission,onCommissionChange})
           <PostedDate date={deal.offer.postedDate} color="#0F6E56"/>
           {deal.offer.sellerEmail && <a href={`mailto:${deal.offer.sellerEmail}`} style={{display:"inline-flex",alignItems:"center",gap:3,fontSize:10,color:"#085041",textDecoration:"none",marginTop:3,fontWeight:500}}><i className="ti ti-mail" aria-hidden="true" style={{fontSize:11}}/>{deal.offer.sellerEmail}</a>}
           <div style={{display:"flex",flexWrap:"wrap",gap:4,marginTop:5}}>
-            {deal.offer.link && /^https?:\/\//.test(deal.offer.link) && <a href={deal.offer.link} target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:3,fontSize:10,color:"#fff",textDecoration:"none",padding:"2px 8px",borderRadius:20,background:"#0F6E56",border:"0.5px solid #0F6E56",fontWeight:500}}>
-              <i className="ti ti-external-link" aria-hidden="true" style={{fontSize:11}}/> Inzerát prodávajícího
+            {deal.offer.link && /^https?:\/\//.test(deal.offer.link) && <a href={deal.offer.link} target="_blank" rel="noopener noreferrer" title={linkKindBadge("offer").title} style={{display:"inline-flex",alignItems:"center",gap:3,fontSize:10,color:"#fff",textDecoration:"none",padding:"2px 8px",borderRadius:20,background:"#0F6E56",border:"0.5px solid #0F6E56",fontWeight:500}}>
+              <i className={"ti "+linkKindBadge("offer").icon} aria-hidden="true" style={{fontSize:11}}/> Inzerát prodávajícího
             </a>}
+            <button onClick={()=>handleEditLink("offer")} title="Upravit URL inzerátu" style={{display:"inline-flex",alignItems:"center",fontSize:10,padding:"2px 6px",borderRadius:20,background:"transparent",border:"0.5px dashed #0F6E56",color:"#0F6E56",cursor:"pointer"}}>
+              <i className="ti ti-edit" aria-hidden="true" style={{fontSize:11}}/>
+            </button>
             {buildSourceLinks(deal.offer.searchQuery||deal.offer.title).slice(0,4).map(s=>(
               <a key={s.id} href={s.href} target="_blank" rel="noopener noreferrer"
                 style={{display:"inline-flex",alignItems:"center",gap:2,fontSize:10,padding:"2px 7px",borderRadius:20,textDecoration:"none",background:s.color,border:`0.5px solid ${s.border}`,color:s.text,whiteSpace:"nowrap"}}>
