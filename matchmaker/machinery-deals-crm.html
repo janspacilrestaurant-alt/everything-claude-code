@@ -1,224 +1,1149 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Machinery Deals CRM</title>
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.3.0/tabler-icons.min.css">
-  <style>
-    :root {
-      --bg: #0f172a;
-      --panel: #1e293b;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-      --accent: #38bdf8;
-      --border: #334155;
-    }
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: var(--bg); color: var(--text); }
-    .app { max-width: 1200px; margin: 0 auto; padding: 16px; }
-    header { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
-    h1 { margin: 0; font-size: 20px; color: var(--accent); }
-    .filters { display: flex; gap: 8px; align-items: center; }
-    .count { color: var(--muted); font-size: 14px; }
-    select, button { background: var(--panel); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; }
-    table { width: 100%; border-collapse: collapse; background: var(--panel); border-radius: 8px; overflow: hidden; }
-    th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); font-size: 14px; }
-    th { background: #0b1220; color: var(--muted); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
-    tr:hover td { background: #243246; }
-    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: grid; place-items: center; padding: 16px; }
-    .modal-content { background: var(--panel); padding: 20px; border-radius: 10px; max-width: 600px; width: 100%; max-height: 90vh; overflow: auto; }
-    .modal-content hr { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
-    a { color: var(--accent); }
-    @media (max-width: 640px) {
-      th:nth-child(4), td:nth-child(4) { display: none; }
-      th:nth-child(7), td:nth-child(7) { display: none; }
-    }
-  </style>
-  <!--PRELOAD-->
-  <script>
-    var PRELOADED_DEALS = [];
-    (function(){try{localStorage.setItem("ms_deals_v16",JSON.stringify(PRELOADED_DEALS));}catch(e){}})();
-  </script>
-  <!--/PRELOAD-->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Machinery Deals CRM — Jan Spáčil</title>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.3.0/tabler-icons.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --color-background-primary: #ffffff; --color-background-secondary: #f7f6f3; --color-background-tertiary: #f0ede8; --color-background-success: #eaf3de; --color-background-warning: #faeeda; --color-text-primary: #1a1a18; --color-text-secondary: #5f5e5a; --color-text-tertiary: #888780; --color-border-primary: rgba(26,26,24,0.4); --color-border-secondary: rgba(26,26,24,0.3); --color-border-tertiary: rgba(26,26,24,0.15); --border-radius-md: 8px; --border-radius-lg: 10px; --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+@media (prefers-color-scheme: dark) { :root { --color-background-primary: #1e1e1c; --color-background-secondary: #282825; --color-background-tertiary: #323230; --color-text-primary: #f0ede8; --color-text-secondary: #b4b2a9; --color-text-tertiary: #7a7971; --color-border-primary: rgba(240,237,232,0.4); --color-border-secondary: rgba(240,237,232,0.3); --color-border-tertiary: rgba(240,237,232,0.15); } }
+html, body { height: 100%; }
+body { font-family: var(--font-sans); background: var(--color-background-tertiary); color: var(--color-text-primary); font-size: 14px; line-height: 1.5; }
+input, select, textarea, button { font-family: var(--font-sans); font-size: 13px; outline: none; }
+button { cursor: pointer; transition: background 0.12s, transform 0.1s; }
+button:active { transform: scale(0.98); }
+a { color: inherit; }
+</style>
 </head>
 <body>
-  <div id="root"></div>
-  <script type="text/babel" data-presets="react">
+<div id="root"></div>
+<script>
+const PRELOADED_DEALS = [{"id": "eu6001", "status": "new", "segment": "machines", "matchCriteria": {"brand": true, "specs": true, "year": "ok", "budget": "ok", "extras": true}, "weightTier": 2, "demand": {"title": "Německá firma hledá dodavatele CNC soustružených dílů", "buyer": "German manufacturer (EEN listing)", "buyerEmail": "", "buyerPhone": "", "country": "DE", "budget": "Long-term supply contract", "budgetMidK": 50, "link": "https://www.google.com/search?q=site%3Aeen.ec.europa.eu+CNC+turning+milling+supplier+Germany", "postedDate": "2026-05-15", "details": "German company with 30+ years experience looking for CNC turned/milled parts suppliers. Materials: aluminium, stainless steel, titanium, plastic.", "searchQuery": "CNC turning milling supplier Germany"}, "offer": {"title": "DMG MORI CTX Beta 800 TC (2016) — Siemens 840D", "seller": "Exapro dealer DE", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "DE", "price": 65, "specs": "5-axis · Siemens 840D CELOS · 12000rpm milling · 5000rpm main · 24 HSK63 tools · bar feeder ready", "link": "https://www.google.com/search?q=site%3Aexapro.com+DMG+MORI+CTX+Beta+800", "postedDate": "2026-05-10", "searchQuery": "DMG MORI CTX Beta 800"}, "profit": {"val": "4-8 k€", "base": "~65 k€"}, "flags": ["EEN verified ✓", "DMG MORI ✓", "Siemens 840D ✓"], "warnings": [], "notes": "Demand from Enterprise Europe Network — real verified company", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:00:00.000Z"}, {"id": "eu6002", "status": "new", "segment": "machines", "matchCriteria": {"brand": true, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 2, "demand": {"title": "Rumunská CNC firma hledá aerospace partnery", "buyer": "Romanian CNC company (EEN listing)", "buyerEmail": "", "buyerPhone": "", "country": "RO", "budget": "Partnership + equipment", "budgetMidK": 80, "link": "https://een.ec.europa.eu/partnering-opportunities/romanian-cnc-machining-company-specializing-complex-components-extensive", "postedDate": "2026-06-01", "details": "Romanian company 90 employees, CNC milling/turning, aluminium/steel/titanium, aerospace certified, looking for partners in EU.", "searchQuery": "CNC machining aerospace Romania"}, "offer": {"title": "Hermle C42U 5-axis (2013) — Siemens 840D", "seller": "Exapro dealer CH", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "CH", "price": 95, "specs": "5-axis · Siemens 840D · 800x800x550mm · 18000rpm · HSK-A63 · 42+160 tools · pallet changer", "link": "https://www.google.com/search?q=site%3Aexapro.com+Hermle+C42U+5-axis", "postedDate": "2026-05-20", "searchQuery": "Hermle C42U 5-axis"}, "profit": {"val": "6-12 k€", "base": "~95 k€"}, "flags": ["EEN verified ✓", "Hermle ✓", "5-axis ✓", "Aerospace ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:01:00.000Z"}, {"id": "eu6003", "status": "new", "segment": "machines", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": true}, "weightTier": 2, "demand": {"title": "Polská firma — CNC fiber laser + press brakes", "buyer": "Polish metalworking machinery company (EEN)", "buyerEmail": "", "buyerPhone": "", "country": "PL", "budget": "50-100 k€", "budgetMidK": 75, "link": "https://www.google.com/search?q=site%3Aeen.ec.europa.eu+fiber+laser+cutting+CNC+press+brake+Poland", "postedDate": "2026-05-21", "details": "Polish company selling fiber laser cutting machines, CNC press brakes, machining centers. Looking for distributors in EU. Showroom 500m² in Bydgoszcz.", "searchQuery": "fiber laser cutting CNC press brake Poland"}, "offer": {"title": "Fiber Laser 3kW + Press Brake 160t (2022-2023)", "seller": "Surplex auction", "sellerEmail": "contact@surplex.com", "sellerPhone": "+49 211 422 737 0", "sellerCountry": "DE", "price": 68, "specs": "HSG 3kW fiber · 3000x1500mm · nerez 12mm + LVD PPEB 160t · Cadman CNC · 2022/2023", "link": "https://www.surplex.com/en/search/?q=fiber+laser+cutting+3kW", "postedDate": "2026-05-15", "searchQuery": "fiber laser cutting press brake"}, "profit": {"val": "4-8 k€", "base": "~68 k€"}, "flags": ["EEN verified ✓", "Fiber laser ✓", "Press brake ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:02:00.000Z"}, {"id": "eu6004", "status": "new", "segment": "machines", "matchCriteria": {"brand": true, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 3, "demand": {"title": "Francouzská firma Lyon — CNC obrábění velkých dílů", "buyer": "French CNC company Lyon area (EEN)", "buyerEmail": "", "buyerPhone": "", "country": "FR", "budget": "Partnership", "budgetMidK": 60, "link": "https://een.ec.europa.eu/partnering-opportunities/french-company-specialized-manufacturing-cnc-computer-numerical-control", "postedDate": "2026-03-11", "details": "French company Lyon, 50+ years experience, precision CNC machining large-scale metal components, railway/defense/nuclear. Looking for EU partners.", "searchQuery": "CNC machining large parts France railway"}, "offer": {"title": "Hermle C30U (2011) — Heidenhain iTNC530", "seller": "Exapro dealer", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "PL", "price": 55, "specs": "5-axis · Heidenhain iTNC530 · 650x600x500mm · 18000rpm · HSK63 · 32 tools · 49000h", "link": "https://www.google.com/search?q=site%3Aexapro.com+Hermle+C30U+5-axis", "postedDate": "2026-05-01", "searchQuery": "Hermle C30U 5-axis"}, "profit": {"val": "3-6 k€", "base": "~55 k€"}, "flags": ["EEN verified ✓", "Hermle ✓", "Heidenhain ✓"], "warnings": ["49000h — vyšší hodiny"], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:03:00.000Z"}, {"id": "eu6005", "status": "new", "segment": "machines", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 2, "demand": {"title": "EU tender — 2x CNC obráběcí stroje pro školu DE", "buyer": "BFW Sachsen-Anhalt (EU public tender)", "buyerEmail": "bley@bfw-sachsen-anhalt.de", "buyerPhone": "+49 3925221611", "country": "DE", "budget": "Public tender", "budgetMidK": 100, "link": "https://ted.europa.eu/en/search/result?q=CNC+lathe", "postedDate": "2026-05-28", "details": "Delivery, assembly and commissioning of 2 CNC machining centers + removal of 2 old machines. Public tender via TED.", "searchQuery": "CNC machining center public tender Germany"}, "offer": {"title": "Haas VF-2SS (2021) — 12000rpm", "seller": "Exapro dealer", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "US", "price": 52, "specs": "12000rpm · 30HP · 30 ATC · Renishaw WIPS-R · Chip Auger · 2021 · low hours", "link": "https://www.google.com/search?q=site%3Aexapro.com+Haas+VF-2SS+vertical+machining+center", "postedDate": "2026-05-08", "searchQuery": "Haas VF-2SS vertical machining center"}, "profit": {"val": "4-7 k€", "base": "~52 k€"}, "flags": ["TED public tender ✓", "Haas ✓", "2021 ✓"], "warnings": ["Public tender — formální proces"], "notes": "Veřejná zakázka — nutno podat nabídku formálně přes TED", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:04:00.000Z"}, {"id": "eu6006", "status": "new", "segment": "CNC", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": true}, "weightTier": 1, "demand": {"title": "Rumunský dodavatel přesných dílů hledá zákazníky", "buyer": "Romanian precision parts supplier (EEN)", "buyerEmail": "", "buyerPhone": "", "country": "RO", "budget": "Supply contract", "budgetMidK": 20, "link": "https://een.ec.europa.eu/partnering-opportunities/romanian-manufacturer-cnc-machined-metal-parts-offers-their-services-under", "postedDate": "2026-06-25", "details": "Romanian manufacturer, milled/turned parts from aluminium, brass, steel, stainless steel. Shafts, worm gears, sprockets, thermoforming moulds. ±0.01mm tolerance.", "searchQuery": "CNC precision parts Romania supplier"}, "offer": {"title": "CNC kapacita — Precyzja Wrocław PL", "seller": "Precyzja Wrocław (EEN match)", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "PL", "price": 15, "specs": "CNC soustružení/frézování · hliník/ocel/nerez · tolerance ±0.01mm · 500h/měsíc kapacita · ISO 9001", "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+CNC+machining+subcontracting+Europe", "postedDate": "2026-05-20", "searchQuery": "CNC machining subcontracting Europe"}, "profit": {"val": "1-2 k€", "base": "~15 k€"}, "flags": ["EEN verified ✓", "±0.01mm ✓", "20+ years ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:05:00.000Z"}, {"id": "eu6007", "status": "new", "segment": "CNC", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 1, "demand": {"title": "Bosenská CNC firma — partnerství pro obrábění", "buyer": "Bosnian CNC company (EEN listing)", "buyerEmail": "", "buyerPhone": "", "country": "BA", "budget": "Commercial agreement", "budgetMidK": 10, "link": "https://www.google.com/search?q=site%3Aeen.ec.europa.eu+CNC+machining+Bosnia+partner", "postedDate": "2026-02-05", "details": "Bosnian company, CNC lathes + milling, Deckel Maho DMU 80P, 3x Chiron 5-axis, parts Ø<35mm, exports to AT/DE/CH.", "searchQuery": "CNC machining Bosnia partner"}, "offer": {"title": "CNC subdodávky — Europages network", "seller": "Europages CNC suppliers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 8, "specs": "Europages directory · 1000+ CNC subcontractors in EU · free contact · verified companies", "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+CNC+turning+subcontracting", "postedDate": "2026-05-01", "searchQuery": "CNC turning subcontracting"}, "profit": {"val": "0.5-1 k€", "base": "~8 k€"}, "flags": ["EEN verified ✓", "5-axis Chiron ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:06:00.000Z"}, {"id": "eu6008", "status": "new", "segment": "CNC", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": true}, "weightTier": 1, "demand": {"title": "Rumunský dodavatel nástrojů — hledá prototypové zakázky", "buyer": "Romanian precision parts for tool shops (EEN)", "buyerEmail": "", "buyerPhone": "", "country": "RO", "budget": "Subcontracting", "budgetMidK": 12, "link": "https://een.ec.europa.eu/partnering-opportunities/romanian-precision-machined-parts-supplier-tool-shops-looking-companies", "postedDate": "2024-12-12", "details": "Romanian microenterprise, machined parts for tool shops, customized solutions, new CNC technology co-financed by EU funds.", "searchQuery": "CNC precision parts tool shop Romania"}, "offer": {"title": "Prototypy + malosériová výroba — Europages", "seller": "Europages prototype suppliers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 10, "specs": "Prototypování · CNC frézování · 3D tisk · malé série · verified EU suppliers", "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+prototype+CNC+machining+Europe", "postedDate": "2026-05-15", "searchQuery": "prototype CNC machining Europe"}, "profit": {"val": "0.5-1.5 k€", "base": "~10 k€"}, "flags": ["EEN verified ✓", "EU co-funded ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:07:00.000Z"}, {"id": "eu6009", "status": "new", "segment": "CNC", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 1, "demand": {"title": "WTB: Okuma LS-540 lathe — USA/EU forum", "buyer": "Practical Machinist user (forum)", "buyerEmail": "", "buyerPhone": "", "country": "US", "budget": "10-20 k€", "budgetMidK": 15, "link": "https://www.google.com/search?q=site%3Apracticalmachinist.com+Okuma+LS-540+CNC+lathe", "postedDate": "2025-12-13", "details": "User jbhill looking for Okuma LS-540 lathe. Forum post with 7 replies, active thread.", "searchQuery": "Okuma LS-540 CNC lathe"}, "offer": {"title": "Okuma soustruhy — Exapro search", "seller": "Exapro EU marketplace", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 18, "specs": "Okuma lathes · multiple models available · EU-wide shipping", "link": "https://www.google.com/search?q=site%3Aexapro.com+Okuma+lathe+used", "postedDate": "2026-05-01", "searchQuery": "Okuma lathe used"}, "profit": {"val": "1-2 k€", "base": "~18 k€"}, "flags": ["Forum verified ✓", "Active thread ✓"], "warnings": ["US buyer — shipping + customs"], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:08:00.000Z"}, {"id": "eu6010", "status": "new", "segment": "CNC", "matchCriteria": {"brand": true, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 1, "demand": {"title": "FS: Brother Speedio S700X1 — $67K", "buyer": "Practical Machinist seller", "buyerEmail": "", "buyerPhone": "", "country": "US", "budget": "67 k$", "budgetMidK": 62, "link": "https://www.google.com/search?q=site%3Apracticalmachinist.com+Brother+Speedio+S700X1", "postedDate": "2026-03-10", "details": "Brother Speedio S700X1, 2800 hours, March 2020 build. Asking $67K. Forum listing.", "searchQuery": "Brother Speedio S700X1"}, "offer": {"title": "Brother Speedio — Machineseeker search", "seller": "Machineseeker EU", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 55, "specs": "Brother Speedio · multiple models · EU dealers · verified sellers", "link": "https://www.google.com/search?q=site%3Amachineseeker.com+Brother+Speedio+machining+center", "postedDate": "2026-05-01", "searchQuery": "Brother Speedio machining center"}, "profit": {"val": "3-5 k€", "base": "~55 k€"}, "flags": ["Forum listing ✓", "2800h low ✓", "2020 build ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:09:00.000Z"}, {"id": "eu6011", "status": "new", "segment": "tooling", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 1, "demand": {"title": "Turecká firma — CNC nástroje a formy, hledá distributory", "buyer": "Turkish CNC tooling company (EEN)", "buyerEmail": "", "buyerPhone": "", "country": "TR", "budget": "Distribution agreement", "budgetMidK": 30, "link": "https://www.google.com/search?q=site%3Aeen.ec.europa.eu+CNC+tooling+distributor+Turkey", "postedDate": "2026-03-12", "details": "Turkish company, CNC machine tools + mold making + sheet metal. Looking for commercial reps and distributors worldwide.", "searchQuery": "CNC tooling distributor Turkey"}, "offer": {"title": "Vstřikovací formy — Surplex auctions", "seller": "Surplex marketplace", "sellerEmail": "contact@surplex.com", "sellerPhone": "", "sellerCountry": "EU", "price": 20, "specs": "Injection molds · various sizes · from factory closures · Surplex verified", "link": "https://www.surplex.com/en/search/?q=injection+mold+tooling", "postedDate": "2026-05-15", "searchQuery": "injection mold tooling used"}, "profit": {"val": "1.5-3 k€", "base": "~20 k€"}, "flags": ["EEN verified ✓", "Distribution deal ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:10:00.000Z"}, {"id": "eu6012", "status": "new", "segment": "tooling", "matchCriteria": {"brand": true, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 1, "demand": {"title": "Sandvik Capto C6 nástrojové držáky — Europages", "buyer": "Europages buyer request", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "5-12 k€", "budgetMidK": 8, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+Sandvik+Capto+C6+tool+holders", "postedDate": "2026-06-01", "details": "Buyer looking for Sandvik Capto C6 tool holders, turning + milling, 10+ pieces.", "searchQuery": "Sandvik Capto C6 tool holders"}, "offer": {"title": "Sandvik Capto — Machineseeker search", "seller": "Machineseeker dealers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 7, "specs": "Sandvik Capto C6 · various configs · turning/milling · from factory closures", "link": "https://www.google.com/search?q=site%3Amachineseeker.com+Sandvik+Capto+C6", "postedDate": "2026-05-20", "searchQuery": "Sandvik Capto C6"}, "profit": {"val": "0.5-1 k€", "base": "~7 k€"}, "flags": ["Sandvik ✓", "Capto C6 ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:11:00.000Z"}, {"id": "eu6013", "status": "new", "segment": "tooling", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 1, "demand": {"title": "Hydraulické sklíčidla + upínače — Europages", "buyer": "Europages industrial buyers", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "3-8 k€", "budgetMidK": 5, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+hydraulic+chuck+CNC+clamping", "postedDate": "2026-06-01", "details": "Industrial buyers searching for hydraulic chucks, collet chucks, clamping fixtures for CNC.", "searchQuery": "hydraulic chuck CNC clamping"}, "offer": {"title": "SMW Autoblok, Röhm, Schunk — Machineseeker", "seller": "Machineseeker dealers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 4, "specs": "Hydraulic chucks · SMW Autoblok · Röhm · Schunk · Ø160-400mm · used + new", "link": "https://www.google.com/search?q=site%3Amachineseeker.com+hydraulic+chuck+CNC+lathe", "postedDate": "2026-05-15", "searchQuery": "hydraulic chuck CNC lathe"}, "profit": {"val": "0.2-0.5 k€", "base": "~4 k€"}, "flags": ["Europages ✓", "Multiple brands ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:12:00.000Z"}, {"id": "eu6014", "status": "new", "segment": "tooling", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 1, "demand": {"title": "BT40/HSK63 nástrojové držáky — hromadný nákup", "buyer": "Europages buyer", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "3-8 k€", "budgetMidK": 5, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+BT40+HSK63+tool+holder+bulk", "postedDate": "2026-06-01", "details": "Bulk purchase BT40/HSK63 tool holders, ER collets, shell mill holders for new CNC shop setup.", "searchQuery": "BT40 HSK63 tool holder bulk"}, "offer": {"title": "BT40 + HSK63 sady — Machineseeker", "seller": "Machineseeker dealers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 5, "specs": "BT40/HSK63 · ER32/ER40 · Weldon · shell mill · sets from factory closures", "link": "https://www.google.com/search?q=site%3Amachineseeker.com+BT40+HSK63+tool+holder+set", "postedDate": "2026-05-10", "searchQuery": "BT40 HSK63 tool holder set"}, "profit": {"val": "0.3-0.7 k€", "base": "~5 k€"}, "flags": ["Europages ✓", "Bulk deal ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:13:00.000Z"}, {"id": "eu6015", "status": "new", "segment": "tooling", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 2, "demand": {"title": "Střižné a ohýbací nástroje — Europages", "buyer": "Europages stamping buyers", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "10-25 k€", "budgetMidK": 17, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+stamping+die+progressive+tool", "postedDate": "2026-06-01", "details": "Stamping dies, progressive dies, bending tools for sheet metal production.", "searchQuery": "stamping die progressive tool"}, "offer": {"title": "Lisovací nástroje — Surplex auctions", "seller": "Surplex marketplace", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 14, "specs": "Progressive dies · stamping tools · from factory closures · documentation included", "link": "https://www.surplex.com/en/search/?q=stamping+die+progressive", "postedDate": "2026-05-20", "searchQuery": "progressive stamping die"}, "profit": {"val": "1-2 k€", "base": "~14 k€"}, "flags": ["Europages ✓", "Surplex ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:14:00.000Z"}, {"id": "eu6016", "status": "new", "segment": "MRO", "matchCriteria": {"brand": true, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 1, "demand": {"title": "Siemens 1PH7 vřetenový motor — Europages", "buyer": "Europages MRO buyer", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "3-8 k€", "budgetMidK": 5, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+Siemens+1PH7+spindle+motor", "postedDate": "2026-06-01", "details": "Siemens 1PH7 spindle motor repair or replacement, 18kW, 12000rpm.", "searchQuery": "Siemens 1PH7 spindle motor"}, "offer": {"title": "Siemens 1PH7 repas — Machineseeker", "seller": "Machineseeker spindle dealers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "DE", "price": 4.5, "specs": "Siemens 1PH7 · 18kW · 12000rpm · repaired · new bearings · 12M warranty", "link": "https://www.google.com/search?q=site%3Amachineseeker.com+Siemens+1PH7+spindle", "postedDate": "2026-05-20", "searchQuery": "Siemens 1PH7 spindle"}, "profit": {"val": "0.3-0.6 k€", "base": "~4.5 k€"}, "flags": ["Siemens ✓", "Machineseeker verified ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:15:00.000Z"}, {"id": "eu6017", "status": "new", "segment": "MRO", "matchCriteria": {"brand": true, "specs": true, "year": "ok", "budget": "ok", "extras": true}, "weightTier": 1, "demand": {"title": "Fanuc servo driver — Europages", "buyer": "Europages MRO buyer", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "2-5 k€", "budgetMidK": 3, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+Fanuc+A06B+servo+amplifier+spare", "postedDate": "2026-06-01", "details": "Fanuc servo amplifier A06B-6117, spare part for CNC machine.", "searchQuery": "Fanuc A06B servo amplifier spare"}, "offer": {"title": "Fanuc servo díly — Machineseeker", "seller": "Machineseeker Fanuc parts", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "DE", "price": 2.8, "specs": "Fanuc A06B-6117 · tested · 6M warranty · 24h shipping", "link": "https://www.google.com/search?q=site%3Amachineseeker.com+Fanuc+A06B+servo", "postedDate": "2026-05-25", "searchQuery": "Fanuc A06B servo"}, "profit": {"val": "0.2-0.4 k€", "base": "~2.8 k€"}, "flags": ["Fanuc ✓", "Tested ✓", "24h ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:16:00.000Z"}, {"id": "eu6018", "status": "new", "segment": "MRO", "matchCriteria": {"brand": true, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 1, "demand": {"title": "Heidenhain lineární pravítko — Europages", "buyer": "Europages buyer", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "1.5-4 k€", "budgetMidK": 2.5, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+Heidenhain+LS486+linear+scale", "postedDate": "2026-06-01", "details": "Heidenhain LS 486C linear scale, ML=720mm, 10nm resolution.", "searchQuery": "Heidenhain LS486 linear scale"}, "offer": {"title": "Heidenhain LS486 — Machineseeker", "seller": "Machineseeker dealers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "DE", "price": 2.2, "specs": "LS 486C · ML=720mm · 10nm · new/refurb", "link": "https://www.google.com/search?q=site%3Amachineseeker.com+Heidenhain+LS486", "postedDate": "2026-05-20", "searchQuery": "Heidenhain LS486"}, "profit": {"val": "0.15-0.3 k€", "base": "~2.2 k€"}, "flags": ["Heidenhain ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:17:00.000Z"}, {"id": "eu6019", "status": "new", "segment": "MRO", "matchCriteria": {"brand": true, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 1, "demand": {"title": "Rexroth IndraDrive servo — Europages", "buyer": "Europages buyer", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "2-5 k€", "budgetMidK": 3.5, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+Rexroth+IndraDrive+HCS02+servo", "postedDate": "2026-06-01", "details": "Bosch Rexroth IndraDrive HCS02, servo drive for press line.", "searchQuery": "Rexroth IndraDrive HCS02 servo"}, "offer": {"title": "Rexroth drives — Machineseeker", "seller": "Machineseeker dealers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "DE", "price": 2.5, "specs": "HCS02 · repaired · firmware updated · load tested · 6M warranty", "link": "https://www.google.com/search?q=site%3Amachineseeker.com+Rexroth+IndraDrive+HCS02", "postedDate": "2026-05-20", "searchQuery": "Rexroth IndraDrive HCS02"}, "profit": {"val": "0.15-0.35 k€", "base": "~2.5 k€"}, "flags": ["Rexroth ✓", "Tested ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:18:00.000Z"}, {"id": "eu6020", "status": "new", "segment": "MRO", "matchCriteria": {"brand": true, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 1, "demand": {"title": "HIWIN kuličkové šrouby — Europages", "buyer": "Europages buyer", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "0.5-2 k€", "budgetMidK": 1.2, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+HIWIN+ball+screw+CNC", "postedDate": "2026-06-01", "details": "Ball screws HIWIN/THK/NSK, various sizes, for CNC retrofit projects.", "searchQuery": "HIWIN ball screw CNC"}, "offer": {"title": "HIWIN/THK ball screws — Machineseeker", "seller": "Machineseeker dealers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 0.8, "specs": "HIWIN R20 · THK BNK · various lengths · new + used", "link": "https://www.google.com/search?q=site%3Amachineseeker.com+HIWIN+ball+screw", "postedDate": "2026-05-20", "searchQuery": "HIWIN ball screw"}, "profit": {"val": "0.05-0.1 k€", "base": "~0.8 k€"}, "flags": ["HIWIN ✓"], "warnings": ["Malá marže"], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:19:00.000Z"}, {"id": "eu6021", "status": "new", "segment": "reverse", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": true}, "weightTier": 1, "demand": {"title": "Česká firma — RE services hledá partnery", "buyer": "Czech RE company (EEN)", "buyerEmail": "", "buyerPhone": "", "country": "CZ", "budget": "Supply contract", "budgetMidK": 15, "link": "https://www.google.com/search?q=site%3Aeen.ec.europa.eu+reverse+engineering+CNC+Czech", "postedDate": "2025-06-01", "details": "Czech company 15+ years, CNC machining + tool steel + surface treatment, max 1180x710mm, ISO certified, looking for long-term customers.", "searchQuery": "reverse engineering CNC Czech"}, "offer": {"title": "3D skenování + RE — Europages", "seller": "Europages 3D scanning providers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 5, "specs": "GOM ATOS · Creaform · STEP/IGES output · EU-wide service", "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+3D+scanning+reverse+engineering", "postedDate": "2026-05-15", "searchQuery": "3D scanning reverse engineering"}, "profit": {"val": "0.5-1 k€", "base": "~5 k€"}, "flags": ["EEN verified ✓", "ISO certified ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:20:00.000Z"}, {"id": "eu6022", "status": "new", "segment": "reverse", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 1, "demand": {"title": "3D tisk kovů — titanový implantát", "buyer": "MedTech startup EU", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "2-6 k€", "budgetMidK": 4, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+3D+printing+titanium+DMLS+medical", "postedDate": "2026-06-01", "details": "DMLS/SLM titanium Ti6Al4V printing for medical implants, 3 pcs.", "searchQuery": "3D printing titanium DMLS medical"}, "offer": {"title": "Metal 3D printing — Europages", "seller": "Europages DMLS providers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 3.5, "specs": "EOS/SLM · Ti6Al4V · HIP · CNC finishing · material cert", "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+DMLS+titanium+3D+printing", "postedDate": "2026-05-20", "searchQuery": "DMLS titanium 3D printing"}, "profit": {"val": "0.2-0.5 k€", "base": "~3.5 k€"}, "flags": ["Ti6Al4V ✓", "DMLS ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:21:00.000Z"}, {"id": "eu6023", "status": "new", "segment": "reverse", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 1, "demand": {"title": "Odlitky na zakázku — Europages", "buyer": "Europages casting buyers", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "5-15 k€", "budgetMidK": 10, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+custom+casting+reverse+engineering", "postedDate": "2026-06-01", "details": "Custom iron/aluminium castings, reverse engineered from sample, small batches.", "searchQuery": "custom casting reverse engineering"}, "offer": {"title": "Zakázkové odlitky — Europages foundries", "seller": "EU foundries", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 8, "specs": "GG25/AlSi · from sample → 3D scan → pattern → casting · EU foundries", "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+iron+casting+foundry+Europe", "postedDate": "2026-05-15", "searchQuery": "iron casting foundry Europe"}, "profit": {"val": "0.5-1 k€", "base": "~8 k€"}, "flags": ["Europages ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:22:00.000Z"}, {"id": "eu6024", "status": "new", "segment": "reverse", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 1, "demand": {"title": "Ozubení na zakázku — Europages", "buyer": "Europages gear buyers", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "1-5 k€", "budgetMidK": 3, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+custom+gear+manufacturing+reverse", "postedDate": "2026-06-01", "details": "Custom gear manufacturing, reverse engineering from sample, module 2-10.", "searchQuery": "custom gear manufacturing reverse"}, "offer": {"title": "Ozubení výroba — Europages", "seller": "EU gear manufacturers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 2, "specs": "Custom gears · module 2-10 · from sample · 16MnCr5 + hardening · EU manufacturers", "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+gear+cutting+manufacturing", "postedDate": "2026-05-15", "searchQuery": "gear cutting manufacturing"}, "profit": {"val": "0.1-0.3 k€", "base": "~2 k€"}, "flags": ["Europages ✓"], "warnings": ["Malá marže"], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:23:00.000Z"}, {"id": "eu6025", "status": "new", "segment": "reverse", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 1, "demand": {"title": "Hydraulický blok kopie — Europages", "buyer": "EU hydraulics buyer", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "5-15 k€", "budgetMidK": 10, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+hydraulic+manifold+reverse+engineering", "postedDate": "2026-06-01", "details": "Reverse engineering hydraulic valve block, original manufacturer defunct, 10pcs needed.", "searchQuery": "hydraulic manifold reverse engineering"}, "offer": {"title": "Hydraulické bloky — Europages + TradeMachines", "seller": "EU hydraulic manufacturers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 8, "specs": "CT scan + 3D model + CNC manufacturing · GGG40/AlSi · pressure tested", "link": "https://www.trademachines.com/search?q=hydraulic+manifold+valve+block", "postedDate": "2026-05-15", "searchQuery": "hydraulic manifold valve block"}, "profit": {"val": "0.5-1 k€", "base": "~8 k€"}, "flags": ["Europages ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:24:00.000Z"}, {"id": "eu6026", "status": "new", "segment": "building", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 3, "demand": {"title": "IPE/HEB ocelové nosníky — Europages", "buyer": "Europages steel buyer", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "10-30 k€", "budgetMidK": 20, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+IPE+HEB+steel+beams+Europe", "postedDate": "2026-06-01", "details": "IPE/HEB steel beams, S235/S355, various lengths, for construction projects.", "searchQuery": "IPE HEB steel beams Europe"}, "offer": {"title": "Ocelové profily — Machineseeker", "seller": "Machineseeker steel dealers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 15, "specs": "IPE/HEB 100-400 · S235/S355 · EN 10025 · cert 3.1 · EU delivery", "link": "https://www.google.com/search?q=site%3Amachineseeker.com+IPE+HEB+steel+beam", "postedDate": "2026-05-20", "searchQuery": "IPE HEB steel beam"}, "profit": {"val": "0.8-2 k€", "base": "~15 k€"}, "flags": ["Europages ✓", "EN 10025 ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:25:00.000Z"}, {"id": "eu6027", "status": "new", "segment": "building", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 3, "demand": {"title": "Stavební materiál — EU public tenders", "buyer": "EU public tender (TED)", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "Public tender", "budgetMidK": 50, "link": "https://ted.europa.eu/en/search/result?q=steel+construction", "postedDate": "2026-06-01", "details": "EU public tenders for steel construction materials, beams, reinforcement, roofing.", "searchQuery": "steel construction tender Europe"}, "offer": {"title": "Stavební ocel — Europages suppliers", "seller": "Europages steel suppliers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 30, "specs": "Steel beams · reinforcement · roofing sheets · EU-wide delivery", "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+steel+construction+materials", "postedDate": "2026-05-15", "searchQuery": "steel construction materials"}, "profit": {"val": "2-5 k€", "base": "~30 k€"}, "flags": ["TED public tender ✓", "Europages ✓"], "warnings": ["Formální tender proces"], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:26:00.000Z"}, {"id": "eu6028", "status": "new", "segment": "building", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 3, "demand": {"title": "Kari sítě + výztuž — Europages", "buyer": "EU construction buyer", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "5-15 k€", "budgetMidK": 10, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+reinforcement+mesh+wire+construction", "postedDate": "2026-06-01", "details": "Welded wire mesh, reinforcement bars, for concrete construction.", "searchQuery": "reinforcement mesh wire construction"}, "offer": {"title": "Výztuž + sítě — Machineseeker", "seller": "Machineseeker dealers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 7, "specs": "Welded mesh · B500B · EN 10080 · various sizes · EU delivery", "link": "https://www.google.com/search?q=site%3Amachineseeker.com+welded+wire+mesh+reinforcement", "postedDate": "2026-05-20", "searchQuery": "welded wire mesh reinforcement"}, "profit": {"val": "0.4-0.8 k€", "base": "~7 k€"}, "flags": ["Europages ✓", "B500B ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:27:00.000Z"}, {"id": "eu6029", "status": "new", "segment": "building", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 3, "demand": {"title": "Trapézové plechy + střešní panely — Europages", "buyer": "EU roofing buyer", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "10-25 k€", "budgetMidK": 17, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+trapezoidal+sheet+roofing+panel", "postedDate": "2026-06-01", "details": "Trapezoidal sheets, sandwich panels, zinc/colour coated, for industrial halls.", "searchQuery": "trapezoidal sheet roofing panel"}, "offer": {"title": "Střešní panely — Machineseeker/Europages", "seller": "EU panel manufacturers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 14, "specs": "T35/T50 · zinc Z275 · 0.5-0.75mm · cut to length · EU delivery", "link": "https://www.google.com/search?q=site%3Amachineseeker.com+trapezoidal+sheet+roofing", "postedDate": "2026-05-20", "searchQuery": "trapezoidal sheet roofing"}, "profit": {"val": "0.8-1.5 k€", "base": "~14 k€"}, "flags": ["Europages ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:28:00.000Z"}, {"id": "eu6030", "status": "new", "segment": "building", "matchCriteria": {"brand": false, "specs": true, "year": "ok", "budget": "ok", "extras": false}, "weightTier": 3, "demand": {"title": "Hliníkové profily + fasádní systémy — Europages", "buyer": "EU facade buyer", "buyerEmail": "", "buyerPhone": "", "country": "EU", "budget": "15-40 k€", "budgetMidK": 27, "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+aluminium+profile+facade+system", "postedDate": "2026-06-01", "details": "Aluminium profiles for facade systems, curtain walls, industrial buildings.", "searchQuery": "aluminium profile facade system"}, "offer": {"title": "Hliníkové profily — Europages suppliers", "seller": "EU aluminium suppliers", "sellerEmail": "", "sellerPhone": "", "sellerCountry": "EU", "price": 20, "specs": "Aluminium profiles · custom extrusion · anodized/powder coated · EU-wide delivery", "link": "https://www.google.com/search?q=site%3Aeuropages.co.uk+aluminium+extrusion+profile", "postedDate": "2026-05-15", "searchQuery": "aluminium extrusion profile"}, "profit": {"val": "1-3 k€", "base": "~20 k€"}, "flags": ["Europages ✓"], "warnings": [], "notes": "", "emails": {"buyer": null, "seller": null}, "createdAt": "2026-06-08T10:29:00.000Z"}];
+(function() {
+  try {
+    var existing = JSON.parse(localStorage.getItem("ms_deals_v16") || "[]");
+    var existingIds = {};
+    existing.forEach(function(d) { existingIds[d.id] = true; });
+    var newDeals = PRELOADED_DEALS.filter(function(d) { return !existingIds[d.id]; });
+    if (newDeals.length > 0) {
+      var merged = existing.concat(newDeals);
+      localStorage.setItem("ms_deals_v16", JSON.stringify(merged));
+    }
+  } catch(e) {
+    localStorage.setItem("ms_deals_v16", JSON.stringify(PRELOADED_DEALS));
+  }
+})();
+</script>
+<script type="text/babel" data-presets="react">
 const { useState, useEffect, useCallback } = React;
 
-const STORAGE_KEY = "ms_deals_v16";
+const DEALS_KEY = "ms_deals_v16";
 
-const SEGMENTS = [
-  { id: "machines",  label: "Stroje" },
-  { id: "CNC",       label: "CNC zakázky" },
-  { id: "tooling",   label: "Tooling" },
-  { id: "MRO",       label: "MRO / ND" },
-  { id: "reverse",   label: "Reverse" },
-  { id: "building",  label: "Stavba" },
-];
-
+const COUNTRY_COORDS = {
+  CZ:{lat:50.0,lon:15.5,name:"Česká republika"},SK:{lat:48.7,lon:19.7,name:"Slovensko"},
+  DE:{lat:51.2,lon:10.4,name:"Německo"},AT:{lat:47.5,lon:14.5,name:"Rakousko"},
+  PL:{lat:52.0,lon:19.4,name:"Polsko"},HU:{lat:47.2,lon:19.5,name:"Maďarsko"},
+  FR:{lat:46.2,lon:2.2,name:"Francie"},IT:{lat:42.8,lon:12.8,name:"Itálie"},
+  NL:{lat:52.3,lon:5.3,name:"Nizozemsko"},BE:{lat:50.5,lon:4.5,name:"Belgie"},
+  CH:{lat:46.8,lon:8.2,name:"Švýcarsko"},ES:{lat:40.4,lon:-3.7,name:"Španělsko"},
+  UK:{lat:52.4,lon:-1.9,name:"Velká Británie"},SE:{lat:60.1,lon:18.6,name:"Švédsko"},
+  RO:{lat:45.9,lon:24.9,name:"Rumunsko"},
+};
+const EU_COUNTRIES=["CZ","SK","DE","AT","PL","HU","FR","IT","NL","BE","ES","SE","RO"];
+// ── European marketplace sources ──────────────────────────────────────────────
 const SOURCES = [
-  { id: "ex", name: "Exapro",        url: "https://www.google.com/search?q=site:exapro.com+" },
-  { id: "ms", name: "Machineseeker", url: "https://www.machineseeker.com/mss/" },
-  { id: "tm", name: "TradeMachines", url: "https://www.trademachines.com/search?q=" },
-  { id: "sp", name: "Surplex",       url: "https://www.surplex.com/en/search/?q=" },
+  { id:"ms",  name:"Machineseeker",  url:"https://www.machineseeker.com/mss/", flag:"🇩🇪", color:"#E6F1FB", border:"#B5D4F4", text:"#0C447C" },
+  { id:"um",  name:"Used-Machines",  url:"https://www.used-machines.com/",      flag:"🇩🇪", color:"#EAF3DE", border:"#C0DD97", text:"#27500A" },
+  { id:"mio", name:"Machinio",       url:"https://machinio.com/search?q=",      flag:"🇺🇸", color:"#EEEDFE", border:"#CECBF6", text:"#3C3489" },
+  { id:"ex",  name:"Exapro",         url:"https://www.google.com/search?q=site%3Aexapro.com+",   flag:"🇫🇷", color:"#FAEEDA", border:"#FAC775", text:"#633806" },
+  { id:"rb",  name:"Resale.biz",     url:"https://www.resale.biz/search/?q=",   flag:"🇩🇪", color:"#E1F5EE", border:"#9FE1CB", text:"#085041" },
+  { id:"ma",  name:"Maschinensuche", url:"https://www.maschinensuche.de/?q=",   flag:"🇩🇪", color:"#FCEBEB", border:"#F7C1C1", text:"#791F1F" },
+  { id:"eu",  name:"Surplex",        url:"https://www.surplex.com/en/search/?q=",flag:"🇩🇪",color:"#F1EFE8", border:"#D3D1C7", text:"#2C2C2A" },
+  { id:"trd", name:"TradeMachines",  url:"https://www.trademachines.com/search?q=",flag:"🇩🇪",color:"#FBEAF0",border:"#F4C0D1",text:"#4B1528"},
 ];
 
-const STATUSES = ["new", "contacted", "negotiating", "closed", "lost"];
-
-function loadDeals() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    return JSON.parse(raw);
-  } catch (e) {
-    return [];
-  }
+function buildSourceLinks(searchQuery) {
+  const q = encodeURIComponent(searchQuery);
+  return SOURCES.map(s => ({ ...s, href: s.url + q }));
 }
 
-function saveDeals(deals) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(deals));
-  } catch (e) {}
-}
-
-function matchScore(deal) {
-  const w = { brand: 0.25, specs: 0.30, year: 0.20, budget: 0.15, extras: 0.10 };
-  const c = deal.matchCriteria || {};
-  let score = 0;
-  if (c.brand) score += w.brand;
-  if (c.specs) score += w.specs;
-  if (c.year === "ok") score += w.year;
-  if (c.budget === "ok") score += w.budget;
-  if (c.extras) score += w.extras;
-  return Math.round(score * 100);
-}
-
-function commissionRate(segment, priceK) {
-  if (segment === "machines")  return priceK > 50 ? 0.065 : 0.10;
-  if (segment === "CNC")       return 0.075;
-  if (segment === "tooling")   return 0.075;
-  if (segment === "MRO")       return 0.125;
-  if (segment === "reverse")   return 0.10;
-  if (segment === "building")  return 0.04;
-  return 0.08;
-}
-
-function DealRow({ deal, onStatus, onOpen }) {
-  const score = matchScore(deal);
-  const price = deal.offer?.price || 0;
-  const rate = commissionRate(deal.segment, price);
-  const profit = Math.round(price * rate * 10) / 10;
+function SourceBadge({ src }) {
   return (
-    <tr>
-      <td>{deal.id}</td>
-      <td>{deal.segment}</td>
-      <td>{deal.demand?.title || "—"}</td>
-      <td>{deal.demand?.country || "—"} → {deal.offer?.sellerCountry || "—"}</td>
-      <td>{price ? `${price} k€` : "—"}</td>
-      <td>{score} %</td>
-      <td>~{profit} k€</td>
-      <td>
-        <select value={deal.status} onChange={(e) => onStatus(deal.id, e.target.value)}>
-          {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-        </select>
-      </td>
-      <td><button onClick={() => onOpen(deal.id)}>Detail</button></td>
-    </tr>
+    <a href={src.href} target="_blank" rel="noopener noreferrer"
+      style={{ display:"inline-flex", alignItems:"center", gap:3, fontSize:10,
+        padding:"2px 7px", borderRadius:20, textDecoration:"none",
+        background:src.color, border:`0.5px solid ${src.border}`, color:src.text,
+        whiteSpace:"nowrap" }}>
+      {src.name} ↗
+    </a>
   );
 }
 
-function App() {
-  const [deals, setDeals] = useState([]);
-  const [segmentFilter, setSegmentFilter] = useState("all");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [openId, setOpenId] = useState(null);
 
-  useEffect(() => {
-    const initial = loadDeals();
-    if (initial.length === 0 && typeof PRELOADED_DEALS !== "undefined") {
-      setDeals(PRELOADED_DEALS);
-      saveDeals(PRELOADED_DEALS);
-    } else {
-      setDeals(initial);
-    }
-  }, []);
+function haversineKm(c1,c2){
+  const R=6371,dLat=(c2.lat-c1.lat)*Math.PI/180,dLon=(c2.lon-c1.lon)*Math.PI/180;
+  const a=Math.sin(dLat/2)**2+Math.cos(c1.lat*Math.PI/180)*Math.cos(c2.lat*Math.PI/180)*Math.sin(dLon/2)**2;
+  return Math.round(R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));
+}
 
-  const updateStatus = useCallback((id, status) => {
-    setDeals((prev) => {
-      const next = prev.map((d) => (d.id === id ? { ...d, status } : d));
-      saveDeals(next);
-      return next;
-    });
-  }, []);
+const WEIGHT_TIERS=[
+  {label:"Lehký (< 2 t)",val:1.5},{label:"Střední (2–8 t)",val:5},
+  {label:"Těžký (8–25 t)",val:15},{label:"Extra těžký (> 25 t)",val:40},
+];
 
-  const filtered = deals.filter((d) => {
-    if (segmentFilter !== "all" && d.segment !== segmentFilter) return false;
-    if (statusFilter !== "all" && d.status !== statusFilter) return false;
-    return true;
+function calcCosts(deal,weightTon,machineValueK){
+  const buyerC=COUNTRY_COORDS[deal.demand.country];
+  const sellerC=COUNTRY_COORDS[deal.offer.sellerCountry||deal.demand.country];
+  if(!buyerC||!sellerC)return null;
+  const distKm=haversineKm(buyerC,sellerC);
+  const valueEur=machineValueK*1000;
+  const ratePerKmTon=weightTon<=2?1.8:weightTon<=8?1.4:weightTon<=25?1.1:0.9;
+  const transport=Math.round(Math.max(800,distKm*weightTon*ratePerKmTon));
+  const insurance=Math.round(valueEur*0.003);
+  const bothEU=EU_COUNTRIES.includes(deal.demand.country)&&EU_COUNTRIES.includes(deal.offer.sellerCountry||"DE");
+  const customs=bothEU?0:Math.round(valueEur*0.037);
+  const installation=Math.round(valueEur*0.015+500);
+  const docs=bothEU?350:950;
+  const total=transport+insurance+customs+installation+docs;
+  return{distKm,transport,insurance,customs,installation,docs,total,pctOfValue:((total/valueEur)*100).toFixed(1),bothEU};
+}
+
+function calcMatchScore(deal){
+  let s=0;const c=deal.matchCriteria||{};
+  if(c.brand)s+=25;if(c.specs)s+=30;
+  if(c.year==="ok")s+=20;else if(c.year==="borderline")s+=10;
+  if(c.budget==="ok")s+=15;else if(c.budget==="tight")s+=7;
+  if(c.extras)s+=10;
+  return Math.min(100,s);
+}
+function scoreColor(s){
+  if(s>=80)return{bg:"#EAF3DE",border:"#C0DD97",text:"#27500A"};
+  if(s>=55)return{bg:"#FAEEDA",border:"#FAC775",text:"#633806"};
+  return{bg:"#FCEBEB",border:"#F7C1C1",text:"#791F1F"};
+}
+
+// Net profit = broker commission on actual sale price (price preferred, fallback to budget midpoint)
+function calcNetProfit(deal, commissionPct) {
+  const price = deal.offer?.price || deal.demand.budgetMidK || 80;
+  const net = Math.round(price * commissionPct / 100 * 10) / 10;
+  const lo  = Math.round(price * 0.9 * commissionPct / 100 * 10) / 10;
+  const hi  = Math.round(price * 1.1 * commissionPct / 100 * 10) / 10;
+  return { net, lo, hi, formatted: `${lo}–${hi} k€`, mid: net, basePrice: price };
+}
+
+const initialDeals=[];
+
+
+const SEGMENTS = {
+  machines:  { label:"Stroje",           icon:"ti-crane",          color:"#EEEDFE", border:"#CECBF6", text:"#534AB7" },
+  mro:       { label:"MRO / ND",         icon:"ti-tool",           color:"#E6F1FB", border:"#B5D4F4", text:"#0C447C" },
+  cnc:       { label:"CNC zakázky",      icon:"ti-3d-cube-sphere", color:"#E1F5EE", border:"#9FE1CB", text:"#085041" },
+  tooling:   { label:"Tooling / Formy",   icon:"ti-puzzle",         color:"#FBEAF0", border:"#F4C0D1", text:"#72243E" },
+  reverse:   { label:"Reverse eng.",      icon:"ti-scan",           color:"#FAECE7", border:"#F5C4B3", text:"#712B13" },
+  building:  { label:"Stavební mat.",     icon:"ti-building",       color:"#FAEEDA", border:"#FAC775", text:"#633806" },
+};
+
+function SegmentBadge({segment}) {
+  const s = SEGMENTS[segment] || SEGMENTS.machines;
+  return (
+    <span style={{display:"inline-flex",alignItems:"center",gap:4,fontSize:10,padding:"2px 8px",borderRadius:20,background:s.color,border:"0.5px solid "+s.border,color:s.text,fontWeight:500,whiteSpace:"nowrap"}}>
+      <i className={"ti "+s.icon} aria-hidden="true" style={{fontSize:11}}/>{s.label}
+    </span>
+  );
+}
+
+const STATUS_CONFIG={
+  new:{label:"Nový",color:"#B5D4F4",text:"#0C447C",dot:"#378ADD"},
+  contacted:{label:"Osloveno",color:"#FAC775",text:"#633806",dot:"#BA7517"},
+  negotiating:{label:"Vyjednávání",color:"#CECBF6",text:"#3C3489",dot:"#534AB7"},
+  closed:{label:"Uzavřeno",color:"#C0DD97",text:"#27500A",dot:"#639922"},
+  lost:{label:"Ztraceno",color:"#F7C1C1",text:"#791F1F",dot:"#E24B4A"},
+};
+
+// ── AI helper ─────────────────────────────────────────────────────────────────
+async function callClaude(prompt) {
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 1000,
+      system: `You are a machinery deal structuring assistant. Always respond with valid JSON only, no markdown, no extra text.`,
+      messages: [{ role: "user", content: prompt }],
+    }),
   });
+  const data = await res.json();
+  const text = data.content?.find(b => b.type === "text")?.text || "";
+  return JSON.parse(text.replace(/```json|```/g, "").trim());
+}
 
-  const openDeal = deals.find((d) => d.id === openId);
+// ── Add Deal Modal ─────────────────────────────────────────────────────────────
+// ── Supabase cloud sync (REST, no SDK — works in standalone HTML) ──────────────
+const SYNC_ROW_ID = "main"; // single-user: whole pipeline in one row
+
+function getSyncConfig(){
+  try{ const raw=localStorage.getItem("ms_sync_cfg"); return raw?JSON.parse(raw):null; }catch{ return null; }
+}
+function setSyncConfig(cfg){
+  try{ localStorage.setItem("ms_sync_cfg",JSON.stringify(cfg)); }catch{}
+}
+
+async function cloudPush(cfg, payload){
+  const url = `${cfg.url}/rest/v1/deals_sync?on_conflict=id`;
+  const res = await fetch(url, {
+    method:"POST",
+    headers:{
+      "apikey":cfg.key,
+      "Authorization":`Bearer ${cfg.key}`,
+      "Content-Type":"application/json",
+      "Prefer":"resolution=merge-duplicates,return=minimal",
+    },
+    body:JSON.stringify([{ id:SYNC_ROW_ID, payload, updated_at:new Date().toISOString() }]),
+  });
+  if(!res.ok) throw new Error(`Push selhal (${res.status})`);
+  return true;
+}
+
+async function cloudPull(cfg){
+  const url = `${cfg.url}/rest/v1/deals_sync?id=eq.${SYNC_ROW_ID}&select=payload,updated_at`;
+  const res = await fetch(url, {
+    headers:{ "apikey":cfg.key, "Authorization":`Bearer ${cfg.key}` },
+  });
+  if(!res.ok) throw new Error(`Stažení selhalo (${res.status})`);
+  const rows = await res.json();
+  return rows[0] || null;
+}
+
+function SyncModal({onClose,onConfigSaved,onPull,deals,commission}){
+  const existing = getSyncConfig();
+  const [url,setUrl]=useState(existing?.url||"");
+  const [key,setKey]=useState(existing?.key||"");
+  const [status,setStatus]=useState("");
+  const [busy,setBusy]=useState(false);
+
+  const save=()=>{
+    if(!url.trim()||!key.trim()){setStatus("Vyplň URL i anon klíč.");return;}
+    const cfg={url:url.replace(/\/$/,""),key:key.trim()};
+    setSyncConfig(cfg);
+    onConfigSaved(cfg);
+    setStatus("Uloženo ✓");
+  };
+  const testPush=async()=>{
+    setBusy(true);setStatus("Nahrávám do cloudu...");
+    try{ const cfg={url:url.replace(/\/$/,""),key:key.trim()}; setSyncConfig(cfg); onConfigSaved(cfg);
+      await cloudPush(cfg,{deals,commission,updatedAt:new Date().toISOString()});
+      setStatus("Nahráno do cloudu ✓"); }
+    catch(e){ setStatus("Chyba: "+e.message); }
+    setBusy(false);
+  };
+  const testPull=async()=>{
+    setBusy(true);setStatus("Stahuji z cloudu...");
+    try{ const cfg={url:url.replace(/\/$/,""),key:key.trim()}; setSyncConfig(cfg); onConfigSaved(cfg);
+      const row=await cloudPull(cfg);
+      if(!row){setStatus("V cloudu zatím nejsou data.");}
+      else{ onPull(row.payload); setStatus(`Staženo ✓ (${row.payload.deals?.length||0} dealů)`); }
+    }catch(e){ setStatus("Chyba: "+e.message); }
+    setBusy(false);
+  };
+
+  const inp={width:"100%",fontSize:12,padding:"8px 10px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"var(--color-background-secondary)",color:"var(--color-text-primary)",marginBottom:10};
+  const lab={fontSize:11,color:"var(--color-text-secondary)",marginBottom:4,display:"block"};
 
   return (
-    <div className="app">
-      <header>
-        <h1>Machinery Deals CRM</h1>
-        <div className="filters">
-          <select value={segmentFilter} onChange={(e) => setSegmentFilter(e.target.value)}>
-            <option value="all">Všechny segmenty</option>
-            {SEGMENTS.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
-          </select>
-          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-            <option value="all">Všechny stavy</option>
-            {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-          </select>
-          <span className="count">{filtered.length} / {deals.length}</span>
+    <div className="ms-modal-overlay">
+      <div className="ms-modal-box" style={{maxWidth:480}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+          <div style={{fontSize:14,fontWeight:500,color:"var(--color-text-primary)"}}>Cloud sync (Supabase)</div>
+          <button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",fontSize:18,color:"var(--color-text-secondary)"}}>×</button>
         </div>
-      </header>
+        <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:12,lineHeight:1.5}}>
+          Zadej Project URL a <strong>anon</strong> klíč z Project Settings → API. Klíče se uloží jen v tomto prohlížeči. Na druhém zařízení zadáš stejné údaje a stáhneš data.
+        </div>
+        <label style={lab}>Project URL</label>
+        <input style={inp} value={url} onChange={e=>setUrl(e.target.value)} placeholder="https://xxxx.supabase.co" />
+        <label style={lab}>Anon (public) klíč</label>
+        <input style={inp} value={key} onChange={e=>setKey(e.target.value)} placeholder="eyJhbGci..." />
+        {status && <div style={{fontSize:11,padding:"7px 11px",marginBottom:10,background:status.startsWith("Chyba")?"#FCEBEB":"#E1F5EE",color:status.startsWith("Chyba")?"#791F1F":"#085041",borderRadius:"var(--border-radius-md)",border:`0.5px solid ${status.startsWith("Chyba")?"#F7C1C1":"#9FE1CB"}`}}>{status}</div>}
+        <div style={{display:"flex",gap:6,flexWrap:"wrap",justifyContent:"flex-end"}}>
+          <button onClick={save} disabled={busy} style={{fontSize:12,padding:"8px 14px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"transparent",cursor:"pointer",color:"var(--color-text-primary)"}}>Uložit klíče</button>
+          <button onClick={testPull} disabled={busy} style={{fontSize:12,padding:"8px 14px",borderRadius:"var(--border-radius-md)",border:"0.5px solid #378ADD",background:"#E6F1FB",cursor:"pointer",color:"#0C447C",fontWeight:500,display:"flex",alignItems:"center",gap:5}}><i className="ti ti-cloud-download" aria-hidden="true" style={{fontSize:13}}/>Stáhnout</button>
+          <button onClick={testPush} disabled={busy} style={{fontSize:12,padding:"8px 14px",borderRadius:"var(--border-radius-md)",border:"0.5px solid #639922",background:"#EAF3DE",cursor:"pointer",color:"#27500A",fontWeight:500,display:"flex",alignItems:"center",gap:5}}><i className="ti ti-cloud-upload" aria-hidden="true" style={{fontSize:13}}/>Nahrát</button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th><th>Segment</th><th>Poptávka</th><th>Trasa</th>
-            <th>Cena</th><th>Shoda</th><th>Zisk</th><th>Stav</th><th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {filtered.map((d) => (
-            <DealRow key={d.id} deal={d} onStatus={updateStatus} onOpen={setOpenId} />
+function AddDealModal({ onClose, onAdd, onSaveEdit, editDeal }) {
+  const isEdit = !!editDeal;
+  const [mode, setMode] = useState(isEdit?"manual":"manual"); // "manual" | "ai"
+  const [step, setStep] = useState(1); // 1=demand, 2=offer, 3=review
+  const [segment, setSegment] = useState(editDeal?.segment||"machines");
+  const [validationError, setValidationError] = useState("");
+  const [aiInput, setAiInput] = useState("");
+  const [aiStatus, setAiStatus] = useState("idle"); // idle | loading | done | error
+  const [aiError, setAiError] = useState("");
+
+  const emptyDemand = { title:"", buyer:"", buyerEmail:"", buyerPhone:"", country:"CZ", budget:"", budgetMidK:80, link:"", postedDate:"", details:"" };
+  const emptyOffer  = { title:"", seller:"", sellerEmail:"", sellerPhone:"", sellerCountry:"DE", price:80, specs:"", link:"", postedDate:"" };
+  const emptyCriteria = { brand:false, specs:false, year:"ok", budget:"ok", extras:false };
+
+  const [demand, setDemand] = useState(editDeal?{...emptyDemand,...editDeal.demand}:emptyDemand);
+  const [offer,  setOffer]  = useState(editDeal?{...emptyOffer,...editDeal.offer}:emptyOffer);
+  const [criteria, setCriteria] = useState(editDeal?editDeal.matchCriteria:emptyCriteria);
+
+  const D = (k,v) => setDemand(p=>({...p,[k]:v}));
+  const O = (k,v) => setOffer(p=>({...p,[k]:v}));
+  const C = (k,v) => setCriteria(p=>({...p,[k]:v}));
+
+  const countries = Object.entries(COUNTRY_COORDS).map(([k,v])=>({code:k,name:v.name}));
+
+  // ── AI flow ──────────────────────────────────────────────────────────────────
+  const runAI = async () => {
+    setAiStatus("loading");
+    setAiError("");
+    try {
+      const result = await callClaude(`
+Analyze this industrial demand input and create a structured deal with a matched offer. Determine the segment: "machines" (used machinery), "mro" (spare parts/maintenance), "cnc" (custom machining), "tooling" (molds/jigs/fixtures), "reverse" (reverse engineering), "building" (construction materials).
+If the input contains a contact email address, put it in buyerEmail. If it contains a listing URL, use it verbatim as the demand link.
+Input: "${aiInput}"
+
+Return a JSON object with this exact shape:
+{
+  "demand": {
+    "title": "short descriptive title",
+    "buyer": "type of company buying",
+    "buyerEmail": "",
+    "buyerPhone": "",
+    "country": "2-letter EU code (CZ/SK/DE/AT/PL/HU/FR/IT/NL/BE/CH/ES/UK/SE/RO)",
+    "budget": "range like 50–120 k€",
+    "budgetMidK": number (midpoint in thousands),
+    "link": "the BUYERS wanted-ad / request URL if present in input (use verbatim), otherwise empty string. Do NOT put a machine-for-sale listing here",
+    "searchQuery": "2-4 english keywords for searching",
+    "postedDate": "YYYY-MM-DD if a publish date is in the input, otherwise empty string",
+    "details": "key technical requirements"
+  },
+  "offer": {
+    "title": "realistic used machine model + year",
+    "seller": "type of seller / dealer",
+    "sellerEmail": "",
+    "sellerPhone": "",
+    "sellerCountry": "2-letter code",
+    "price": number (estimated price in thousands €),
+    "specs": "key specs separated by ·",
+    "link": "the SELLERS machine-for-sale listing URL (verbatim if in input, otherwise a realistic listing URL on machineseeker/exapro/surplex)",
+    "searchQuery": "2-4 english keywords for searching",
+    "postedDate": "YYYY-MM-DD if a publish date is in the input, otherwise empty string"
+  },
+  "matchCriteria": {
+    "brand": true/false,
+    "specs": true/false,
+    "year": "ok" or "borderline",
+    "budget": "ok" or "tight",
+    "extras": true/false
+  },
+  "profit": {
+    "val": "X–Y k€",
+    "base": "~Z k€"
+  },
+  "flags": ["flag1 ✓", "flag2 ✓"],
+  "warnings": ["warning if any"]
+}
+`);
+      setDemand(result.demand);
+      setOffer(result.offer);
+      setCriteria(result.matchCriteria);
+      // store profit/flags for review
+      setAiResult(result);
+      if(result.segment) setSegment(result.segment);
+      setAiStatus("done");
+      setStep(3);
+    } catch(e) {
+      setAiStatus("error");
+      setAiError("AI párování není dostupné (mimo prostředí Claude chybí přístup k API). Použij prosím manuální zadání.");
+    }
+  };
+
+  const [aiResult, setAiResult] = useState(null);
+
+  const validate = () => {
+    if(!demand.title.trim()) return "Vyplň název poptávky.";
+    if(!offer.title.trim()) return "Vyplň název nabídky.";
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(demand.buyerEmail && !emailRe.test(demand.buyerEmail)) return "E-mail kupujícího nemá platný formát.";
+    if(offer.sellerEmail && !emailRe.test(offer.sellerEmail)) return "E-mail prodávajícího nemá platný formát.";
+    const urlOk = (u)=>!u || /^https?:\/\//i.test(u);
+    if(!urlOk(demand.link)) return "Odkaz poptávky musí začínat http:// nebo https://";
+    if(!urlOk(offer.link)) return "Odkaz nabídky musí začínat http:// nebo https://";
+    return "";
+  };
+
+  const handleSave = () => {
+    const err = validate();
+    if(err){ setValidationError(err); return; }
+    setValidationError("");
+    if(isEdit){
+      onSaveEdit(editDeal.id, { segment, matchCriteria:criteria, demand, offer });
+      onClose();
+      return;
+    }
+    const profitData = aiResult?.profit || { val:"5–15 k€", base:"~80 k€" };
+    const newDeal = {
+      id: "d" + Date.now(),
+      status: "new",
+      segment,
+      matchCriteria: criteria,
+      demand, offer,
+      profit: profitData,
+      flags: aiResult?.flags || [],
+      warnings: aiResult?.warnings || [],
+      notes: "",
+      emails: { buyer: null, seller: null },
+      createdAt: new Date().toISOString(),
+    };
+    onAdd(newDeal);
+    onClose();
+  };
+
+  const inputStyle = {
+    width:"100%", fontSize:12, padding:"7px 10px", lineHeight:1.5,
+    border:"0.5px solid var(--color-border-secondary)",
+    borderRadius:"var(--border-radius-md)",
+    background:"var(--color-background-secondary)",
+    color:"var(--color-text-primary)",
+  };
+  const labelStyle = { fontSize:11, color:"var(--color-text-secondary)", marginBottom:4, display:"block" };
+  const rowStyle   = { marginBottom:10 };
+
+  return (
+    <div className="ms-modal-overlay">
+      <div className="ms-modal-box">
+
+        {/* Header */}
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
+          <div style={{fontSize:14,fontWeight:500,color:"var(--color-text-primary)"}}>{isEdit?"Upravit deal":"Přidat poptávku + spárovat nabídku"}</div>
+          <button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",fontSize:18,color:"var(--color-text-secondary)",padding:"0 4px"}}>×</button>
+        </div>
+
+        {/* Mode toggle */}
+        {!isEdit && <div style={{display:"flex",gap:6,marginBottom:16}}>
+          {[["manual","Manuálně"],["ai","AI — auto spárovat"]].map(([m,l])=>(
+            <button key={m} onClick={()=>{setMode(m);setStep(m==="ai"?1:1);setAiStatus("idle");}} style={{
+              fontSize:12,padding:"5px 14px",borderRadius:20,cursor:"pointer",
+              border:mode===m?"1.5px solid #534AB7":"0.5px solid var(--color-border-secondary)",
+              background:mode===m?"#EEEDFE":"transparent",
+              color:mode===m?"#3C3489":"var(--color-text-secondary)",
+              fontWeight:mode===m?500:400,
+            }}>
+              {m==="ai" && <i className="ti ti-sparkles" aria-hidden="true" style={{fontSize:12,marginRight:4}}/>}
+              {l}
+            </button>
           ))}
-        </tbody>
-      </table>
+        </div>}
 
-      {openDeal && (
-        <div className="modal" onClick={() => setOpenId(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h2>{openDeal.demand?.title}</h2>
-            <p><b>Kupující:</b> {openDeal.demand?.buyer} ({openDeal.demand?.country})</p>
-            <p><b>Email:</b> {openDeal.demand?.buyerEmail || "—"}</p>
-            <p><b>Telefon:</b> {openDeal.demand?.buyerPhone || "—"}</p>
-            <hr />
-            <p><b>Prodávající:</b> {openDeal.offer?.seller} ({openDeal.offer?.sellerCountry})</p>
-            <p><b>Email:</b> {openDeal.offer?.sellerEmail || "—"}</p>
-            <p><b>Telefon:</b> {openDeal.offer?.sellerPhone || "—"}</p>
-            <p><b>Cena:</b> {openDeal.offer?.price} k€</p>
-            <hr />
-            <p><b>Zdroje vyhledávání:</b></p>
-            <ul>
-              {SOURCES.map((s) => (
-                <li key={s.id}>
-                  <a href={s.url + encodeURIComponent(openDeal.offer?.searchQuery || "")} target="_blank" rel="noreferrer">
-                    {s.name}
-                  </a>
-                </li>
+        {/* Segment picker */}
+        <div style={{marginBottom:14}}>
+          <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:5}}>Segment:</div>
+          <div style={{display:"flex",gap:5,flexWrap:"wrap"}}>
+            {Object.entries(SEGMENTS).map(([key,cfg])=>(
+              <button key={key} onClick={()=>setSegment(key)} style={{fontSize:11,padding:"5px 10px",borderRadius:20,cursor:"pointer",border:segment===key?`1.5px solid ${cfg.border}`:"0.5px solid var(--color-border-secondary)",background:segment===key?cfg.color:"transparent",color:segment===key?cfg.text:"var(--color-text-secondary)",fontWeight:segment===key?500:400,display:"flex",alignItems:"center",gap:4}}>
+                <i className={"ti "+cfg.icon} aria-hidden="true" style={{fontSize:12}}/>{cfg.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* ── AI MODE ── */}
+        {mode==="ai" && step===1 && (
+          <div>
+            <div style={rowStyle}>
+              <label style={labelStyle}>Vlož popis poptávky, link na Machineseeker nebo volný text</label>
+              <textarea
+                value={aiInput}
+                onChange={e=>setAiInput(e.target.value)}
+                placeholder={"Příklady:\n• https://www.machineseeker.com/cnc-fraeza/...\n• Hledám použitý soustruh CNC, max. 5 let starý, Česká republika, budget cca 40k€\n• Potřebujeme laserový řezač pro nerez, Slovensko, Trumpf nebo Bystronic"}
+                style={{...inputStyle,minHeight:130,resize:"vertical",fontFamily:"var(--font-sans)"}}
+              />
+            </div>
+            {aiStatus==="error" && (
+              <div style={{fontSize:11,padding:"6px 10px",background:"#FCEBEB",color:"#791F1F",borderRadius:"var(--border-radius-md)",border:"0.5px solid #F7C1C1",marginBottom:10}}>
+                {aiError}
+              </div>
+            )}
+            <div style={{display:"flex",gap:8,justifyContent:"flex-end",marginTop:4}}>
+              <button onClick={onClose} style={{fontSize:12,padding:"6px 14px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"transparent",cursor:"pointer",color:"var(--color-text-primary)"}}>Zrušit</button>
+              <button onClick={runAI} disabled={!aiInput.trim()||aiStatus==="loading"} style={{
+                fontSize:12,padding:"6px 16px",borderRadius:"var(--border-radius-md)",
+                border:"0.5px solid #534AB7",background:aiStatus==="loading"?"#CECBF6":"#EEEDFE",
+                cursor:aiInput.trim()&&aiStatus!=="loading"?"pointer":"not-allowed",
+                color:"#3C3489",fontWeight:500,display:"flex",alignItems:"center",gap:6,
+              }}>
+                {aiStatus==="loading"
+                  ? <><span style={{display:"inline-block",width:12,height:12,border:"1.5px solid #534AB7",borderTopColor:"transparent",borderRadius:"50%",animation:"spin 0.7s linear infinite"}}/>Analyzuji...</>
+                  : <><i className="ti ti-sparkles" aria-hidden="true" style={{fontSize:12}}/>AI spárovat</>}
+              </button>
+            </div>
+            <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+          </div>
+        )}
+
+        {/* ── AI review / Manual step 1+2+3 ── */}
+        {(mode==="manual" || (mode==="ai" && step===3)) && (
+          <div>
+            {/* Step tabs (manual only) */}
+            {mode==="manual" && (
+              <div style={{display:"flex",gap:4,marginBottom:14}}>
+                {[["1","Poptávka"],["2","Nabídka"],["3","Shoda"]].map(([s,l])=>(
+                  <button key={s} onClick={()=>setStep(+s)} style={{
+                    fontSize:11,padding:"4px 12px",borderRadius:20,cursor:"pointer",
+                    border:step===+s?"1.5px solid var(--color-border-primary)":"0.5px solid var(--color-border-secondary)",
+                    background:step===+s?"var(--color-background-secondary)":"transparent",
+                    color:"var(--color-text-primary)",fontWeight:step===+s?500:400,
+                  }}>{s}. {l}</button>
+                ))}
+              </div>
+            )}
+            {mode==="ai" && step===3 && (
+              <div style={{fontSize:11,padding:"6px 10px",background:"#E1F5EE",color:"#085041",borderRadius:"var(--border-radius-md)",border:"0.5px solid #9FE1CB",marginBottom:12,display:"flex",alignItems:"center",gap:6}}>
+                <i className="ti ti-check" aria-hidden="true" style={{fontSize:13}}/>
+                AI úspěšně spárovala — zkontroluj a případně uprav
+              </div>
+            )}
+
+            {/* Step 1 — Demand */}
+            {(step===1||mode==="ai") && (
+              <div style={{marginBottom:mode==="ai"?14:0,paddingBottom:mode==="ai"?14:0,borderBottom:mode==="ai"?"0.5px solid var(--color-border-tertiary)":"none"}}>
+                {mode==="ai"&&<div style={{fontSize:11,fontWeight:500,color:"#534AB7",marginBottom:8,letterSpacing:".03em"}}>POPTÁVKA</div>}
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Název poptávky</label>
+                  <input style={inputStyle} value={demand.title} onChange={e=>D("title",e.target.value)} placeholder="CNC frézka 3-osá, hliník" />
+                </div>
+                <div className="ms-grid-2" style={{...rowStyle}}>
+                  <div>
+                    <label style={labelStyle}>Kupující (firma / typ)</label>
+                    <input style={inputStyle} value={demand.buyer} onChange={e=>D("buyer",e.target.value)} placeholder="Výrobní firma CZ" />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Země kupujícího</label>
+                    <select style={inputStyle} value={demand.country} onChange={e=>D("country",e.target.value)}>
+                      {countries.map(c=><option key={c.code} value={c.code}>{c.code} — {c.name}</option>)}
+                    </select>
+                  </div>
+                </div>
+                <div className="ms-grid-2" style={{...rowStyle}}>
+                  <div>
+                    <label style={labelStyle}>E-mail kupujícího</label>
+                    <input style={inputStyle} type="email" value={demand.buyerEmail} onChange={e=>D("buyerEmail",e.target.value)} placeholder="kupujici@firma.cz" />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Telefon kupujícího</label>
+                    <input style={inputStyle} value={demand.buyerPhone} onChange={e=>D("buyerPhone",e.target.value)} placeholder="+420 ..." />
+                  </div>
+                </div>
+                <div className="ms-grid-2" style={{...rowStyle}}>
+                  <div>
+                    <label style={labelStyle}>Budget (text)</label>
+                    <input style={inputStyle} value={demand.budget} onChange={e=>D("budget",e.target.value)} placeholder="50–120 k€" />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Budget střed (k€)</label>
+                    <input style={{...inputStyle}} type="number" value={demand.budgetMidK} onChange={e=>D("budgetMidK",+e.target.value)} placeholder="80" />
+                  </div>
+                </div>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Odkaz na inzerát kupujícího (poptávka)</label>
+                  <input style={inputStyle} value={demand.link} onChange={e=>D("link",e.target.value)} placeholder="https://.../wanted/12345 - poptavkovy inzerat" />
+                </div>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Datum zveřejnění inzerátu</label>
+                  <input style={inputStyle} type="date" value={demand.postedDate} onChange={e=>D("postedDate",e.target.value)} />
+                </div>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Technické požadavky</label>
+                  <textarea style={{...inputStyle,minHeight:55,resize:"vertical"}} value={demand.details} onChange={e=>D("details",e.target.value)} placeholder="Stůl min. 800×600 mm, vřeteno 8 000 rpm..." />
+                </div>
+                {mode==="manual"&&<div style={{display:"flex",justifyContent:"flex-end"}}><button onClick={()=>setStep(2)} style={{fontSize:12,padding:"6px 16px",borderRadius:"var(--border-radius-md)",border:"0.5px solid #534AB7",background:"#EEEDFE",cursor:"pointer",color:"#3C3489",fontWeight:500}}>Dál: Nabídka →</button></div>}
+              </div>
+            )}
+
+            {/* Step 2 — Offer */}
+            {(step===2||mode==="ai") && (
+              <div style={{marginBottom:mode==="ai"?14:0,paddingBottom:mode==="ai"?14:0,borderBottom:mode==="ai"?"0.5px solid var(--color-border-tertiary)":"none"}}>
+                {mode==="ai"&&<div style={{fontSize:11,fontWeight:500,color:"#0F6E56",marginBottom:8,letterSpacing:".03em"}}>NABÍDKA (AI návrh)</div>}
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Název nabízeného stroje</label>
+                  <input style={inputStyle} value={offer.title} onChange={e=>O("title",e.target.value)} placeholder="HAAS VF-2 (2018)" />
+                </div>
+                <div className="ms-grid-2" style={{...rowStyle}}>
+                  <div>
+                    <label style={labelStyle}>Prodávající</label>
+                    <input style={inputStyle} value={offer.seller} onChange={e=>O("seller",e.target.value)} placeholder="Dealer DE" />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Země prodávajícího</label>
+                    <select style={inputStyle} value={offer.sellerCountry} onChange={e=>O("sellerCountry",e.target.value)}>
+                      {countries.map(c=><option key={c.code} value={c.code}>{c.code} — {c.name}</option>)}
+                    </select>
+                  </div>
+                </div>
+                <div className="ms-grid-2" style={{...rowStyle}}>
+                  <div>
+                    <label style={labelStyle}>E-mail prodávajícího</label>
+                    <input style={inputStyle} type="email" value={offer.sellerEmail} onChange={e=>O("sellerEmail",e.target.value)} placeholder="dealer@firma.de" />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Telefon</label>
+                    <input style={inputStyle} value={offer.sellerPhone} onChange={e=>O("sellerPhone",e.target.value)} placeholder="+49 ..." />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Cena (k€)</label>
+                    <input style={inputStyle} type="number" value={offer.price} onChange={e=>O("price",+e.target.value)} placeholder="80" />
+                  </div>
+                </div>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Specifikace stroje</label>
+                  <input style={inputStyle} value={offer.specs} onChange={e=>O("specs",e.target.value)} placeholder="Stůl 900×500 mm · 10 000 rpm · SK40" />
+                </div>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Odkaz na inzerát prodávajícího (nabídka)</label>
+                  <input style={inputStyle} value={offer.link} onChange={e=>O("link",e.target.value)} placeholder="https://.../listing/12345 - prodejni inzerat" />
+                </div>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Datum zveřejnění inzerátu</label>
+                  <input style={inputStyle} type="date" value={offer.postedDate} onChange={e=>O("postedDate",e.target.value)} />
+                </div>
+                {mode==="manual"&&<div style={{display:"flex",gap:6,justifyContent:"flex-end"}}>
+                  <button onClick={()=>setStep(1)} style={{fontSize:12,padding:"6px 14px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"transparent",cursor:"pointer",color:"var(--color-text-secondary)"}}>← Zpět</button>
+                  <button onClick={()=>setStep(3)} style={{fontSize:12,padding:"6px 16px",borderRadius:"var(--border-radius-md)",border:"0.5px solid #534AB7",background:"#EEEDFE",cursor:"pointer",color:"#3C3489",fontWeight:500}}>Dál: Shoda →</button>
+                </div>}
+              </div>
+            )}
+
+            {/* Step 3 — Match criteria */}
+            {(step===3) && (
+              <div>
+                {mode==="manual"&&<div style={{fontSize:11,fontWeight:500,color:"var(--color-text-secondary)",marginBottom:8}}>Hodnocení shody kritérií (určuje % score)</div>}
+                {mode==="ai"&&<div style={{fontSize:11,fontWeight:500,color:"var(--color-text-secondary)",marginBottom:8,letterSpacing:".03em"}}>SHODA KRITÉRIÍ</div>}
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:14}}>
+                  {[
+                    {k:"brand",label:"Značka odpovídá",pts:25,type:"bool"},
+                    {k:"specs",label:"Specifikace splněny",pts:30,type:"bool"},
+                    {k:"extras",label:"Příslušenství / extras",pts:10,type:"bool"},
+                    {k:"year",label:"Rok výroby",pts:20,type:"tri",opts:[["ok","OK"],["borderline","Hraničí"]]},
+                    {k:"budget",label:"Budget",pts:15,type:"tri",opts:[["ok","OK"],["tight","Těsný"]]},
+                  ].map(c=>(
+                    <div key={c.k} style={{padding:"8px 10px",border:"0.5px solid var(--color-border-tertiary)",borderRadius:"var(--border-radius-md)",background:"var(--color-background-secondary)"}}>
+                      <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:5}}>{c.label} <span style={{opacity:.5}}>({c.pts} b.)</span></div>
+                      {c.type==="bool"
+                        ? <div style={{display:"flex",gap:4}}>
+                            {[["true","Ano","#EAF3DE","#27500A","#C0DD97"],["false","Ne","#FCEBEB","#791F1F","#F7C1C1"]].map(([v,l,bg,col,br])=>(
+                              <button key={v} onClick={()=>C(c.k,v==="true")} style={{fontSize:11,padding:"3px 10px",borderRadius:20,cursor:"pointer",border:String(criteria[c.k])===v?`1.5px solid ${br}`:"0.5px solid var(--color-border-secondary)",background:String(criteria[c.k])===v?bg:"transparent",color:String(criteria[c.k])===v?col:"var(--color-text-secondary)",fontWeight:String(criteria[c.k])===v?500:400}}>{l}</button>
+                            ))}
+                          </div>
+                        : <div style={{display:"flex",gap:4}}>
+                            {c.opts.map(([v,l])=>(
+                              <button key={v} onClick={()=>C(c.k,v)} style={{fontSize:11,padding:"3px 10px",borderRadius:20,cursor:"pointer",border:criteria[c.k]===v?"1.5px solid #C0DD97":"0.5px solid var(--color-border-secondary)",background:criteria[c.k]===v?"#EAF3DE":"transparent",color:criteria[c.k]===v?"#27500A":"var(--color-text-secondary)",fontWeight:criteria[c.k]===v?500:400}}>{l}</button>
+                            ))}
+                          </div>}
+                    </div>
+                  ))}
+                  <div style={{padding:"8px 10px",border:`1.5px solid ${scoreColor(calcMatchScore({matchCriteria:criteria})).border}`,borderRadius:"var(--border-radius-md)",background:scoreColor(calcMatchScore({matchCriteria:criteria})).bg,display:"flex",alignItems:"center",justifyContent:"center"}}>
+                    <div style={{textAlign:"center"}}>
+                      <div style={{fontSize:10,color:scoreColor(calcMatchScore({matchCriteria:criteria})).text,marginBottom:2}}>Celková shoda</div>
+                      <div style={{fontSize:24,fontWeight:500,color:scoreColor(calcMatchScore({matchCriteria:criteria})).text}}>{calcMatchScore({matchCriteria:criteria})} %</div>
+                    </div>
+                  </div>
+                </div>
+                {validationError && <div style={{fontSize:11,padding:"7px 11px",marginBottom:10,background:"#FCEBEB",color:"#791F1F",borderRadius:"var(--border-radius-md)",border:"0.5px solid #F7C1C1"}}><i className="ti ti-alert-triangle" aria-hidden="true" style={{fontSize:12,marginRight:5}}/>{validationError}</div>}
+                <div style={{display:"flex",gap:6,justifyContent:"flex-end"}}>
+                  {mode==="manual"&&!isEdit&&<button onClick={()=>setStep(2)} style={{fontSize:12,padding:"8px 14px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"transparent",cursor:"pointer",color:"var(--color-text-secondary)"}}>← Zpět</button>}
+                  {mode==="ai"&&<button onClick={()=>setStep(1)} style={{fontSize:12,padding:"8px 14px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"transparent",cursor:"pointer",color:"var(--color-text-secondary)"}}>← Upravit</button>}
+                  <button onClick={handleSave} style={{fontSize:12,padding:"8px 16px",borderRadius:"var(--border-radius-md)",border:"0.5px solid #639922",background:"#EAF3DE",cursor:"pointer",color:"#27500A",fontWeight:500,display:"flex",alignItems:"center",gap:5}}>
+                    <i className={`ti ${isEdit?"ti-device-floppy":"ti-plus"}`} aria-hidden="true" style={{fontSize:13}}/>{isEdit?"Uložit změny":"Uložit deal"}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── Shared sub-components ──────────────────────────────────────────────────────
+function MatchScore({deal}){
+  const score=calcMatchScore(deal),col=scoreColor(score),segs=10,filled=Math.round(score/segs);
+  return(
+    <div style={{display:"flex",alignItems:"center",gap:7}}>
+      <div style={{display:"flex",gap:2}}>
+        {Array.from({length:segs}).map((_,i)=>(
+          <div key={i} style={{width:14,height:7,borderRadius:2,background:i<filled?col.border:"var(--color-background-secondary)",border:`0.5px solid ${i<filled?col.border:"var(--color-border-tertiary)"}`}}/>
+        ))}
+      </div>
+      <span style={{fontSize:12,fontWeight:500,padding:"2px 8px",borderRadius:"var(--border-radius-md)",background:col.bg,color:col.text,border:`0.5px solid ${col.border}`}}>{score} %</span>
+    </div>
+  );
+}
+
+function CostBreakdown({deal,onUpdate}){
+  const [wi,setWi]=useState(deal.weightTier??1);
+  const costs=calcCosts(deal,WEIGHT_TIERS[wi].val,deal.offer?.price||deal.demand.budgetMidK||80);
+  if(!costs)return<div style={{fontSize:12,color:"var(--color-text-secondary)"}}>Nepodporovaná země.</div>;
+  const rows=[
+    {label:"Doprava",val:costs.transport,icon:"ti-truck"},
+    {label:"Pojištění (0,3 % hodnoty)",val:costs.insurance,icon:"ti-shield"},
+    {label:"Montáž + demontáž",val:costs.installation,icon:"ti-tool"},
+    {label:"Dokumentace",val:costs.docs,icon:"ti-file-text"},
+    ...(costs.customs>0?[{label:"Clo (HS84 ~3,7 %)",val:costs.customs,icon:"ti-building-bank",warn:true}]:[]),
+  ];
+  return(
+    <div style={{marginTop:10}}>
+      <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:8,display:"flex",alignItems:"center",gap:8}}>
+        <i className="ti ti-route" aria-hidden="true" style={{fontSize:13}}/>
+        Vzdálenost: <strong style={{color:"var(--color-text-primary)",fontWeight:500}}>{costs.distKm.toLocaleString("cs-CZ")} km</strong>
+        {costs.bothEU&&<span style={{fontSize:10,padding:"1px 6px",background:"#E1F5EE",color:"#085041",borderRadius:10,border:"0.5px solid #9FE1CB"}}>EU — bez cla</span>}
+      </div>
+      <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}>
+        <span style={{fontSize:11,color:"var(--color-text-secondary)"}}>Hmotnost:</span>
+        <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
+          {WEIGHT_TIERS.map((t,i)=>(
+            <button key={i} onClick={()=>{setWi(i);onUpdate&&onUpdate(deal.id,{weightTier:i});}} style={{fontSize:10,padding:"3px 8px",borderRadius:20,cursor:"pointer",border:wi===i?"1.5px solid #534AB7":"0.5px solid var(--color-border-secondary)",background:wi===i?"#EEEDFE":"transparent",color:wi===i?"#3C3489":"var(--color-text-secondary)",fontWeight:wi===i?500:400}}>{t.label}</button>
+          ))}
+        </div>
+      </div>
+      <div style={{border:"0.5px solid var(--color-border-tertiary)",borderRadius:"var(--border-radius-md)",overflow:"hidden"}}>
+        {rows.map((r,i)=>(
+          <div key={r.label} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"7px 12px",fontSize:12,background:i%2===0?"var(--color-background-secondary)":"var(--color-background-primary)"}}>
+            <span style={{display:"flex",alignItems:"center",gap:6,color:r.warn?"#854F0B":"var(--color-text-secondary)"}}><i className={`ti ${r.icon}`} aria-hidden="true" style={{fontSize:13}}/>{r.label}</span>
+            <span style={{fontWeight:500,color:r.warn?"#854F0B":"var(--color-text-primary)"}}>{r.val.toLocaleString("cs-CZ")} €</span>
+          </div>
+        ))}
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"9px 12px",fontSize:13,fontWeight:500,background:"#EAF3DE",borderTop:"0.5px solid #C0DD97"}}>
+          <span style={{color:"#27500A",display:"flex",alignItems:"center",gap:6}}><i className="ti ti-sum" aria-hidden="true" style={{fontSize:14}}/>Celkem náklady</span>
+          <div style={{textAlign:"right"}}>
+            <span style={{color:"#27500A"}}>{costs.total.toLocaleString("cs-CZ")} €</span>
+            <span style={{fontSize:10,color:"#3B6D11",marginLeft:6}}>({costs.pctOfValue} % hodnoty)</span>
+          </div>
+        </div>
+      </div>
+      <div style={{fontSize:10,color:"var(--color-text-tertiary)",marginTop:6}}>Orientační kalkulace · {WEIGHT_TIERS[wi].val} t · cena ~{(deal.offer?.price||deal.demand.budgetMidK||80).toLocaleString("cs-CZ")} k€</div>
+    </div>
+  );
+}
+
+// ── Language templates ──────────────────────────────────────────────────────
+const LANG = {
+  CZ:{
+    greeting:"Vážení,",
+    buyerSubject:(t)=>`Poptávaný stroj nalezen — ${t}`,
+    buyerIntro:"mám pro Vás nabídku, která odpovídá Vašim technickým požadavkům.",
+    buyerMachine:"Specifikace stroje:",
+    buyerMatch:"Shoda s požadavky:",
+    buyerCosts:"Odhadované náklady logistiky:",
+    buyerTransport:"doprava",buyerInsurance:"pojištění",buyerCustoms:"clo",
+    buyerQuestion:"Bylo by mi velkou pomocí, kdybyste mi sdělili, jaké další technické informace potřebujete k posouzení nabídky, a zda se Vám cena jeví jako přijatelná.",
+    buyerClosing:"Těším se na Vaši odpověď.",
+    sellerSubject:(t)=>`Zájem o Váš stroj — ${t}`,
+    sellerIntro:"zastupuji zájemce o stroj, který nabízíte.",
+    sellerMachine:"Váš stroj:",
+    sellerQuestion:"Mohl/a byste mi prosím sdělit, zda je stroj stále dostupný, jaké jsou technické parametry (stáří, provozní hodiny, stav) a zda je cena otevřená k jednání? Mým zájmem je zprostředkovat rychlý a hladký převod.",
+    sellerCommission:"Jako zprostředkovatel účtuji provizi 5 % z realizované ceny — ta bude zahrnuta do konečné nabídky pro kupujícího a neovlivní Vás jako prodávajícího.",
+    sellerClosing:"Děkuji za Váš čas.",
+    sign:"S pozdravem",
+  },
+  SK:{
+    greeting:"Vážení,",
+    buyerSubject:(t)=>`Dopytovaný stroj nájdený — ${t}`,
+    buyerIntro:"mám pre Vás ponuku, ktorá zodpovedá Vašim technickým požiadavkám.",
+    buyerMachine:"Špecifikácia stroja:",
+    buyerMatch:"Zhoda s požiadavkami:",
+    buyerCosts:"Odhadované náklady logistiky:",
+    buyerTransport:"doprava",buyerInsurance:"poistenie",buyerCustoms:"clo",
+    buyerQuestion:"Uvítal/a by som, keby ste mi oznámili, aké ďalšie technické informácie potrebujete na posúdenie ponuky a či sa Vám cena zdá prijateľná.",
+    buyerClosing:"Teším sa na Vašu odpoveď.",
+    sellerSubject:(t)=>`Záujem o Váš stroj — ${t}`,
+    sellerIntro:"zastupujem záujemcu o stroj, ktorý ponúkate.",
+    sellerMachine:"Váš stroj:",
+    sellerQuestion:"Mohli by ste mi prosím uviesť, či je stroj stále dostupný, aké sú technické parametre (vek, prevádzkové hodiny, stav) a či je cena otvorená na rokovanie?",
+    sellerCommission:"Ako sprostredkovateľ účtujem províziu 5 % z realizovanej ceny — tá bude zahrnutá v konečnej ponuke pre kupujúceho a neovplyvní Vás ako predávajúceho.",
+    sellerClosing:"Ďakujem za Váš čas.",
+    sign:"S pozdravom",
+  },
+  DE:{
+    greeting:"Sehr geehrte Damen und Herren,",
+    buyerSubject:(t)=>`Passende Maschine gefunden — ${t}`,
+    buyerIntro:"ich habe ein Angebot für Sie, das Ihren technischen Anforderungen entspricht.",
+    buyerMachine:"Maschinenspezifikation:",
+    buyerMatch:"Übereinstimmung mit Anforderungen:",
+    buyerCosts:"Geschätzte Logistikkosten:",
+    buyerTransport:"Transport",buyerInsurance:"Versicherung",buyerCustoms:"Zoll",
+    buyerQuestion:"Es wäre mir eine große Hilfe, wenn Sie mir mitteilen könnten, welche weiteren technischen Informationen Sie zur Beurteilung des Angebots benötigen und ob der Preis für Sie akzeptabel erscheint.",
+    buyerClosing:"Ich freue mich auf Ihre Antwort.",
+    sellerSubject:(t)=>`Interesse an Ihrer Maschine — ${t}`,
+    sellerIntro:"ich vertrete einen Interessenten für die von Ihnen angebotene Maschine.",
+    sellerMachine:"Ihre Maschine:",
+    sellerQuestion:"Könnten Sie mir bitte mitteilen, ob die Maschine noch verfügbar ist, wie der technische Zustand ist (Baujahr, Betriebsstunden, Zustand) und ob der Preis verhandelbar ist? Mein Ziel ist eine schnelle und reibungslose Abwicklung.",
+    sellerCommission:"Als Vermittler berechne ich eine Provision von 5 % des realisierten Kaufpreises — diese wird in das finale Angebot an den Käufer eingerechnet und betrifft Sie als Verkäufer nicht.",
+    sellerClosing:"Vielen Dank für Ihre Zeit.",
+    sign:"Mit freundlichen Grüßen",
+  },
+  AT:{
+    greeting:"Sehr geehrte Damen und Herren,",
+    buyerSubject:(t)=>`Passende Maschine gefunden — ${t}`,
+    buyerIntro:"ich habe ein Angebot für Sie, das Ihren technischen Anforderungen entspricht.",
+    buyerMachine:"Maschinenspezifikation:",
+    buyerMatch:"Übereinstimmung:",
+    buyerCosts:"Geschätzte Logistikkosten:",
+    buyerTransport:"Transport",buyerInsurance:"Versicherung",buyerCustoms:"Zoll",
+    buyerQuestion:"Es wäre mir eine große Hilfe, wenn Sie mir mitteilen könnten, welche weiteren technischen Informationen Sie benötigen und ob der Preis für Sie in Ordnung ist.",
+    buyerClosing:"Ich freue mich auf Ihre Rückmeldung.",
+    sellerSubject:(t)=>`Interesse an Ihrer Maschine — ${t}`,
+    sellerIntro:"ich vertrete einen Interessenten für die von Ihnen angebotene Maschine.",
+    sellerMachine:"Ihre Maschine:",
+    sellerQuestion:"Können Sie mir bitte mitteilen, ob die Maschine noch verfügbar ist, wie der aktuelle Zustand ist (Alter, Betriebsstunden) und ob der Preis verhandelbar ist?",
+    sellerCommission:"Als Vermittler berechne ich eine Provision von 5 % des Kaufpreises — diese wird vom Käufer getragen und betrifft Sie nicht.",
+    sellerClosing:"Herzlichen Dank.",
+    sign:"Mit freundlichen Grüßen",
+  },
+  PL:{
+    greeting:"Szanowni Państwo,",
+    buyerSubject:(t)=>`Znaleziono maszynę zgodną z zapytaniem — ${t}`,
+    buyerIntro:"mam dla Państwa ofertę spełniającą Państwa wymagania techniczne.",
+    buyerMachine:"Specyfikacja maszyny:",
+    buyerMatch:"Zgodność z wymaganiami:",
+    buyerCosts:"Szacowane koszty logistyki:",
+    buyerTransport:"transport",buyerInsurance:"ubezpieczenie",buyerCustoms:"cło",
+    buyerQuestion:"Byłoby mi bardzo pomocne, gdyby mogli mi Państwo powiedzieć, jakich dodatkowych informacji technicznych potrzebują do oceny oferty oraz czy cena jest dla Państwa do zaakceptowania.",
+    buyerClosing:"Czekam na Państwa odpowiedź.",
+    sellerSubject:(t)=>`Zainteresowanie Państwa maszyną — ${t}`,
+    sellerIntro:"reprezentuję zainteresowanego nabyciem oferowanej przez Państwa maszyny.",
+    sellerMachine:"Państwa maszyna:",
+    sellerQuestion:"Czy mogliby mi Państwo podać, czy maszyna jest nadal dostępna, jaki jest jej stan techniczny (rok produkcji, godziny pracy, stan) oraz czy cena jest do negocjacji?",
+    sellerCommission:"Jako pośrednik pobieramy prowizję w wysokości 5% od zrealizowanej ceny — jest ona wliczona w ofertę dla kupującego i nie dotyczy Państwa jako sprzedającego.",
+    sellerClosing:"Dziękuję za Państwa czas.",
+    sign:"Z poważaniem",
+  },
+  EN:{
+    greeting:"Dear Sir/Madam,",
+    buyerSubject:(t)=>`Matching machine found — ${t}`,
+    buyerIntro:"I have found an offer that matches your technical requirements.",
+    buyerMachine:"Machine specifications:",
+    buyerMatch:"Match score:",
+    buyerCosts:"Estimated logistics costs:",
+    buyerTransport:"transport",buyerInsurance:"insurance",buyerCustoms:"customs",
+    buyerQuestion:"It would be very helpful if you could let me know what further technical information you need to evaluate the offer, and whether the price seems acceptable to you.",
+    buyerClosing:"I look forward to your reply.",
+    sellerSubject:(t)=>`Interest in your machine — ${t}`,
+    sellerIntro:"I represent a buyer interested in the machine you are offering.",
+    sellerMachine:"Your machine:",
+    sellerQuestion:"Could you please let me know whether the machine is still available, its current technical condition (age, operating hours, condition), and whether the price is open to negotiation? My goal is to facilitate a fast and smooth transaction.",
+    sellerCommission:"As a broker, I charge a 5% commission on the final sale price — this is included in the buyer's offer and does not affect you as the seller.",
+    sellerClosing:"Thank you for your time.",
+    sign:"Kind regards",
+  },
+};
+
+const COUNTRY_LANG = {CZ:"CZ",SK:"SK",DE:"DE",AT:"AT",PL:"PL",HU:"EN",FR:"EN",IT:"EN",NL:"EN",BE:"EN",CH:"DE",ES:"EN",UK:"EN",SE:"EN",RO:"EN"};
+const SIGNATURE = `Jan Spáčil\njan.spacil86@gmail.com`;
+
+function getLang(country){ return LANG[COUNTRY_LANG[country]] || LANG.EN; }
+
+function fmtNum(n,langKey){
+  const locale = langKey==="CZ"||langKey==="SK"?"cs-CZ":langKey==="DE"||langKey==="AT"||langKey==="CH"?"de-DE":langKey==="PL"?"pl-PL":"en-GB";
+  return n.toLocaleString(locale);
+}
+
+function generateEmail(type,deal,costs){
+  const score = calcMatchScore(deal);
+  const country = type==="buyer" ? deal.demand.country : (deal.offer.sellerCountry||"DE");
+  const langKey = COUNTRY_LANG[country] || "EN";
+  const L = LANG[langKey];
+  const fmt = (n) => fmtNum(n, langKey);
+
+  let costsLine = "";
+  if(costs){
+    const parts = [`${L.buyerTransport} ${fmt(costs.transport)} €`, `${L.buyerInsurance} ${fmt(costs.insurance)} €`];
+    if(costs.customs > 0) parts.push(`${L.buyerCustoms} ${fmt(costs.customs)} €`);
+    costsLine = `\n${L.buyerCosts} ${fmt(costs.total)} € (${parts.join(", ")}).`;
+  }
+
+  if(type==="buyer"){
+    return [
+      `${L.buyerSubject(deal.demand.title)}`,``,
+      `${L.greeting}`,``,
+      `${L.buyerIntro}`,``,
+      `${L.buyerMachine}`,
+      `${deal.offer.title}`,
+      `${deal.offer.specs}`,``,
+      `${L.buyerMatch} ${score} %${costsLine}`,``,
+      `${L.buyerQuestion}`,``,
+      `${L.buyerClosing}`,``,
+      `${L.sign},`,
+      SIGNATURE,
+    ].join("\n");
+  }
+
+  return [
+    `${L.sellerSubject(deal.offer.title)}`,``,
+    `${L.greeting}`,``,
+    `${L.sellerIntro}`,``,
+    `${L.sellerMachine} ${deal.offer.title}`,
+    `${deal.offer.specs}`,``,
+    `${L.sellerQuestion}`,``,
+    `${L.sellerCommission}`,``,
+    `${L.sellerClosing}`,``,
+    `${L.sign},`,
+    SIGNATURE,
+  ].join("\n");
+}
+
+function Badge({status}){const cfg=STATUS_CONFIG[status];return(<span style={{display:"inline-flex",alignItems:"center",gap:5,fontSize:11,fontWeight:500,padding:"3px 9px",borderRadius:20,background:cfg.color,color:cfg.text,border:`0.5px solid ${cfg.dot}`}}><span style={{width:6,height:6,borderRadius:"50%",background:cfg.dot,flexShrink:0}}/>{cfg.label}</span>);}
+
+function buildMailto(to, fullBody){
+  const lines = fullBody.split("\n");
+  const subject = lines[0] || "";
+  const bodyText = lines.slice(1).join("\n").replace(/^\n+/, "");
+  return `mailto:${to||""}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+}
+
+function EmailModal({deal,type,onClose,onSent}){
+  const costs=calcCosts(deal,WEIGHT_TIERS[deal.weightTier??1].val,deal.offer?.price||deal.demand.budgetMidK||80);
+  const [body,setBody]=useState(()=>generateEmail(type,deal,costs));
+  const [sent,setSent]=useState(false);
+  const defaultRecipient = type==="buyer" ? (deal.demand.buyerEmail||"") : (deal.offer.sellerEmail||"");
+  const [recipient,setRecipient]=useState(defaultRecipient);
+  const handleSend=()=>{setSent(true);setTimeout(()=>{onSent(type);onClose();},800);};
+  const handleOpenMail=()=>{ window.location.href = buildMailto(recipient, body); onSent(type); };
+  return(
+    <div className="ms-modal-overlay">
+      <div className="ms-modal-box" style={{maxWidth:540}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+          <div style={{fontSize:14,fontWeight:500,color:"var(--color-text-primary)"}}>Oslovení — {type==="buyer"?"kupující":"prodávající"}</div>
+          <button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",fontSize:18,color:"var(--color-text-secondary)",padding:"0 4px"}}>×</button>
+        </div>
+        <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:8,padding:"6px 10px",background:"var(--color-background-secondary)",borderRadius:"var(--border-radius-md)",display:"flex",alignItems:"center",justifyContent:"space-between",gap:8}}>
+          <span>{type==="buyer"?`${deal.demand.buyer} · ${deal.demand.country}`:`${deal.offer.seller} · ${deal.offer.sellerCountry||""}`}</span>
+          <input type="email" value={recipient} onChange={e=>setRecipient(e.target.value)} placeholder="vlož e-mail příjemce" style={{flex:1,maxWidth:260,fontSize:11,padding:"3px 6px",border:`0.5px solid ${recipient?"#639922":"#FAC775"}`,borderRadius:"var(--border-radius-md)",background:"var(--color-background-primary)",color:"var(--color-text-primary)"}}/>
+        </div>
+        <textarea value={body} onChange={e=>setBody(e.target.value)} style={{width:"100%",minHeight:280,fontSize:12,fontFamily:"var(--font-mono,monospace)",lineHeight:1.6,padding:"10px 12px",border:"0.5px solid var(--color-border-secondary)",borderRadius:"var(--border-radius-md)",background:"var(--color-background-secondary)",color:"var(--color-text-primary)",resize:"vertical"}}/>
+        <div style={{display:"flex",gap:8,marginTop:12,justifyContent:"space-between",alignItems:"center"}}>
+          <button onClick={()=>{navigator.clipboard?.writeText(body);}} style={{fontSize:11,padding:"6px 12px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"transparent",cursor:"pointer",color:"var(--color-text-secondary)",display:"flex",alignItems:"center",gap:5}}><i className="ti ti-copy" aria-hidden="true" style={{fontSize:13}}/>Kopírovat</button>
+          <div style={{display:"flex",gap:8}}>
+            <button onClick={onClose} style={{fontSize:12,padding:"6px 14px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"transparent",cursor:"pointer",color:"var(--color-text-primary)"}}>Zrušit</button>
+            <button onClick={handleSend} style={{fontSize:12,padding:"6px 14px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:sent?"#C0DD97":"transparent",cursor:"pointer",color:sent?"#27500A":"var(--color-text-secondary)",fontWeight:500,transition:"all .2s"}}>{sent?"Označeno ✓":"Jen označit"}</button>
+            <button onClick={handleOpenMail} style={{fontSize:12,padding:"6px 16px",borderRadius:"var(--border-radius-md)",border:"0.5px solid #639922",background:"#EAF3DE",cursor:"pointer",color:"#27500A",fontWeight:500,display:"flex",alignItems:"center",gap:5}}><i className="ti ti-mail-forward" aria-hidden="true" style={{fontSize:13}}/>Otevřít v e-mailu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StatCard({label,value,sub,color}){return(<div style={{background:"var(--color-background-secondary)",borderRadius:"var(--border-radius-md)",padding:"12px 14px",flex:1}}><div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:4}}>{label}</div><div style={{fontSize:22,fontWeight:500,color:color||"var(--color-text-primary)"}}>{value}</div>{sub&&<div style={{fontSize:11,color:"var(--color-text-secondary)",marginTop:2}}>{sub}</div>}</div>);}
+
+function PostedDate({date,color}){
+  if(!date)return null;
+  const d=new Date(date);
+  if(isNaN(d))return null;
+  const days=Math.floor((Date.now()-d.getTime())/86400000);
+  const ageLabel = days<=0?"dnes":days===1?"včera":days<30?`před ${days} dny`:days<60?"před měsícem":`před ${Math.floor(days/30)} měsíci`;
+  const stale = days>=60;
+  return (
+    <div style={{display:"inline-flex",alignItems:"center",gap:3,fontSize:10,color:stale?"#854F0B":color,marginTop:2}}>
+      <i className="ti ti-calendar-event" aria-hidden="true" style={{fontSize:10}}/>
+      Zveřejněno {d.toLocaleDateString("cs-CZ")} · {ageLabel}{stale?" ⚠":""}
+    </div>
+  );
+}
+
+function DealCard({deal,onUpdate,onDelete,onEdit,commission,onCommissionChange}){
+  const [expanded,setExpanded]=useState(false);
+  const [emailModal,setEmailModal]=useState(null);
+  const [notes,setNotes]=useState(deal.notes||"");
+  const [editingComm,setEditingComm]=useState(false);
+  const [commInput,setCommInput]=useState(String(commission));
+  const col=scoreColor(calcMatchScore(deal));
+  const netP=calcNetProfit(deal,commission);
+
+  const handleEmailSent=(type)=>{
+    const patch={emails:{...deal.emails,[type]:new Date().toISOString()}};
+    if(deal.status==="new")patch.status="contacted";
+    onUpdate(deal.id,patch);
+  };
+
+  return(
+    <div style={{background:"var(--color-background-primary)",border:"0.5px solid var(--color-border-tertiary)",borderRadius:"var(--border-radius-lg)",overflow:"hidden"}}>
+      {emailModal&&<EmailModal deal={deal} type={emailModal} onClose={()=>setEmailModal(null)} onSent={handleEmailSent}/>}
+
+      <div className="ms-card-header" style={{borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
+        <div style={{padding:"10px 14px",background:"#EEEDFE",borderRight:"0.5px solid #AFA9EC"}}>
+          <div style={{fontSize:10,fontWeight:500,color:"#534AB7",marginBottom:3,letterSpacing:".04em"}}>POPTÁVKA</div>
+          <div style={{fontSize:12,fontWeight:500,color:"#3C3489",lineHeight:1.4}}>{deal.demand.title}</div>
+          <div style={{fontSize:11,color:"#534AB7",marginTop:2}}>{deal.demand.country} · {deal.demand.budget}</div>
+          <PostedDate date={deal.demand.postedDate} color="#534AB7"/>
+          {deal.demand.buyerEmail && <a href={`mailto:${deal.demand.buyerEmail}`} style={{display:"inline-flex",alignItems:"center",gap:3,fontSize:10,color:"#3C3489",textDecoration:"none",marginTop:3,fontWeight:500}}><i className="ti ti-mail" aria-hidden="true" style={{fontSize:11}}/>{deal.demand.buyerEmail}</a>}
+          <div style={{display:"flex",flexWrap:"wrap",gap:4,marginTop:5}}>
+            {deal.demand.link && /^https?:\/\//.test(deal.demand.link) && <a href={deal.demand.link} target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:3,fontSize:10,color:"#fff",textDecoration:"none",padding:"2px 8px",borderRadius:20,background:"#534AB7",border:"0.5px solid #534AB7",fontWeight:500}}>
+              <i className="ti ti-external-link" aria-hidden="true" style={{fontSize:11}}/> Inzerát kupujícího
+            </a>}
+            {buildSourceLinks(deal.demand.searchQuery||deal.demand.title).slice(0,4).map(s=>(
+              <a key={s.id} href={s.href} target="_blank" rel="noopener noreferrer"
+                style={{display:"inline-flex",alignItems:"center",gap:2,fontSize:10,padding:"2px 7px",borderRadius:20,textDecoration:"none",background:s.color,border:`0.5px solid ${s.border}`,color:s.text,whiteSpace:"nowrap"}}>
+                {s.name} ↗
+              </a>
+            ))}
+          </div>
+        </div>
+        <div style={{padding:"10px 14px",background:"#E1F5EE"}}>
+          <div style={{fontSize:10,fontWeight:500,color:"#0F6E56",marginBottom:3,letterSpacing:".04em"}}>NABÍDKA</div>
+          <div style={{fontSize:12,fontWeight:500,color:"#085041",lineHeight:1.4}}>{deal.offer.title}</div>
+          <div style={{fontSize:11,color:"#0F6E56",marginTop:2}}>{deal.offer.sellerCountry} · {deal.offer.seller}{deal.offer.price?` · ${deal.offer.price} k€`:""}</div>
+          <PostedDate date={deal.offer.postedDate} color="#0F6E56"/>
+          {deal.offer.sellerEmail && <a href={`mailto:${deal.offer.sellerEmail}`} style={{display:"inline-flex",alignItems:"center",gap:3,fontSize:10,color:"#085041",textDecoration:"none",marginTop:3,fontWeight:500}}><i className="ti ti-mail" aria-hidden="true" style={{fontSize:11}}/>{deal.offer.sellerEmail}</a>}
+          <div style={{display:"flex",flexWrap:"wrap",gap:4,marginTop:5}}>
+            {deal.offer.link && /^https?:\/\//.test(deal.offer.link) && <a href={deal.offer.link} target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:3,fontSize:10,color:"#fff",textDecoration:"none",padding:"2px 8px",borderRadius:20,background:"#0F6E56",border:"0.5px solid #0F6E56",fontWeight:500}}>
+              <i className="ti ti-external-link" aria-hidden="true" style={{fontSize:11}}/> Inzerát prodávajícího
+            </a>}
+            {buildSourceLinks(deal.offer.searchQuery||deal.offer.title).slice(0,4).map(s=>(
+              <a key={s.id} href={s.href} target="_blank" rel="noopener noreferrer"
+                style={{display:"inline-flex",alignItems:"center",gap:2,fontSize:10,padding:"2px 7px",borderRadius:20,textDecoration:"none",background:s.color,border:`0.5px solid ${s.border}`,color:s.text,whiteSpace:"nowrap"}}>
+                {s.name} ↗
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="ms-summary" style={{borderBottom:expanded?"0.5px solid var(--color-border-tertiary)":"none"}}>
+        <Badge status={deal.status}/>
+        <SegmentBadge segment={deal.segment}/>
+        <MatchScore deal={deal}/>
+        <div style={{display:"flex",alignItems:"center",gap:6}}>
+          <div style={{background:"#EAF3DE",border:"0.5px solid #C0DD97",borderRadius:"var(--border-radius-md)",padding:"4px 10px",display:"flex",alignItems:"baseline",gap:5}}>
+            <span style={{fontSize:18,fontWeight:500,color:"#27500A",letterSpacing:"-0.5px"}}>{netP.formatted}</span>
+            <span style={{fontSize:10,color:"#3B6D11"}}>čistý zisk</span>
+          </div>
+          {editingComm
+            ? <div style={{display:"flex",alignItems:"center",gap:4}}>
+                <input type="number" min="1" max="30" step="0.5" value={commInput}
+                  onChange={e=>{const val=e.target.value;setCommInput(val);const v=parseFloat(val);if(v>0&&v<=30)onCommissionChange(v);}}
+                  onKeyDown={e=>{if(e.key==="Enter"||e.key==="Escape")setEditingComm(false);}}
+                  autoFocus
+                  style={{width:52,fontSize:12,padding:"3px 6px",borderRadius:"var(--border-radius-md)",border:"1.5px solid #534AB7",background:"var(--color-background-primary)",color:"var(--color-text-primary)",textAlign:"center"}}
+                />
+                <span style={{fontSize:11,color:"var(--color-text-secondary)"}}>%</span>
+                <button onClick={()=>setEditingComm(false)} style={{fontSize:10,padding:"3px 8px",borderRadius:"var(--border-radius-md)",border:"0.5px solid #639922",background:"#EAF3DE",cursor:"pointer",color:"#27500A"}}>OK</button>
+              </div>
+            : <button onClick={()=>{setCommInput(String(commission));setEditingComm(true);}} title="Změnit provizi" style={{fontSize:11,padding:"3px 9px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"transparent",cursor:"pointer",color:"var(--color-text-secondary)",display:"flex",alignItems:"center",gap:3}}>
+                <i className="ti ti-percentage" aria-hidden="true" style={{fontSize:12}}/>{commission} %
+              </button>
+          }
+        </div>
+        <div style={{display:"flex",flexWrap:"wrap",gap:3,flex:1}}>
+          {deal.flags.map(f=><span key={f} style={{fontSize:10,padding:"2px 6px",borderRadius:"var(--border-radius-md)",background:"#EAF3DE",color:"#3B6D11",border:"0.5px solid #C0DD97"}}>{f}</span>)}
+          {deal.warnings.map(w=><span key={w} style={{fontSize:10,padding:"2px 6px",borderRadius:"var(--border-radius-md)",background:"#FAEEDA",color:"#854F0B",border:"0.5px solid #FAC775"}}>{w}</span>)}
+        </div>
+        <button onClick={()=>setExpanded(!expanded)} style={{fontSize:11,padding:"4px 10px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"transparent",cursor:"pointer",color:"var(--color-text-secondary)"}}>
+          {expanded?"Skrýt ↑":"Detail ↓"}
+        </button>
+      </div>
+
+      {expanded&&(
+        <div style={{padding:"12px 14px"}}>
+          <div style={{marginBottom:14}}>
+            <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:6,fontWeight:500}}>Hledat na evropských platformách</div>
+            <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+              {buildSourceLinks(deal.offer.searchQuery||deal.offer.title).map(s=>(
+                <a key={s.id} href={s.href} target="_blank" rel="noopener noreferrer"
+                  style={{display:"inline-flex",alignItems:"center",gap:3,fontSize:11,padding:"4px 10px",borderRadius:20,textDecoration:"none",background:s.color,border:`0.5px solid ${s.border}`,color:s.text}}>
+                  {s.name} ↗
+                </a>
               ))}
-            </ul>
-            <button onClick={() => setOpenId(null)}>Zavřít</button>
+            </div>
+          </div>
+          <div className="ms-grid-2" style={{marginBottom:14}}>
+            <div style={{padding:"8px 11px",background:"#EEEDFE",borderRadius:"var(--border-radius-md)",border:"0.5px solid #CECBF6"}}>
+              <div style={{fontSize:10,fontWeight:500,color:"#534AB7",marginBottom:4,letterSpacing:".03em"}}>KONTAKT — KUPUJÍCÍ</div>
+              <div style={{fontSize:11,color:"#3C3489"}}>{deal.demand.buyer||"—"}</div>
+              {deal.demand.buyerEmail
+                ? <a href={`mailto:${deal.demand.buyerEmail}`} style={{fontSize:11,color:"#534AB7",textDecoration:"none",display:"block",marginTop:2}}>✉ {deal.demand.buyerEmail}</a>
+                : <div style={{fontSize:11,color:"#854F0B",marginTop:2}}>⚠ bez e-mailu</div>}
+              {deal.demand.buyerPhone && <a href={`tel:${deal.demand.buyerPhone}`} style={{fontSize:11,color:"#534AB7",textDecoration:"none",display:"block",marginTop:1}}>☎ {deal.demand.buyerPhone}</a>}
+            </div>
+            <div style={{padding:"8px 11px",background:"#E1F5EE",borderRadius:"var(--border-radius-md)",border:"0.5px solid #9FE1CB"}}>
+              <div style={{fontSize:10,fontWeight:500,color:"#0F6E56",marginBottom:4,letterSpacing:".03em"}}>KONTAKT — PRODÁVAJÍCÍ</div>
+              <div style={{fontSize:11,color:"#085041"}}>{deal.offer.seller||"—"}{deal.offer.price?` · ${deal.offer.price} k€`:""}</div>
+              {deal.offer.sellerEmail
+                ? <a href={`mailto:${deal.offer.sellerEmail}`} style={{fontSize:11,color:"#0F6E56",textDecoration:"none",display:"block",marginTop:2}}>✉ {deal.offer.sellerEmail}</a>
+                : <div style={{fontSize:11,color:"#854F0B",marginTop:2}}>⚠ bez e-mailu</div>}
+              {deal.offer.sellerPhone && <a href={`tel:${deal.offer.sellerPhone}`} style={{fontSize:11,color:"#0F6E56",textDecoration:"none",display:"block",marginTop:1}}>☎ {deal.offer.sellerPhone}</a>}
+            </div>
+          </div>
+          <div style={{marginBottom:14}}>
+            <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:6,fontWeight:500}}>Shoda kritérií</div>
+            <div style={{display:"flex",gap:5,flexWrap:"wrap"}}>
+              {[{k:"brand",l:"Značka",p:25},{k:"specs",l:"Specifikace",p:30},{k:"year",l:"Rok",p:20,multi:true},{k:"budget",l:"Budget",p:15,multi:true},{k:"extras",l:"Extras",p:10}].map(c=>{
+                const val=deal.matchCriteria[c.k];const ok=val===true||val==="ok";const partial=val==="borderline"||val==="tight";
+                return(<div key={c.k} style={{fontSize:11,padding:"3px 9px",borderRadius:"var(--border-radius-md)",border:`0.5px solid ${ok?"#C0DD97":partial?"#FAC775":"var(--color-border-tertiary)"}`,background:ok?"#EAF3DE":partial?"#FAEEDA":"var(--color-background-secondary)",color:ok?"#27500A":partial?"#854F0B":"var(--color-text-secondary)",display:"flex",alignItems:"center",gap:4}}>
+                  <span>{ok?"✓":partial?"~":"✗"}</span><span>{c.l}</span><span style={{opacity:.6,fontSize:10}}>{c.p}b.</span>
+                </div>);
+              })}
+              <div style={{fontSize:11,padding:"3px 9px",borderRadius:"var(--border-radius-md)",border:`1.5px solid ${col.border}`,background:col.bg,color:col.text,fontWeight:500}}>= {calcMatchScore(deal)} / 100</div>
+            </div>
+          </div>
+
+          <div style={{marginBottom:14}}>
+            <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:2,fontWeight:500,display:"flex",alignItems:"center",gap:5}}>
+              <i className="ti ti-calculator" aria-hidden="true" style={{fontSize:13}}/>Kalkulace logistiky
+            </div>
+            <CostBreakdown deal={deal} onUpdate={onUpdate}/>
+          </div>
+
+          <div style={{fontSize:12,color:"var(--color-text-secondary)",marginBottom:10}}>
+            <i className="ti ti-mail" aria-hidden="true" style={{fontSize:13,marginRight:5}}/>
+            {deal.emails.buyer?<span style={{color:"#639922"}}>Kupující osloven {new Date(deal.emails.buyer).toLocaleDateString("cs-CZ")}</span>:<span>Kupující — neosloven</span>}
+            {" · "}
+            {deal.emails.seller?<span style={{color:"#639922"}}>Prodávající osloven {new Date(deal.emails.seller).toLocaleDateString("cs-CZ")}</span>:<span>Prodávající — neosloven</span>}
+          </div>
+
+          <div style={{display:"flex",gap:6,marginBottom:12,flexWrap:"wrap"}}>
+            <button onClick={()=>setEmailModal("buyer")} style={{fontSize:12,padding:"6px 12px",borderRadius:"var(--border-radius-md)",border:"0.5px solid #AFA9EC",background:"#EEEDFE",cursor:"pointer",color:"#3C3489",display:"flex",alignItems:"center",gap:5}}>
+              <i className="ti ti-mail" aria-hidden="true" style={{fontSize:13}}/> Oslovi kupujícího
+            </button>
+            <button onClick={()=>setEmailModal("seller")} style={{fontSize:12,padding:"6px 12px",borderRadius:"var(--border-radius-md)",border:"0.5px solid #9FE1CB",background:"#E1F5EE",cursor:"pointer",color:"#085041",display:"flex",alignItems:"center",gap:5}}>
+              <i className="ti ti-mail" aria-hidden="true" style={{fontSize:13}}/> Oslovi prodávajícího
+            </button>
+          </div>
+
+          <div style={{marginBottom:12}}>
+            <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:5}}>Status dealu:</div>
+            <div style={{display:"flex",gap:5,flexWrap:"wrap"}}>
+              {Object.entries(STATUS_CONFIG).map(([key,cfg])=>(
+                <button key={key} onClick={()=>onUpdate(deal.id,{status:key})} style={{fontSize:11,padding:"3px 10px",borderRadius:20,border:deal.status===key?`1.5px solid ${cfg.dot}`:"0.5px solid var(--color-border-secondary)",background:deal.status===key?cfg.color:"transparent",color:deal.status===key?cfg.text:"var(--color-text-secondary)",cursor:"pointer",fontWeight:deal.status===key?500:400,transition:"all .15s"}}>{cfg.label}</button>
+              ))}
+            </div>
+          </div>
+
+          <div style={{marginBottom:12}}>
+            <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:5}}>Poznámky:</div>
+            <textarea value={notes} onChange={e=>setNotes(e.target.value)} onBlur={()=>onUpdate(deal.id,{notes})} placeholder="Přidej poznámku k dealu..." style={{width:"100%",minHeight:65,fontSize:12,padding:"8px 10px",lineHeight:1.5,border:"0.5px solid var(--color-border-secondary)",borderRadius:"var(--border-radius-md)",background:"var(--color-background-secondary)",color:"var(--color-text-primary)",resize:"vertical"}}/>
+          </div>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",borderTop:"0.5px solid var(--color-border-tertiary)",paddingTop:10,gap:8,flexWrap:"wrap"}}>
+            <span style={{fontSize:10,color:"var(--color-text-tertiary)"}}>Vytvořeno {new Date(deal.createdAt).toLocaleDateString("cs-CZ")}</span>
+            <div style={{display:"flex",gap:6}}>
+              <button onClick={()=>onEdit(deal)} style={{fontSize:11,padding:"6px 12px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"transparent",cursor:"pointer",color:"var(--color-text-primary)",display:"flex",alignItems:"center",gap:4}}>
+                <i className="ti ti-edit" aria-hidden="true" style={{fontSize:12}}/>Upravit
+              </button>
+              <button onClick={()=>{if(confirm(`Smazat deal "${deal.demand.title}"?`))onDelete(deal.id);}} style={{fontSize:11,padding:"6px 12px",borderRadius:"var(--border-radius-md)",border:"0.5px solid #F7C1C1",background:"transparent",cursor:"pointer",color:"#791F1F",display:"flex",alignItems:"center",gap:4}}>
+                <i className="ti ti-trash" aria-hidden="true" style={{fontSize:12}}/>Smazat
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -226,9 +1151,256 @@ function App() {
   );
 }
 
+// ── App ────────────────────────────────────────────────────────────────────────
+function ResponsiveStyles(){
+  return (
+    <style>{`
+      .ms-app { padding: 1rem; max-width: 920px; margin: 0 auto; }
+      .ms-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 1000; overflow-y: auto; }
+      .ms-modal-box { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; }
+      .ms-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+      .ms-card-header { display: grid; grid-template-columns: 1fr 1fr; }
+      .ms-summary { padding: 9px 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+      .ms-header-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+      .ms-tap { min-height: 32px; }
+      @media (max-width: 560px) {
+        .ms-app { padding: 0.75rem 0.6rem; }
+        .ms-grid-2 { grid-template-columns: 1fr; }
+        .ms-card-header { grid-template-columns: 1fr; }
+        .ms-card-header > div { border-right: none !important; }
+        .ms-modal-box { padding: 1rem; max-height: 92vh; }
+        .ms-modal-overlay { padding: 8px; align-items: flex-start; }
+        .ms-header-actions { width: 100%; }
+        .ms-header-actions button, .ms-header-actions label { flex: 1; justify-content: center; min-height: 40px; }
+        .ms-tap { min-height: 40px; }
+        .ms-stat-grid { grid-template-columns: 1fr 1fr !important; }
+      }
+      @media (max-width: 380px) {
+        .ms-stat-grid { grid-template-columns: 1fr !important; }
+      }
+    `}</style>
+  );
+}
+
+function App(){
+  const [deals,setDeals]=useState(()=>{try{const s=localStorage.getItem(DEALS_KEY);return s?JSON.parse(s):initialDeals;}catch{return initialDeals;}});
+  const [commission,setCommission]=useState(()=>{ try{const v=localStorage.getItem("ms_commission");return v?parseFloat(v):5;}catch{return 5;}});
+  const [filter,setFilter]=useState("all");
+  const [segFilter,setSegFilter]=useState("all");
+  const [search,setSearch]=useState("");
+  const [sortBy,setSortBy]=useState("date");
+  const [showAdd,setShowAdd]=useState(false);
+  const [editDeal,setEditDeal]=useState(null);
+  const [storageNote,setStorageNote]=useState("");
+
+  const handleCommissionChange = (v) => {
+    setCommission(v);
+    try{localStorage.setItem("ms_commission",String(v));}catch{}
+  };
+
+  const snapRef = React.useRef(false);
+  useEffect(()=>{
+    try{
+      localStorage.setItem(DEALS_KEY,JSON.stringify(deals));
+      if(snapRef.current){
+        const snapRaw=localStorage.getItem("ms_snapshots");
+        const snaps=snapRaw?JSON.parse(snapRaw):[];
+        snaps.unshift({at:new Date().toISOString(),count:deals.length,data:deals});
+        localStorage.setItem("ms_snapshots",JSON.stringify(snaps.slice(0,3)));
+      } else { snapRef.current=true; }
+    }catch{setStorageNote("Data se neukládají (incognito nebo blokované úložiště)");}
+  }, [deals]);
+
+  const [showBackupHint,setShowBackupHint]=useState(false);
+  const [showSync,setShowSync]=useState(false);
+  const [syncCfg,setSyncCfg]=useState(()=>getSyncConfig());
+  const [syncStatus,setSyncStatus]=useState("idle"); // idle | syncing | ok | error
+  const [lastSync,setLastSync]=useState(null);
+  const mountedRef = React.useRef(false);
+  const changeRef = React.useRef(0);
+  useEffect(()=>{
+    if(!mountedRef.current){ mountedRef.current=true; return; }
+    changeRef.current+=1;
+    if(changeRef.current%15===0) setShowBackupHint(true);
+  }, [deals]);
+
+  // Auto-push to cloud (debounced 2s) when configured
+  const syncTimerRef = React.useRef(null);
+  const firstSyncRef = React.useRef(false);
+  useEffect(()=>{
+    if(!syncCfg) return;
+    if(!firstSyncRef.current){ firstSyncRef.current=true; return; }
+    clearTimeout(syncTimerRef.current);
+    syncTimerRef.current=setTimeout(async()=>{
+      setSyncStatus("syncing");
+      try{ await cloudPush(syncCfg,{deals,commission,updatedAt:new Date().toISOString()});
+        setSyncStatus("ok"); setLastSync(new Date()); }
+      catch{ setSyncStatus("error"); }
+    },2000);
+    return ()=>clearTimeout(syncTimerRef.current);
+  }, [deals,commission,syncCfg]);
+
+  const handlePull=(payload)=>{
+    if(payload?.deals) setDeals(payload.deals);
+    if(payload?.commission) handleCommissionChange(payload.commission);
+    setLastSync(new Date());
+  };
+
+  const updateDeal=useCallback((id,patch)=>{setDeals(prev=>prev.map(d=>d.id===id?{...d,...patch}:d));},[]);
+  const addDeal=useCallback((deal)=>{setDeals(prev=>[deal,...prev]);},[]);
+  const saveEdit=useCallback((id,patch)=>{setDeals(prev=>prev.map(d=>d.id===id?{...d,...patch}:d));setEditDeal(null);},[]);
+  const openEdit=useCallback((deal)=>{setEditDeal(deal);setShowAdd(true);},[]);
+  const deleteDeal=useCallback((id)=>{setDeals(prev=>prev.filter(d=>d.id!==id));},[]);
+
+  const exportData=()=>{
+    const blob=new Blob([JSON.stringify({deals,commission,exportedAt:new Date().toISOString()},null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");a.href=url;a.download=`machinery-deals-${new Date().toISOString().slice(0,10)}.json`;a.click();
+    URL.revokeObjectURL(url);
+  };
+  const importData=(e)=>{
+    const file=e.target.files?.[0];if(!file)return;
+    const reader=new FileReader();
+    reader.onload=(ev)=>{
+      try{
+        const data=JSON.parse(ev.target.result);
+        if(Array.isArray(data.deals)){setDeals(data.deals);if(data.commission)handleCommissionChange(data.commission);}
+        else if(Array.isArray(data)){setDeals(data);}
+      }catch{alert("Neplatný soubor — očekávám JSON export.");}
+    };
+    reader.readAsText(file);e.target.value="";
+  };
+
+  let working = deals;
+  if(segFilter!=="all") working=working.filter(d=>d.segment===segFilter);
+  if(filter!=="all") working=working.filter(d=>d.status===filter);
+  if(search.trim()){
+    const q=search.toLowerCase();
+    working=working.filter(d=>
+      d.demand.title.toLowerCase().includes(q)||
+      d.offer.title.toLowerCase().includes(q)||
+      (d.demand.buyer||"").toLowerCase().includes(q)||
+      (d.offer.seller||"").toLowerCase().includes(q)||
+      (d.demand.country||"").toLowerCase().includes(q)||
+      (d.offer.sellerCountry||"").toLowerCase().includes(q)||
+      (SEGMENTS[d.segment]?.label||"").toLowerCase().includes(q)
+    );
+  }
+  const filtered=[...working].sort((a,b)=>{
+    if(sortBy==="profit")return calcNetProfit(b,commission).net-calcNetProfit(a,commission).net;
+    if(sortBy==="score")return calcMatchScore(b)-calcMatchScore(a);
+    return new Date(b.createdAt)-new Date(a.createdAt);
+  });
+
+  const totalNetMin=deals.filter(d=>d.status!=="lost").reduce((a,d)=>a+calcNetProfit(d,commission).lo,0);
+  const totalNetMax=deals.filter(d=>d.status!=="lost").reduce((a,d)=>a+calcNetProfit(d,commission).hi,0);
+  const avgScore=deals.length?Math.round(deals.reduce((a,d)=>a+calcMatchScore(d),0)/deals.length):0;
+
+  return(
+    <div className="ms-app" style={{fontFamily:"var(--font-sans)"}}>
+      <ResponsiveStyles/>
+      {showAdd&&<AddDealModal onClose={()=>{setShowAdd(false);setEditDeal(null);}} onAdd={addDeal} onSaveEdit={saveEdit} editDeal={editDeal}/>}
+      {showSync&&<SyncModal onClose={()=>setShowSync(false)} onConfigSaved={setSyncCfg} onPull={handlePull} deals={deals} commission={commission}/>}
+
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:"1.25rem",gap:10,flexWrap:"wrap"}}>
+        <div>
+          <div style={{fontSize:18,fontWeight:500,color:"var(--color-text-primary)"}}>Machinery Deals</div>
+          <div style={{fontSize:12,color:"var(--color-text-secondary)",marginTop:2}}>Pipeline párovatelných strojů · {deals.length} dealů</div>
+        </div>
+        <div className="ms-header-actions">
+          <button onClick={()=>setShowAdd(true)} style={{fontSize:12,padding:"6px 14px",borderRadius:"var(--border-radius-md)",border:"0.5px solid #534AB7",background:"#EEEDFE",cursor:"pointer",color:"#3C3489",fontWeight:500,display:"flex",alignItems:"center",gap:5}}>
+            <i className="ti ti-plus" aria-hidden="true" style={{fontSize:13}}/> Přidat poptávku
+          </button>
+          <button onClick={exportData} title="Export dat (JSON)" style={{fontSize:11,padding:"6px 10px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"transparent",cursor:"pointer",color:"var(--color-text-secondary)",display:"flex",alignItems:"center",gap:4}}>
+            <i className="ti ti-download" aria-hidden="true" style={{fontSize:13}}/>Export
+          </button>
+          <label title="Import dat (JSON)" style={{fontSize:11,padding:"6px 10px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"transparent",cursor:"pointer",color:"var(--color-text-secondary)",display:"flex",alignItems:"center",gap:4}}>
+            <i className="ti ti-upload" aria-hidden="true" style={{fontSize:13}}/>Import
+            <input type="file" accept="application/json,.json" onChange={importData} style={{display:"none"}}/>
+          </label>
+          <button onClick={()=>setShowSync(true)} title="Cloud sync" style={{fontSize:11,padding:"6px 10px",borderRadius:"var(--border-radius-md)",border:`0.5px solid ${syncCfg?"#9FE1CB":"var(--color-border-secondary)"}`,background:syncCfg?"#E1F5EE":"transparent",cursor:"pointer",color:syncCfg?"#085041":"var(--color-text-secondary)",display:"flex",alignItems:"center",gap:4}}>
+            <i className={`ti ${syncStatus==="syncing"?"ti-cloud-cog":syncStatus==="ok"?"ti-cloud-check":syncStatus==="error"?"ti-cloud-x":"ti-cloud"}`} aria-hidden="true" style={{fontSize:13}}/>{syncCfg?"Cloud":"Cloud sync"}
+          </button>
+          <button onClick={()=>{if(deals.length>0&&confirm(`Smazat všech ${deals.length} dealů? Doporučuji nejprve Export.`))setDeals([]);}} style={{fontSize:11,padding:"5px 10px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"transparent",cursor:"pointer",color:"var(--color-text-tertiary)"}}>Smazat vše</button>
+        </div>
+      </div>
+
+      {storageNote&&<div style={{fontSize:11,padding:"6px 12px",marginBottom:12,background:"#FAEEDA",color:"#854F0B",borderRadius:"var(--border-radius-md)",border:"0.5px solid #FAC775"}}>{storageNote}</div>}
+      {syncCfg&&<div style={{fontSize:10,color:"var(--color-text-tertiary)",marginBottom:10,display:"flex",alignItems:"center",gap:5}}>
+        <i className={`ti ${syncStatus==="syncing"?"ti-cloud-cog":syncStatus==="error"?"ti-cloud-x":"ti-cloud-check"}`} aria-hidden="true" style={{fontSize:12,color:syncStatus==="error"?"#C0392B":syncStatus==="syncing"?"#BA7517":"#639922"}}/>
+        {syncStatus==="syncing"?"Synchronizuji...":syncStatus==="error"?"Sync selhal — zkontroluj připojení":lastSync?`Synchronizováno ${lastSync.toLocaleTimeString("cs-CZ")}`:"Cloud připojen"}
+      </div>}
+      {showBackupHint&&<div style={{fontSize:11,padding:"8px 12px",marginBottom:12,background:"#E6F1FB",color:"#0C447C",borderRadius:"var(--border-radius-md)",border:"0.5px solid #B5D4F4",display:"flex",alignItems:"center",justifyContent:"space-between",gap:8,flexWrap:"wrap"}}>
+        <span><i className="ti ti-shield-check" aria-hidden="true" style={{fontSize:13,marginRight:5}}/>Doporučuji zálohu — udělal jsi řadu změn. Export uloží vše do souboru.</span>
+        <span style={{display:"flex",gap:6}}>
+          <button onClick={()=>{exportData();setShowBackupHint(false);}} style={{fontSize:11,padding:"4px 12px",borderRadius:"var(--border-radius-md)",border:"0.5px solid #378ADD",background:"#fff",cursor:"pointer",color:"#0C447C",fontWeight:500}}>Exportovat teď</button>
+          <button onClick={()=>setShowBackupHint(false)} style={{fontSize:11,padding:"4px 10px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"transparent",cursor:"pointer",color:"var(--color-text-secondary)"}}>Později</button>
+        </span>
+      </div>}
+
+      <div className="ms-stat-grid" style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(100px,1fr))",gap:8,marginBottom:"1.25rem"}}>
+        <StatCard label="Celkem dealů" value={deals.length}/>
+        <StatCard label="Průměrná shoda" value={`${avgScore} %`} color={scoreColor(avgScore).text}/>
+        <StatCard label="Osloveno" value={deals.filter(d=>d.status==="contacted").length} color="#BA7517"/>
+        <StatCard label="Vyjednávání" value={deals.filter(d=>d.status==="negotiating").length} color="#534AB7"/>
+        <StatCard label="Uzavřeno" value={deals.filter(d=>d.status==="closed").length} color="#3B6D11"/>
+        <StatCard label="Čistý zisk pipeline" value={`${totalNetMin}–${totalNetMax} k€`} color="#27500A" sub={`při provizi ${commission} %`}/>
+      </div>
+
+      <div style={{display:"flex",gap:8,marginBottom:"0.75rem",flexWrap:"wrap",alignItems:"center"}}>
+        <div style={{position:"relative",flex:1,minWidth:180}}>
+          <i className="ti ti-search" aria-hidden="true" style={{position:"absolute",left:10,top:"50%",transform:"translateY(-50%)",fontSize:14,color:"var(--color-text-tertiary)"}}/>
+          <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Hledat stroj, firmu, zemi..." style={{width:"100%",fontSize:12,padding:"7px 10px 7px 32px",borderRadius:"var(--border-radius-md)",border:"0.5px solid var(--color-border-secondary)",background:"var(--color-background-secondary)",color:"var(--color-text-primary)"}}/>
+        </div>
+        <div style={{display:"flex",gap:4,alignItems:"center"}}>
+          <span style={{fontSize:11,color:"var(--color-text-secondary)"}}>Řadit:</span>
+          {[["date","Datum"],["profit","Zisk"],["score","Shoda"]].map(([k,l])=>(
+            <button key={k} onClick={()=>setSortBy(k)} style={{fontSize:11,padding:"4px 10px",borderRadius:20,cursor:"pointer",border:sortBy===k?"1.5px solid #534AB7":"0.5px solid var(--color-border-secondary)",background:sortBy===k?"#EEEDFE":"transparent",color:sortBy===k?"#3C3489":"var(--color-text-secondary)",fontWeight:sortBy===k?500:400}}>{l}</button>
+          ))}
+        </div>
+      </div>
+
+      <div style={{display:"flex",gap:5,marginBottom:"0.5rem",flexWrap:"wrap"}}>
+        <span style={{fontSize:11,color:"var(--color-text-secondary)",lineHeight:"28px"}}>Segment:</span>
+        {[["all","Vše"],...Object.entries(SEGMENTS).map(([k,v])=>[k,v.label])].map(([key,label])=>{
+          const count=key==="all"?deals.length:deals.filter(d=>d.segment===key).length;
+          if(key!=="all"&&count===0) return null;
+          const cfg=SEGMENTS[key];
+          return(<button key={key} onClick={()=>setSegFilter(key)} style={{fontSize:11,padding:"4px 10px",borderRadius:20,border:segFilter===key?`1.5px solid ${cfg?.border||"var(--color-border-primary)"}`:"0.5px solid var(--color-border-secondary)",background:segFilter===key?(cfg?.color||"var(--color-background-secondary)"):"transparent",cursor:"pointer",color:segFilter===key?(cfg?.text||"var(--color-text-primary)"):"var(--color-text-secondary)",fontWeight:segFilter===key?500:400}}>{label}{count>0&&<span style={{opacity:.6}}> ({count})</span>}</button>);
+        })}
+      </div>
+      <div style={{display:"flex",gap:6,marginBottom:"1rem",flexWrap:"wrap"}}>
+        {[["all","Vše"],...Object.entries(STATUS_CONFIG).map(([k,v])=>[k,v.label])].map(([key,label])=>{
+          const count=key==="all"?deals.length:deals.filter(d=>d.status===key).length;
+          return(<button key={key} onClick={()=>setFilter(key)} style={{fontSize:11,padding:"4px 12px",borderRadius:20,border:filter===key?"1.5px solid var(--color-border-primary)":"0.5px solid var(--color-border-secondary)",background:filter===key?"var(--color-background-secondary)":"transparent",cursor:"pointer",color:"var(--color-text-primary)",fontWeight:filter===key?500:400}}>{label}{count>0&&<span style={{opacity:.6}}> ({count})</span>}</button>);
+        })}
+      </div>
+
+      <div style={{display:"flex",flexDirection:"column",gap:10}}>
+        {filtered.length===0&&(
+          deals.length===0
+            ? <div style={{textAlign:"center",padding:"2.5rem 1.5rem",color:"var(--color-text-secondary)"}}>
+                <i className="ti ti-inbox" aria-hidden="true" style={{fontSize:34,opacity:0.4,display:"block",marginBottom:10}}/>
+                <div style={{fontSize:14,fontWeight:500,color:"var(--color-text-primary)",marginBottom:4}}>Zatím žádné dealy</div>
+                <div style={{fontSize:12,marginBottom:16}}>Přidej první poptávku a spáruj ji s nabídkou — ručně nebo přes AI.</div>
+                <button onClick={()=>setShowAdd(true)} style={{fontSize:12,padding:"7px 16px",borderRadius:"var(--border-radius-md)",border:"0.5px solid #534AB7",background:"#EEEDFE",cursor:"pointer",color:"#3C3489",fontWeight:500,display:"inline-flex",alignItems:"center",gap:5}}>
+                  <i className="ti ti-plus" aria-hidden="true" style={{fontSize:13}}/> Přidat poptávku
+                </button>
+              </div>
+            : <div style={{textAlign:"center",padding:"2rem",color:"var(--color-text-secondary)",fontSize:13}}>{search?"Žádný deal neodpovídá hledání.":"Žádné dealy v tomto stavu."}</div>
+        )}
+        {filtered.map(deal=><DealCard key={deal.id} deal={deal} onUpdate={updateDeal} onDelete={deleteDeal} onEdit={openEdit} commission={commission} onCommissionChange={handleCommissionChange}/>)}
+      </div>
+
+      <div style={{marginTop:"1.5rem",padding:"10px 14px",background:"var(--color-background-secondary)",borderRadius:"var(--border-radius-md)",fontSize:11,color:"var(--color-text-secondary)"}}>
+        Data v localStorage · Záloha: tlačítko Export (JSON) · Zisk = cena × provize · Pro produkci: Supabase / HubSpot API
+      </div>
+    </div>
+  );
+}
+
 
 ReactDOM.render(<App />, document.getElementById("root"));
-
-  </script>
+</script>
 </body>
 </html>
