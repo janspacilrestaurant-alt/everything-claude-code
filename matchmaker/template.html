@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Machinery Deals CRM</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.3.0/tabler-icons.min.css">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #1e293b;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: var(--bg); color: var(--text); }
+    .app { max-width: 1200px; margin: 0 auto; padding: 16px; }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+    h1 { margin: 0; font-size: 20px; color: var(--accent); }
+    .filters { display: flex; gap: 8px; align-items: center; }
+    .count { color: var(--muted); font-size: 14px; }
+    select, button { background: var(--panel); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; }
+    table { width: 100%; border-collapse: collapse; background: var(--panel); border-radius: 8px; overflow: hidden; }
+    th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); font-size: 14px; }
+    th { background: #0b1220; color: var(--muted); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+    tr:hover td { background: #243246; }
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: grid; place-items: center; padding: 16px; }
+    .modal-content { background: var(--panel); padding: 20px; border-radius: 10px; max-width: 600px; width: 100%; max-height: 90vh; overflow: auto; }
+    .modal-content hr { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+    a { color: var(--accent); }
+    @media (max-width: 640px) {
+      th:nth-child(4), td:nth-child(4) { display: none; }
+      th:nth-child(7), td:nth-child(7) { display: none; }
+    }
+  </style>
+  <!--PRELOAD-->
+{{PRELOAD}}
+  <!--/PRELOAD-->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" data-presets="react">
+{{JSX}}
+  </script>
+</body>
+</html>
