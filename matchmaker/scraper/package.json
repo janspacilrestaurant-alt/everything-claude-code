@@ -1,0 +1,21 @@
+{
+  "name": "machinery-deals-scraper",
+  "version": "1.0.0",
+  "description": "Daily scraper for Machinery Deals CRM. Pulls fresh offers from Machineseeker/Exapro/Surplex and demands from EEN/TED, normalizes them, and upserts into Supabase deals_eu.",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "scrape": "node src/index.js",
+    "scrape:dry": "DRY_RUN=1 node src/index.js",
+    "scrape:debug": "HEADLESS=0 DEBUG=1 node src/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "dotenv": "^16.4.5",
+    "p-limit": "^6.1.0",
+    "playwright": "^1.48.0"
+  }
+}

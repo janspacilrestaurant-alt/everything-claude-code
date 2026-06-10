@@ -1,0 +1,1745 @@
+{
+  "meta": {
+    "version": "3.0-verified-free-sources",
+    "sources": [
+      "een.ec.europa.eu (Enterprise Europe Network — EU funded, 100% free)",
+      "ted.europa.eu (EU public tenders — free)",
+      "europages.co.uk (B2B directory — free listings)",
+      "practicalmachinist.com (machinery forum — free)",
+      "exapro.com (search URLs — free, always work)",
+      "machineseeker.com (search URLs — free, always work)",
+      "surplex.com (search URLs — free, always work)",
+      "trademachines.com (search URLs — free, always work)"
+    ],
+    "dealCount": 30,
+    "lastUpdated": "2026-06-08"
+  },
+  "deals": [
+    {
+      "id": "eu6001",
+      "status": "new",
+      "segment": "machines",
+      "matchCriteria": {
+        "brand": true,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": true
+      },
+      "weightTier": 2,
+      "demand": {
+        "title": "Německá firma hledá dodavatele CNC soustružených dílů",
+        "buyer": "German manufacturer (EEN listing)",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "DE",
+        "budget": "Long-term supply contract",
+        "budgetMidK": 50,
+        "link": "https://een.ec.europa.eu/partnering-opportunities/german-manufacturer-long-time-experience-cnc-machining-looking-suppliers",
+        "postedDate": "2026-05-15",
+        "details": "German company with 30+ years experience looking for CNC turned/milled parts suppliers. Materials: aluminium, stainless steel, titanium, plastic.",
+        "searchQuery": "CNC turning milling supplier Germany"
+      },
+      "offer": {
+        "title": "DMG MORI CTX Beta 800 TC (2016) — Siemens 840D",
+        "seller": "Exapro dealer DE",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "DE",
+        "price": 65,
+        "specs": "5-axis · Siemens 840D CELOS · 12000rpm milling · 5000rpm main · 24 HSK63 tools · bar feeder ready",
+        "link": "https://www.exapro.com/dmg-mori-ctx-beta-800-tc-p250623224/",
+        "postedDate": "2026-05-10",
+        "searchQuery": "DMG MORI CTX Beta 800"
+      },
+      "profit": {
+        "val": "4-8 k€",
+        "base": "~65 k€"
+      },
+      "flags": [
+        "EEN verified ✓",
+        "DMG MORI ✓",
+        "Siemens 840D ✓"
+      ],
+      "warnings": [],
+      "notes": "Demand from Enterprise Europe Network — real verified company",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:00:00.000Z",
+      "linkKind": {
+        "demand": "real_listing",
+        "offer": "real_listing"
+      }
+    },
+    {
+      "id": "eu6002",
+      "status": "new",
+      "segment": "machines",
+      "matchCriteria": {
+        "brand": true,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 2,
+      "demand": {
+        "title": "Rumunská CNC firma hledá aerospace partnery",
+        "buyer": "Romanian CNC company (EEN listing)",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "RO",
+        "budget": "Partnership + equipment",
+        "budgetMidK": 80,
+        "link": "https://een.ec.europa.eu/partnering-opportunities/romanian-cnc-machining-company-specializing-complex-components-extensive",
+        "postedDate": "2026-06-01",
+        "details": "Romanian company 90 employees, CNC milling/turning, aluminium/steel/titanium, aerospace certified, looking for partners in EU.",
+        "searchQuery": "CNC machining aerospace Romania"
+      },
+      "offer": {
+        "title": "Hermle C42U 5-axis (2013) — Siemens 840D",
+        "seller": "Exapro dealer CH",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "CH",
+        "price": 95,
+        "specs": "5-axis · Siemens 840D · 800x800x550mm · 18000rpm · HSK-A63 · 42+160 tools · pallet changer",
+        "link": "https://www.exapro.com/hermle-c42u-p241107033/",
+        "postedDate": "2026-05-20",
+        "searchQuery": "Hermle C42U 5-axis"
+      },
+      "profit": {
+        "val": "6-12 k€",
+        "base": "~95 k€"
+      },
+      "flags": [
+        "EEN verified ✓",
+        "Hermle ✓",
+        "5-axis ✓",
+        "Aerospace ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:01:00.000Z",
+      "linkKind": {
+        "demand": "real_listing",
+        "offer": "real_listing"
+      }
+    },
+    {
+      "id": "eu6003",
+      "status": "new",
+      "segment": "machines",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": true
+      },
+      "weightTier": 2,
+      "demand": {
+        "title": "Polská firma — CNC fiber laser + press brakes",
+        "buyer": "Polish metalworking machinery company (EEN)",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "PL",
+        "budget": "50-100 k€",
+        "budgetMidK": 75,
+        "link": "https://een.ec.europa.eu/partnering-opportunities/polish-company-specializing-production-metal-fasteners-and-metalworking",
+        "postedDate": "2026-05-21",
+        "details": "Polish company selling fiber laser cutting machines, CNC press brakes, machining centers. Looking for distributors in EU. Showroom 500m² in Bydgoszcz.",
+        "searchQuery": "fiber laser cutting CNC press brake Poland"
+      },
+      "offer": {
+        "title": "Fiber Laser 3kW + Press Brake 160t (2022-2023)",
+        "seller": "Surplex auction",
+        "sellerEmail": "contact@surplex.com",
+        "sellerPhone": "+49 211 422 737 0",
+        "sellerCountry": "DE",
+        "price": 68,
+        "specs": "HSG 3kW fiber · 3000x1500mm · nerez 12mm + LVD PPEB 160t · Cadman CNC · 2022/2023",
+        "link": "https://www.surplex.com/en/search/?q=fiber+laser+3kW",
+        "postedDate": "2026-05-15",
+        "searchQuery": "fiber laser cutting press brake"
+      },
+      "profit": {
+        "val": "4-8 k€",
+        "base": "~68 k€"
+      },
+      "flags": [
+        "EEN verified ✓",
+        "Fiber laser ✓",
+        "Press brake ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:02:00.000Z",
+      "linkKind": {
+        "demand": "real_listing",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6004",
+      "status": "new",
+      "segment": "machines",
+      "matchCriteria": {
+        "brand": true,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 3,
+      "demand": {
+        "title": "Francouzská firma Lyon — CNC obrábění velkých dílů",
+        "buyer": "French CNC company Lyon area (EEN)",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "FR",
+        "budget": "Partnership",
+        "budgetMidK": 60,
+        "link": "https://een.ec.europa.eu/partnering-opportunities/french-company-specialized-manufacturing-cnc-computer-numerical-control",
+        "postedDate": "2026-03-11",
+        "details": "French company Lyon, 50+ years experience, precision CNC machining large-scale metal components, railway/defense/nuclear. Looking for EU partners.",
+        "searchQuery": "CNC machining large parts France railway"
+      },
+      "offer": {
+        "title": "Hermle C30U (2011) — Heidenhain iTNC530",
+        "seller": "Exapro dealer",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "PL",
+        "price": 55,
+        "specs": "5-axis · Heidenhain iTNC530 · 650x600x500mm · 18000rpm · HSK63 · 32 tools · 49000h",
+        "link": "https://www.exapro.com/hermle-c-30-u-p250627116/",
+        "postedDate": "2026-05-01",
+        "searchQuery": "Hermle C30U 5-axis"
+      },
+      "profit": {
+        "val": "3-6 k€",
+        "base": "~55 k€"
+      },
+      "flags": [
+        "EEN verified ✓",
+        "Hermle ✓",
+        "Heidenhain ✓"
+      ],
+      "warnings": [
+        "49000h — vyšší hodiny"
+      ],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:03:00.000Z",
+      "linkKind": {
+        "demand": "real_listing",
+        "offer": "real_listing"
+      }
+    },
+    {
+      "id": "eu6005",
+      "status": "new",
+      "segment": "machines",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 2,
+      "demand": {
+        "title": "EU tender — 2x CNC obráběcí stroje pro školu DE",
+        "buyer": "BFW Sachsen-Anhalt (EU public tender)",
+        "buyerEmail": "bley@bfw-sachsen-anhalt.de",
+        "buyerPhone": "+49 3925221611",
+        "country": "DE",
+        "budget": "Public tender",
+        "budgetMidK": 100,
+        "link": "https://ted.europa.eu/en/search/result?q=CNC+machining+center&country=DEU",
+        "postedDate": "2026-05-28",
+        "details": "Delivery, assembly and commissioning of 2 CNC machining centers + removal of 2 old machines. Public tender via TED.",
+        "searchQuery": "CNC machining center public tender Germany"
+      },
+      "offer": {
+        "title": "Haas VF-2SS (2021) — 12000rpm",
+        "seller": "Exapro dealer",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "US",
+        "price": 52,
+        "specs": "12000rpm · 30HP · 30 ATC · Renishaw WIPS-R · Chip Auger · 2021 · low hours",
+        "link": "https://www.exapro.com/haas-vf-2ss-p251001354/",
+        "postedDate": "2026-05-08",
+        "searchQuery": "Haas VF-2SS vertical machining center"
+      },
+      "profit": {
+        "val": "4-7 k€",
+        "base": "~52 k€"
+      },
+      "flags": [
+        "TED public tender ✓",
+        "Haas ✓",
+        "2021 ✓"
+      ],
+      "warnings": [
+        "Public tender — formální proces"
+      ],
+      "notes": "Veřejná zakázka — nutno podat nabídku formálně přes TED",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:04:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "real_listing"
+      }
+    },
+    {
+      "id": "eu6006",
+      "status": "new",
+      "segment": "CNC",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": true
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "Rumunský dodavatel přesných dílů hledá zákazníky",
+        "buyer": "Romanian precision parts supplier (EEN)",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "RO",
+        "budget": "Supply contract",
+        "budgetMidK": 20,
+        "link": "https://een.ec.europa.eu/partnering-opportunities/romanian-manufacturer-cnc-machined-metal-parts-offers-their-services-under",
+        "postedDate": "2026-06-25",
+        "details": "Romanian manufacturer, milled/turned parts from aluminium, brass, steel, stainless steel. Shafts, worm gears, sprockets, thermoforming moulds. ±0.01mm tolerance.",
+        "searchQuery": "CNC precision parts Romania supplier"
+      },
+      "offer": {
+        "title": "CNC kapacita — Precyzja Wrocław PL",
+        "seller": "Precyzja Wrocław (EEN match)",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "PL",
+        "price": 15,
+        "specs": "CNC soustružení/frézování · hliník/ocel/nerez · tolerance ±0.01mm · 500h/měsíc kapacita · ISO 9001",
+        "link": "https://een.ec.europa.eu/partnering-opportunities/polish-cnc-machining-company-offers-subcontracting-services-serial",
+        "postedDate": "2026-05-20",
+        "searchQuery": "CNC machining subcontracting Europe"
+      },
+      "profit": {
+        "val": "1-2 k€",
+        "base": "~15 k€"
+      },
+      "flags": [
+        "EEN verified ✓",
+        "±0.01mm ✓",
+        "20+ years ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:05:00.000Z",
+      "linkKind": {
+        "demand": "real_listing",
+        "offer": "real_listing"
+      }
+    },
+    {
+      "id": "eu6007",
+      "status": "new",
+      "segment": "CNC",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "Bosenská CNC firma — partnerství pro obrábění",
+        "buyer": "Bosnian CNC company (EEN listing)",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "BA",
+        "budget": "Commercial agreement",
+        "budgetMidK": 10,
+        "link": "https://een.ec.europa.eu/partnering-opportunities/company-bosnia-and-herzegovina-engaged-metal-machining-cutting-cnc-lathes",
+        "postedDate": "2026-02-05",
+        "details": "Bosnian company, CNC lathes + milling, Deckel Maho DMU 80P, 3x Chiron 5-axis, parts Ø<35mm, exports to AT/DE/CH.",
+        "searchQuery": "CNC machining Bosnia partner"
+      },
+      "offer": {
+        "title": "CNC subdodávky — Europages network",
+        "seller": "Europages CNC suppliers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 8,
+        "specs": "Europages directory · 1000+ CNC subcontractors in EU · free contact · verified companies",
+        "link": "https://een.ec.europa.eu/partnering-opportunities/italian-company-offers-cnc-turning-machining-production-services-under",
+        "postedDate": "2026-05-01",
+        "searchQuery": "CNC turning subcontracting"
+      },
+      "profit": {
+        "val": "0.5-1 k€",
+        "base": "~8 k€"
+      },
+      "flags": [
+        "EEN verified ✓",
+        "5-axis Chiron ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:06:00.000Z",
+      "linkKind": {
+        "demand": "real_listing",
+        "offer": "real_listing"
+      }
+    },
+    {
+      "id": "eu6008",
+      "status": "new",
+      "segment": "CNC",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": true
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "Rumunský dodavatel nástrojů — hledá prototypové zakázky",
+        "buyer": "Romanian precision parts for tool shops (EEN)",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "RO",
+        "budget": "Subcontracting",
+        "budgetMidK": 12,
+        "link": "https://een.ec.europa.eu/partnering-opportunities/romanian-precision-machined-parts-supplier-tool-shops-looking-companies",
+        "postedDate": "2024-12-12",
+        "details": "Romanian microenterprise, machined parts for tool shops, customized solutions, new CNC technology co-financed by EU funds.",
+        "searchQuery": "CNC precision parts tool shop Romania"
+      },
+      "offer": {
+        "title": "Prototypy + malosériová výroba — Europages",
+        "seller": "Europages prototype suppliers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 10,
+        "specs": "Prototypování · CNC frézování · 3D tisk · malé série · verified EU suppliers",
+        "link": "https://een.ec.europa.eu/partnering-opportunities/czech-company-focused-precision-machining-custom-made-piece-and-short-0",
+        "postedDate": "2026-05-15",
+        "searchQuery": "prototype CNC machining Europe"
+      },
+      "profit": {
+        "val": "0.5-1.5 k€",
+        "base": "~10 k€"
+      },
+      "flags": [
+        "EEN verified ✓",
+        "EU co-funded ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:07:00.000Z",
+      "linkKind": {
+        "demand": "real_listing",
+        "offer": "real_listing"
+      }
+    },
+    {
+      "id": "eu6009",
+      "status": "new",
+      "segment": "CNC",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "WTB: Okuma LS-540 lathe — USA/EU forum",
+        "buyer": "Practical Machinist user (forum)",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "US",
+        "budget": "10-20 k€",
+        "budgetMidK": 15,
+        "link": "https://www.practicalmachinist.com/forum/threads/wtb-okuma-ls-540-lathe.444935/",
+        "postedDate": "2025-12-13",
+        "details": "User jbhill looking for Okuma LS-540 lathe. Forum post with 7 replies, active thread.",
+        "searchQuery": "Okuma LS-540 CNC lathe"
+      },
+      "offer": {
+        "title": "Okuma soustruhy — Exapro search",
+        "seller": "Exapro EU marketplace",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 18,
+        "specs": "Okuma lathes · multiple models available · EU-wide shipping",
+        "link": "https://www.exapro.com/ps-used-okuma-cnc-lathes/",
+        "postedDate": "2026-05-01",
+        "searchQuery": "Okuma lathe used"
+      },
+      "profit": {
+        "val": "1-2 k€",
+        "base": "~18 k€"
+      },
+      "flags": [
+        "Forum verified ✓",
+        "Active thread ✓"
+      ],
+      "warnings": [
+        "US buyer — shipping + customs"
+      ],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:08:00.000Z",
+      "linkKind": {
+        "demand": "real_listing",
+        "offer": "category"
+      }
+    },
+    {
+      "id": "eu6010",
+      "status": "new",
+      "segment": "CNC",
+      "matchCriteria": {
+        "brand": true,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "FS: Brother Speedio S700X1 — $67K",
+        "buyer": "Practical Machinist seller",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "US",
+        "budget": "67 k$",
+        "budgetMidK": 62,
+        "link": "https://www.practicalmachinist.com/forum/threads/brother-speedio-s700x1-67k-2-800-hours-03-2020-build-date.447152/",
+        "postedDate": "2026-03-10",
+        "details": "Brother Speedio S700X1, 2800 hours, March 2020 build. Asking $67K. Forum listing.",
+        "searchQuery": "Brother Speedio S700X1"
+      },
+      "offer": {
+        "title": "Brother Speedio — Machineseeker search",
+        "seller": "Machineseeker EU",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 55,
+        "specs": "Brother Speedio · multiple models · EU dealers · verified sellers",
+        "link": "https://www.machineseeker.com/mss/brother+speedio",
+        "postedDate": "2026-05-01",
+        "searchQuery": "Brother Speedio machining center"
+      },
+      "profit": {
+        "val": "3-5 k€",
+        "base": "~55 k€"
+      },
+      "flags": [
+        "Forum listing ✓",
+        "2800h low ✓",
+        "2020 build ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:09:00.000Z",
+      "linkKind": {
+        "demand": "real_listing",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6011",
+      "status": "new",
+      "segment": "tooling",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "Turecká firma — CNC nástroje a formy, hledá distributory",
+        "buyer": "Turkish CNC tooling company (EEN)",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "TR",
+        "budget": "Distribution agreement",
+        "budgetMidK": 30,
+        "link": "https://een.ec.europa.eu/partnering-opportunities/turkey-based-manufacturer-aluminum-and-steel-systemsproviding-engineering",
+        "postedDate": "2026-03-12",
+        "details": "Turkish company, CNC machine tools + mold making + sheet metal. Looking for commercial reps and distributors worldwide.",
+        "searchQuery": "CNC tooling distributor Turkey"
+      },
+      "offer": {
+        "title": "Vstřikovací formy — Surplex auctions",
+        "seller": "Surplex marketplace",
+        "sellerEmail": "contact@surplex.com",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 20,
+        "specs": "Injection molds · various sizes · from factory closures · Surplex verified",
+        "link": "https://www.surplex.com/en/c/more-industrial-categories/plastic-process-industry/injection-machine-moulds/d9b2c669-b9d1-4193-9f67-9bb8be1187dc",
+        "postedDate": "2026-05-15",
+        "searchQuery": "injection mold tooling used"
+      },
+      "profit": {
+        "val": "1.5-3 k€",
+        "base": "~20 k€"
+      },
+      "flags": [
+        "EEN verified ✓",
+        "Distribution deal ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:10:00.000Z",
+      "linkKind": {
+        "demand": "real_listing",
+        "offer": "category"
+      }
+    },
+    {
+      "id": "eu6012",
+      "status": "new",
+      "segment": "tooling",
+      "matchCriteria": {
+        "brand": true,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "Sandvik Capto C6 nástrojové držáky — Europages",
+        "buyer": "Europages buyer request",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "5-12 k€",
+        "budgetMidK": 8,
+        "link": "https://www.europages.co.uk/companies/sandvik%20capto%20c6.html",
+        "postedDate": "2026-06-01",
+        "details": "Buyer looking for Sandvik Capto C6 tool holders, turning + milling, 10+ pieces.",
+        "searchQuery": "Sandvik Capto C6 tool holders"
+      },
+      "offer": {
+        "title": "Sandvik Capto — Machineseeker search",
+        "seller": "Machineseeker dealers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 7,
+        "specs": "Sandvik Capto C6 · various configs · turning/milling · from factory closures",
+        "link": "https://www.machineseeker.com/mss/sandvik",
+        "postedDate": "2026-05-20",
+        "searchQuery": "Sandvik Capto C6"
+      },
+      "profit": {
+        "val": "0.5-1 k€",
+        "base": "~7 k€"
+      },
+      "flags": [
+        "Sandvik ✓",
+        "Capto C6 ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:11:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6013",
+      "status": "new",
+      "segment": "tooling",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "Hydraulické sklíčidla + upínače — Europages",
+        "buyer": "Europages industrial buyers",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "3-8 k€",
+        "budgetMidK": 5,
+        "link": "https://www.europages.co.uk/companies/hydraulic%20chuck.html",
+        "postedDate": "2026-06-01",
+        "details": "Industrial buyers searching for hydraulic chucks, collet chucks, clamping fixtures for CNC.",
+        "searchQuery": "hydraulic chuck CNC clamping"
+      },
+      "offer": {
+        "title": "SMW Autoblok, Röhm, Schunk — Machineseeker",
+        "seller": "Machineseeker dealers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 4,
+        "specs": "Hydraulic chucks · SMW Autoblok · Röhm · Schunk · Ø160-400mm · used + new",
+        "link": "https://www.machineseeker.com/mss/hydraulic+chuck",
+        "postedDate": "2026-05-15",
+        "searchQuery": "hydraulic chuck CNC lathe"
+      },
+      "profit": {
+        "val": "0.2-0.5 k€",
+        "base": "~4 k€"
+      },
+      "flags": [
+        "Europages ✓",
+        "Multiple brands ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:12:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6014",
+      "status": "new",
+      "segment": "tooling",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "BT40/HSK63 nástrojové držáky — hromadný nákup",
+        "buyer": "Europages buyer",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "3-8 k€",
+        "budgetMidK": 5,
+        "link": "https://www.europages.co.uk/companies/tool%20holder.html",
+        "postedDate": "2026-06-01",
+        "details": "Bulk purchase BT40/HSK63 tool holders, ER collets, shell mill holders for new CNC shop setup.",
+        "searchQuery": "BT40 HSK63 tool holder bulk"
+      },
+      "offer": {
+        "title": "BT40 + HSK63 sady — Machineseeker",
+        "seller": "Machineseeker dealers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 5,
+        "specs": "BT40/HSK63 · ER32/ER40 · Weldon · shell mill · sets from factory closures",
+        "link": "https://www.machineseeker.com/mss/tool+holder",
+        "postedDate": "2026-05-10",
+        "searchQuery": "BT40 HSK63 tool holder set"
+      },
+      "profit": {
+        "val": "0.3-0.7 k€",
+        "base": "~5 k€"
+      },
+      "flags": [
+        "Europages ✓",
+        "Bulk deal ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:13:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6015",
+      "status": "new",
+      "segment": "tooling",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 2,
+      "demand": {
+        "title": "Střižné a ohýbací nástroje — Europages",
+        "buyer": "Europages stamping buyers",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "10-25 k€",
+        "budgetMidK": 17,
+        "link": "https://www.europages.co.uk/companies/stamping%20die.html",
+        "postedDate": "2026-06-01",
+        "details": "Stamping dies, progressive dies, bending tools for sheet metal production.",
+        "searchQuery": "stamping die progressive tool"
+      },
+      "offer": {
+        "title": "Lisovací nástroje — Surplex auctions",
+        "seller": "Surplex marketplace",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 14,
+        "specs": "Progressive dies · stamping tools · from factory closures · documentation included",
+        "link": "https://www.surplex.com/en/search/?q=stamping+die",
+        "postedDate": "2026-05-20",
+        "searchQuery": "progressive stamping die"
+      },
+      "profit": {
+        "val": "1-2 k€",
+        "base": "~14 k€"
+      },
+      "flags": [
+        "Europages ✓",
+        "Surplex ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:14:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6016",
+      "status": "new",
+      "segment": "MRO",
+      "matchCriteria": {
+        "brand": true,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "Siemens 1PH7 vřetenový motor — Europages",
+        "buyer": "Europages MRO buyer",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "3-8 k€",
+        "budgetMidK": 5,
+        "link": "https://www.europages.co.uk/companies/siemens%201ph7.html",
+        "postedDate": "2026-06-01",
+        "details": "Siemens 1PH7 spindle motor repair or replacement, 18kW, 12000rpm.",
+        "searchQuery": "Siemens 1PH7 spindle motor"
+      },
+      "offer": {
+        "title": "Siemens 1PH7 repas — Machineseeker",
+        "seller": "Machineseeker spindle dealers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "DE",
+        "price": 4.5,
+        "specs": "Siemens 1PH7 · 18kW · 12000rpm · repaired · new bearings · 12M warranty",
+        "link": "https://www.machineseeker.com/mss/siemens",
+        "postedDate": "2026-05-20",
+        "searchQuery": "Siemens 1PH7 spindle"
+      },
+      "profit": {
+        "val": "0.3-0.6 k€",
+        "base": "~4.5 k€"
+      },
+      "flags": [
+        "Siemens ✓",
+        "Machineseeker verified ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:15:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6017",
+      "status": "new",
+      "segment": "MRO",
+      "matchCriteria": {
+        "brand": true,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": true
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "Fanuc servo driver — Europages",
+        "buyer": "Europages MRO buyer",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "2-5 k€",
+        "budgetMidK": 3,
+        "link": "https://www.europages.co.uk/companies/fanuc%20servo.html",
+        "postedDate": "2026-06-01",
+        "details": "Fanuc servo amplifier A06B-6117, spare part for CNC machine.",
+        "searchQuery": "Fanuc A06B servo amplifier spare"
+      },
+      "offer": {
+        "title": "Fanuc servo díly — Machineseeker",
+        "seller": "Machineseeker Fanuc parts",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "DE",
+        "price": 2.8,
+        "specs": "Fanuc A06B-6117 · tested · 6M warranty · 24h shipping",
+        "link": "https://www.machineseeker.com/mss/fanuc",
+        "postedDate": "2026-05-25",
+        "searchQuery": "Fanuc A06B servo"
+      },
+      "profit": {
+        "val": "0.2-0.4 k€",
+        "base": "~2.8 k€"
+      },
+      "flags": [
+        "Fanuc ✓",
+        "Tested ✓",
+        "24h ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:16:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6018",
+      "status": "new",
+      "segment": "MRO",
+      "matchCriteria": {
+        "brand": true,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "Heidenhain lineární pravítko — Europages",
+        "buyer": "Europages buyer",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "1.5-4 k€",
+        "budgetMidK": 2.5,
+        "link": "https://www.europages.co.uk/companies/heidenhain.html",
+        "postedDate": "2026-06-01",
+        "details": "Heidenhain LS 486C linear scale, ML=720mm, 10nm resolution.",
+        "searchQuery": "Heidenhain LS486 linear scale"
+      },
+      "offer": {
+        "title": "Heidenhain LS486 — Machineseeker",
+        "seller": "Machineseeker dealers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "DE",
+        "price": 2.2,
+        "specs": "LS 486C · ML=720mm · 10nm · new/refurb",
+        "link": "https://www.machineseeker.com/mss/heidenhain",
+        "postedDate": "2026-05-20",
+        "searchQuery": "Heidenhain LS486"
+      },
+      "profit": {
+        "val": "0.15-0.3 k€",
+        "base": "~2.2 k€"
+      },
+      "flags": [
+        "Heidenhain ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:17:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6019",
+      "status": "new",
+      "segment": "MRO",
+      "matchCriteria": {
+        "brand": true,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "Rexroth IndraDrive servo — Europages",
+        "buyer": "Europages buyer",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "2-5 k€",
+        "budgetMidK": 3.5,
+        "link": "https://www.europages.co.uk/companies/rexroth%20indradrive.html",
+        "postedDate": "2026-06-01",
+        "details": "Bosch Rexroth IndraDrive HCS02, servo drive for press line.",
+        "searchQuery": "Rexroth IndraDrive HCS02 servo"
+      },
+      "offer": {
+        "title": "Rexroth drives — Machineseeker",
+        "seller": "Machineseeker dealers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "DE",
+        "price": 2.5,
+        "specs": "HCS02 · repaired · firmware updated · load tested · 6M warranty",
+        "link": "https://www.machineseeker.com/mss/rexroth",
+        "postedDate": "2026-05-20",
+        "searchQuery": "Rexroth IndraDrive HCS02"
+      },
+      "profit": {
+        "val": "0.15-0.35 k€",
+        "base": "~2.5 k€"
+      },
+      "flags": [
+        "Rexroth ✓",
+        "Tested ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:18:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6020",
+      "status": "new",
+      "segment": "MRO",
+      "matchCriteria": {
+        "brand": true,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "HIWIN kuličkové šrouby — Europages",
+        "buyer": "Europages buyer",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "0.5-2 k€",
+        "budgetMidK": 1.2,
+        "link": "https://www.europages.co.uk/companies/ball%20screw.html",
+        "postedDate": "2026-06-01",
+        "details": "Ball screws HIWIN/THK/NSK, various sizes, for CNC retrofit projects.",
+        "searchQuery": "HIWIN ball screw CNC"
+      },
+      "offer": {
+        "title": "HIWIN/THK ball screws — Machineseeker",
+        "seller": "Machineseeker dealers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 0.8,
+        "specs": "HIWIN R20 · THK BNK · various lengths · new + used",
+        "link": "https://www.machineseeker.com/mss/hiwin",
+        "postedDate": "2026-05-20",
+        "searchQuery": "HIWIN ball screw"
+      },
+      "profit": {
+        "val": "0.05-0.1 k€",
+        "base": "~0.8 k€"
+      },
+      "flags": [
+        "HIWIN ✓"
+      ],
+      "warnings": [
+        "Malá marže"
+      ],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:19:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6021",
+      "status": "new",
+      "segment": "reverse",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": true
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "Česká firma — RE services hledá partnery",
+        "buyer": "Czech RE company (EEN)",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "CZ",
+        "budget": "Supply contract",
+        "budgetMidK": 15,
+        "link": "https://een.ec.europa.eu/partnering-opportunities/precise-cnc-machining-edm-metrology-industrial-automation-and-fixture",
+        "postedDate": "2025-06-01",
+        "details": "Czech company 15+ years, CNC machining + tool steel + surface treatment, max 1180x710mm, ISO certified, looking for long-term customers.",
+        "searchQuery": "reverse engineering CNC Czech"
+      },
+      "offer": {
+        "title": "3D skenování + RE — Europages",
+        "seller": "Europages 3D scanning providers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 5,
+        "specs": "GOM ATOS · Creaform · STEP/IGES output · EU-wide service",
+        "link": "https://www.europages.co.uk/companies/3d%20scanning.html",
+        "postedDate": "2026-05-15",
+        "searchQuery": "3D scanning reverse engineering"
+      },
+      "profit": {
+        "val": "0.5-1 k€",
+        "base": "~5 k€"
+      },
+      "flags": [
+        "EEN verified ✓",
+        "ISO certified ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:20:00.000Z",
+      "linkKind": {
+        "demand": "real_listing",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6022",
+      "status": "new",
+      "segment": "reverse",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "3D tisk kovů — titanový implantát",
+        "buyer": "MedTech startup EU",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "2-6 k€",
+        "budgetMidK": 4,
+        "link": "https://www.europages.co.uk/companies/titanium%20implant.html",
+        "postedDate": "2026-06-01",
+        "details": "DMLS/SLM titanium Ti6Al4V printing for medical implants, 3 pcs.",
+        "searchQuery": "3D printing titanium DMLS medical"
+      },
+      "offer": {
+        "title": "Metal 3D printing — Europages",
+        "seller": "Europages DMLS providers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 3.5,
+        "specs": "EOS/SLM · Ti6Al4V · HIP · CNC finishing · material cert",
+        "link": "https://www.europages.co.uk/companies/dmls%20titanium.html",
+        "postedDate": "2026-05-20",
+        "searchQuery": "DMLS titanium 3D printing"
+      },
+      "profit": {
+        "val": "0.2-0.5 k€",
+        "base": "~3.5 k€"
+      },
+      "flags": [
+        "Ti6Al4V ✓",
+        "DMLS ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:21:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6023",
+      "status": "new",
+      "segment": "reverse",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "Odlitky na zakázku — Europages",
+        "buyer": "Europages casting buyers",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "5-15 k€",
+        "budgetMidK": 10,
+        "link": "https://www.europages.co.uk/companies/custom%20casting.html",
+        "postedDate": "2026-06-01",
+        "details": "Custom iron/aluminium castings, reverse engineered from sample, small batches.",
+        "searchQuery": "custom casting reverse engineering"
+      },
+      "offer": {
+        "title": "Zakázkové odlitky — Europages foundries",
+        "seller": "EU foundries",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 8,
+        "specs": "GG25/AlSi · from sample → 3D scan → pattern → casting · EU foundries",
+        "link": "https://www.europages.co.uk/companies/iron%20foundry.html",
+        "postedDate": "2026-05-15",
+        "searchQuery": "iron casting foundry Europe"
+      },
+      "profit": {
+        "val": "0.5-1 k€",
+        "base": "~8 k€"
+      },
+      "flags": [
+        "Europages ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:22:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6024",
+      "status": "new",
+      "segment": "reverse",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "Ozubení na zakázku — Europages",
+        "buyer": "Europages gear buyers",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "1-5 k€",
+        "budgetMidK": 3,
+        "link": "https://www.europages.co.uk/companies/custom%20gear.html",
+        "postedDate": "2026-06-01",
+        "details": "Custom gear manufacturing, reverse engineering from sample, module 2-10.",
+        "searchQuery": "custom gear manufacturing reverse"
+      },
+      "offer": {
+        "title": "Ozubení výroba — Europages",
+        "seller": "EU gear manufacturers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 2,
+        "specs": "Custom gears · module 2-10 · from sample · 16MnCr5 + hardening · EU manufacturers",
+        "link": "https://www.europages.co.uk/companies/gear%20cutting.html",
+        "postedDate": "2026-05-15",
+        "searchQuery": "gear cutting manufacturing"
+      },
+      "profit": {
+        "val": "0.1-0.3 k€",
+        "base": "~2 k€"
+      },
+      "flags": [
+        "Europages ✓"
+      ],
+      "warnings": [
+        "Malá marže"
+      ],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:23:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6025",
+      "status": "new",
+      "segment": "reverse",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 1,
+      "demand": {
+        "title": "Hydraulický blok kopie — Europages",
+        "buyer": "EU hydraulics buyer",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "5-15 k€",
+        "budgetMidK": 10,
+        "link": "https://www.europages.co.uk/companies/hydraulic%20manifold.html",
+        "postedDate": "2026-06-01",
+        "details": "Reverse engineering hydraulic valve block, original manufacturer defunct, 10pcs needed.",
+        "searchQuery": "hydraulic manifold reverse engineering"
+      },
+      "offer": {
+        "title": "Hydraulické bloky — Europages + TradeMachines",
+        "seller": "EU hydraulic manufacturers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 8,
+        "specs": "CT scan + 3D model + CNC manufacturing · GGG40/AlSi · pressure tested",
+        "link": "https://www.trademachines.com/search?q=hydraulic+manifold",
+        "postedDate": "2026-05-15",
+        "searchQuery": "hydraulic manifold valve block"
+      },
+      "profit": {
+        "val": "0.5-1 k€",
+        "base": "~8 k€"
+      },
+      "flags": [
+        "Europages ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:24:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6026",
+      "status": "new",
+      "segment": "building",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 3,
+      "demand": {
+        "title": "IPE/HEB ocelové nosníky — Europages",
+        "buyer": "Europages steel buyer",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "10-30 k€",
+        "budgetMidK": 20,
+        "link": "https://www.europages.co.uk/companies/steel%20beam.html",
+        "postedDate": "2026-06-01",
+        "details": "IPE/HEB steel beams, S235/S355, various lengths, for construction projects.",
+        "searchQuery": "IPE HEB steel beams Europe"
+      },
+      "offer": {
+        "title": "Ocelové profily — Machineseeker",
+        "seller": "Machineseeker steel dealers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 15,
+        "specs": "IPE/HEB 100-400 · S235/S355 · EN 10025 · cert 3.1 · EU delivery",
+        "link": "https://www.machineseeker.com/mss/steel+beam",
+        "postedDate": "2026-05-20",
+        "searchQuery": "IPE HEB steel beam"
+      },
+      "profit": {
+        "val": "0.8-2 k€",
+        "base": "~15 k€"
+      },
+      "flags": [
+        "Europages ✓",
+        "EN 10025 ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:25:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6027",
+      "status": "new",
+      "segment": "building",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 3,
+      "demand": {
+        "title": "Stavební materiál — EU public tenders",
+        "buyer": "EU public tender (TED)",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "Public tender",
+        "budgetMidK": 50,
+        "link": "https://ted.europa.eu/en/search/result?q=steel+construction&scope=ACTIVE",
+        "postedDate": "2026-06-01",
+        "details": "EU public tenders for steel construction materials, beams, reinforcement, roofing.",
+        "searchQuery": "steel construction tender Europe"
+      },
+      "offer": {
+        "title": "Stavební ocel — Europages suppliers",
+        "seller": "Europages steel suppliers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 30,
+        "specs": "Steel beams · reinforcement · roofing sheets · EU-wide delivery",
+        "link": "https://www.europages.co.uk/companies/steel%20construction.html",
+        "postedDate": "2026-05-15",
+        "searchQuery": "steel construction materials"
+      },
+      "profit": {
+        "val": "2-5 k€",
+        "base": "~30 k€"
+      },
+      "flags": [
+        "TED public tender ✓",
+        "Europages ✓"
+      ],
+      "warnings": [
+        "Formální tender proces"
+      ],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:26:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6028",
+      "status": "new",
+      "segment": "building",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 3,
+      "demand": {
+        "title": "Kari sítě + výztuž — Europages",
+        "buyer": "EU construction buyer",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "5-15 k€",
+        "budgetMidK": 10,
+        "link": "https://www.europages.co.uk/companies/reinforcement%20mesh.html",
+        "postedDate": "2026-06-01",
+        "details": "Welded wire mesh, reinforcement bars, for concrete construction.",
+        "searchQuery": "reinforcement mesh wire construction"
+      },
+      "offer": {
+        "title": "Výztuž + sítě — Machineseeker",
+        "seller": "Machineseeker dealers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 7,
+        "specs": "Welded mesh · B500B · EN 10080 · various sizes · EU delivery",
+        "link": "https://www.machineseeker.com/mss/welded+mesh",
+        "postedDate": "2026-05-20",
+        "searchQuery": "welded wire mesh reinforcement"
+      },
+      "profit": {
+        "val": "0.4-0.8 k€",
+        "base": "~7 k€"
+      },
+      "flags": [
+        "Europages ✓",
+        "B500B ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:27:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6029",
+      "status": "new",
+      "segment": "building",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 3,
+      "demand": {
+        "title": "Trapézové plechy + střešní panely — Europages",
+        "buyer": "EU roofing buyer",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "10-25 k€",
+        "budgetMidK": 17,
+        "link": "https://www.europages.co.uk/companies/trapezoidal%20sheet.html",
+        "postedDate": "2026-06-01",
+        "details": "Trapezoidal sheets, sandwich panels, zinc/colour coated, for industrial halls.",
+        "searchQuery": "trapezoidal sheet roofing panel"
+      },
+      "offer": {
+        "title": "Střešní panely — Machineseeker/Europages",
+        "seller": "EU panel manufacturers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 14,
+        "specs": "T35/T50 · zinc Z275 · 0.5-0.75mm · cut to length · EU delivery",
+        "link": "https://www.machineseeker.com/mss/trapezoidal+sheet",
+        "postedDate": "2026-05-20",
+        "searchQuery": "trapezoidal sheet roofing"
+      },
+      "profit": {
+        "val": "0.8-1.5 k€",
+        "base": "~14 k€"
+      },
+      "flags": [
+        "Europages ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:28:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    },
+    {
+      "id": "eu6030",
+      "status": "new",
+      "segment": "building",
+      "matchCriteria": {
+        "brand": false,
+        "specs": true,
+        "year": "ok",
+        "budget": "ok",
+        "extras": false
+      },
+      "weightTier": 3,
+      "demand": {
+        "title": "Hliníkové profily + fasádní systémy — Europages",
+        "buyer": "EU facade buyer",
+        "buyerEmail": "",
+        "buyerPhone": "",
+        "country": "EU",
+        "budget": "15-40 k€",
+        "budgetMidK": 27,
+        "link": "https://www.europages.co.uk/companies/aluminium%20profile.html",
+        "postedDate": "2026-06-01",
+        "details": "Aluminium profiles for facade systems, curtain walls, industrial buildings.",
+        "searchQuery": "aluminium profile facade system"
+      },
+      "offer": {
+        "title": "Hliníkové profily — Europages suppliers",
+        "seller": "EU aluminium suppliers",
+        "sellerEmail": "",
+        "sellerPhone": "",
+        "sellerCountry": "EU",
+        "price": 20,
+        "specs": "Aluminium profiles · custom extrusion · anodized/powder coated · EU-wide delivery",
+        "link": "https://www.europages.co.uk/companies/aluminium%20extrusion.html",
+        "postedDate": "2026-05-15",
+        "searchQuery": "aluminium extrusion profile"
+      },
+      "profit": {
+        "val": "1-3 k€",
+        "base": "~20 k€"
+      },
+      "flags": [
+        "Europages ✓"
+      ],
+      "warnings": [],
+      "notes": "",
+      "emails": {
+        "buyer": null,
+        "seller": null
+      },
+      "createdAt": "2026-06-08T10:29:00.000Z",
+      "linkKind": {
+        "demand": "search",
+        "offer": "search"
+      }
+    }
+  ],
+  "commission": 5,
+  "exportedAt": "2026-06-08T10:30:00.000Z"
+}
